@@ -1,8 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem;
 
-import java.io.IOException;
-
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
