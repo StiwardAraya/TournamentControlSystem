@@ -20,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
