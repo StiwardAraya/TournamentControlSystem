@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="400.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.MainController">
+<AnchorPane id="AnchorPane" fx:id="root" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.MainController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
    <children>
-      <VBox fx:id="mainContainer" layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" styleClass="blur-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="imvMain" fitHeight="400.0" fitWidth="603.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/img/basket_bg_image.jpg" />
+         </image>
+      </ImageView>
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="main-container" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
+               </StackPane.margin>
+               <children>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
+                     <children>
+                        <ImageView pickOnBounds="true" preserveRatio="true" styleClass="logo">
+                           <image>
+                              <Image url="@../resources/img/App_Logo.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label text="Tournament Control System" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="small-container" />
+                        <String fx:value="left" />
+                     </styleClass>
+                  </HBox>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="207.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <children>
+                              <MFXButton text="Mantenimiento" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image" />
+                                 </graphic>
+                              </MFXButton>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <children>
+                              <MFXButton text="Torneos" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image" />
+                                 </graphic>
+                              </MFXButton>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="240.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <children>
+                              <MFXButton graphicTextGap="0.0" lineSpacing="1.0" text="Estadísticas" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image" />
+                                 </graphic>
+                              </MFXButton>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <styleClass>
+                        <String fx:value="large-container" />
+                        <String fx:value="center" />
+                     </styleClass>
+                  </HBox>
+                  <AnchorPane styleClass="small-container" VBox.vgrow="SOMETIMES">
+                     <children>
+                        <MFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Acerca de ..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
