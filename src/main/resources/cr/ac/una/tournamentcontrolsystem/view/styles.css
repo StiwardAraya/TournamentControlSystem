@@ -1,3 +1,27 @@
+* {
+  -mfx-main: #6a9c89;
+  -mfx-purple: #6a9c89;
+  -fx-green: #6a9c89;
+  -fx-green-shade1: #4f7a6b;
+  -fx-green-shade2: #3b5b52;
+  -fx-light-green: #c1d8c3;
+  -fx-beige: #fff5e4;
+  -fx-beige-shade1: #e2cfc1;
+  -fx-beige-shade2: #c6b2a0;
+  -fx-orange: #ffa725;
+  -fx-orange-shade1: #c77a1d;
+  -fx-orange-shade2: #a65e14;
+
+  -fx-font-family: "Montserrat";
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .main-container {
   -fx-background-color: rgba(255, 255, 255, 0.9);
   -fx-padding: 20;
@@ -24,23 +48,45 @@
   -fx-alignment: CENTER;
 }
 
-.mfx-button {
+.mfx-button,
+.mfx-button:armed,
+.mfx-button:focused {
   -mfx-button-type: RAISED;
   -mfx-depth-level: LEVEL5;
   -fx-cursor: hand;
   -fx-content-display: TOP;
-  -fx-padding: 10px;
   -fx-graphic-text-gap: 20px;
+  -fx-font-family: "Montserrat";
+  -fx-font-weight: bold;
+  -fx-min-height: 35px;
+}
+
+.mfx-button:hover {
+  -fx-background-color: -fx-light-green;
+}
+
+.btn-main-menu {
+  -fx-min-height: 100px;
+  -fx-min-width: 100px;
 }
 
 .btn-image {
-  -fx-preserve-ratio: false;
-  -fx-fit-width: 100px;
+  -fx-preserve-ratio: true;
+  -fx-fit-width: 70px;
   -fx-fit-height: 70px;
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
 }
 
 .logo {
   -fx-preserve-ratio: false;
   -fx-fit-width: 45px;
   -fx-fit-height: 45px;
+}
+
+.title {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
+  -fx-font-family: "Montserrat";
 }
