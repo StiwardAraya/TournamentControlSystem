@@ -1,5 +1,6 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -25,12 +27,19 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private AnchorPane root;
-
     @FXML
     private ImageView imvMain;
+    @FXML
+    private MFXButton btnMantenimiento;
+    @FXML
+    private MFXButton btnTorneos;
+    @FXML
+    private MFXButton btnEstadisticas;
 
     private List<Image> imagenes;
     private int indiceActualImagen = 0;
+    @FXML
+    private MFXButton btnAcercaDe;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,6 +50,26 @@ public class MainController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+    }
+
+    @FXML
+    private void onActionBtnMantenimiento(ActionEvent event) {
+        //TODO: Abrir ventana de mantenimiento
+    }
+
+    @FXML
+    private void onActionBtnTorneos(ActionEvent event) {
+        //TODO: Abrir ventana de torneos
+    }
+
+    @FXML
+    private void onActionBtnEstadisticas(ActionEvent event) {
+        //TODO: Abrir ventana de estadisticas
+    }
+
+    @FXML
+    private void onActionBtnAcercaDe(ActionEvent event) {
+        //TODO: Abrir web acerca de
     }
 
     private void cargarImagenes() {
@@ -54,7 +83,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     private void iniciarCambioDeImagen() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), event -> cambiarImagen()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> cambiarImagen()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
