@@ -7,6 +7,8 @@ package cr.ac.una.tournamentcontrolsystem.util;
 
 import cr.ac.una.tournamentcontrolsystem.App;
 import cr.ac.una.tournamentcontrolsystem.controller.Controller;
+import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
+import io.github.palexdev.materialfx.css.themes.Themes;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -21,8 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
-import io.github.palexdev.materialfx.css.themes.Themes;
 
 /**
  * @author Carlos Carranza
@@ -86,7 +86,7 @@ public class FlowController {
 
     public void goMain(String viewName) {
         try {
-            this.mainStage.setScene(new Scene(FXMLLoader.load(App.class.getResource("view/"+ viewName+ ".fxml"), this.idioma)));
+            this.mainStage.setScene(new Scene(FXMLLoader.load(App.class.getResource("view/" + viewName + ".fxml"), this.idioma)));
             MFXThemeManager.addOn(this.mainStage.getScene(), Themes.DEFAULT, Themes.LEGACY);
             this.mainStage.show();
         } catch (IOException ex) {
@@ -137,7 +137,7 @@ public class FlowController {
         controller.setStage(stage);
         stage.getScene().setRoot(loader.getRoot());
         MFXThemeManager.addOn(stage.getScene(), Themes.DEFAULT, Themes.LEGACY);
-        
+
     }
 
     public void goViewInWindow(String viewName) {
@@ -145,7 +145,7 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("cr/ac/una/tournamentcontrolsystem/resources/img/App_Logo.jpg"));
+        stage.getIcons().add(new Image("cr/ac/una/tournamentcontrolsystem/resources/img/App_Logo.png"));
         stage.setTitle(controller.getNombreVista());
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
@@ -165,7 +165,7 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("cr/ac/una/tournamentcontrolsystem/resources/img/App_Logo.jpg"));
+        stage.getIcons().add(new Image("cr/ac/una/tournamentcontrolsystem/resources/img/App_Logo.png"));
         stage.setTitle(controller.getNombreVista());
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) -> {
@@ -187,15 +187,15 @@ public class FlowController {
     public Controller getController(String viewName) {
         return getLoader(viewName).getController();
     }
-    
-    public void limpiarLoader(String view){
+
+    public void limpiarLoader(String view) {
         this.loaders.remove(view);
     }
 
     public static void setIdioma(ResourceBundle idioma) {
         FlowController.idioma = idioma;
     }
-    
+
     public void initialize() {
         this.loaders.clear();
     }
