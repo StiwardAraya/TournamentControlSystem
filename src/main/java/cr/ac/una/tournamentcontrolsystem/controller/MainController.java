@@ -1,5 +1,6 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import cr.ac.una.tournamentcontrolsystem.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -38,6 +40,7 @@ public class MainController extends Controller implements Initializable {
 
     private List<Image> imagenes;
     private int indiceActualImagen = 0;
+
     @FXML
     private MFXButton btnAcercaDe;
 
@@ -54,7 +57,8 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnMantenimiento(ActionEvent event) {
-        //TODO: Abrir ventana de mantenimiento
+        FlowController.getInstance().goMain("MantenimientoView");
+        ((Stage) root.getScene().getWindow()).close();
     }
 
     @FXML
