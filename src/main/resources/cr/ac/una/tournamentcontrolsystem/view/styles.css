@@ -22,6 +22,10 @@
   font-style: normal;
 }
 
+.root{
+    -fx-background-color: -fx-green;
+}
+
 .main-container {
   -fx-background-color: rgba(255, 255, 255, 0.9);
   -fx-padding: 20;
@@ -41,11 +45,19 @@
 }
 
 .left {
-  -fx-alignment: CENTER-LEFT;
+    -fx-alignment: CENTER-LEFT;
 }
 
 .center {
-  -fx-alignment: CENTER;
+    -fx-alignment: CENTER;
+}
+
+.top-center{
+    -fx-alignment: TOP_CENTER;
+}
+
+.bottom-center {
+    -fx-alignment: BOTTOM_CENTER;
 }
 
 .mfx-button,
@@ -89,4 +101,32 @@
   -fx-font-weight: bold;
   -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
   -fx-font-family: "Montserrat";
+}
+
+.small-text{
+    -fx-font-size: 16px;
+}
+
+.side-container{
+    -fx-background-color: -fx-beige;
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
+}
+
+.side-button,
+.side-button:armed,
+.side-button:focused{
+    -fx-background-color: -fx-green;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+.side-button:hover{
+    -fx-background-color: -fx-orange;
+}
+
+.center-view {
+    -fx-background-color: -fx-orange;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
 }
