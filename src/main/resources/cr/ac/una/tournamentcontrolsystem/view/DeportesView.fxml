@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="main-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.DeportesController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+   <children>
+      <VBox layoutX="227.0" layoutY="81.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="top-center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="60.0" prefWidth="560.0" spacing="5.0" styleClass="left" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Deportes">
+                     <styleClass>
+                        <String fx:value="title" />
+                        <String fx:value="small-text" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <styleClass>
+                        <String fx:value="center" />
+                        <String fx:value="form-container" />
+                     </styleClass>
+                     <children>
+                        <MFXTextField fx:id="txfIdentificador" floatMode="BORDER" floatingText="Identificador" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <MFXButton fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" onAction="#onActionBtnBuscar" styleClass="search-btn">
+                           <tooltip>
+                              <Tooltip text="Buscar por id" />
+                           </tooltip>
+                        </MFXButton>
+                        <MFXButton fx:id="btnVerDeportes" maxWidth="1.7976931348623157E308" onAction="#onActionBtnVerDeportes" styleClass="standard-button" text="Ver deportes" HBox.hgrow="ALWAYS">
+                           <tooltip>
+                              <Tooltip text="Ver lista de deportes" />
+                           </tooltip>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <styleClass>
+                        <String fx:value="center" />
+                        <String fx:value="form-container" />
+                     </styleClass>
+                     <children>
+                        <MFXTextField fx:id="txfNombre" floatMode="BORDER" floatingText="nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <styleClass>
+                        <String fx:value="center" />
+                        <String fx:value="form-container" />
+                     </styleClass>
+                     <children>
+                        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Imagen del balón">
+                                 <styleClass>
+                                    <String fx:value="title" />
+                                    <String fx:value="small-text" />
+                                 </styleClass>
+                              </Label>
+                              <StackPane onDragDropped="#onDragDroppedStackPhoto" styleClass="photo-container">
+                                 <children>
+                                    <ImageView fx:id="imvPhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="photo-view">
+                                       <image>
+                                          <Image url="@../resources/img/camara_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label contentDisplay="CENTER" opacity="0.67" prefHeight="62.0" prefWidth="103.0" text="Arrastre una imagen" textAlignment="CENTER" wrapText="true">
+                                       <styleClass>
+                                          <String fx:value="title" />
+                                          <String fx:value="small-text" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <MFXButton fx:id="btnBuscarImagen" maxWidth="1.7976931348623157E308" onAction="#onActionBtnBuscarImagen" styleClass="standard-button" text="Buscar Imagen" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <styleClass>
+                        <String fx:value="center" />
+                        <String fx:value="form-container" />
+                     </styleClass>
+                     <children>
+                        <MFXButton fx:id="btnGuardar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnGuardar" styleClass="standard-button" text="Guardar" HBox.hgrow="ALWAYS" />
+                        <MFXButton fx:id="btnEliminar" layoutX="60.0" layoutY="20.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEliminar" styleClass="standard-button" text="Eliminar" HBox.hgrow="ALWAYS" />
+                        <MFXButton fx:id="btnNuevo" layoutX="415.0" layoutY="20.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnNuevo" styleClass="standard-button" text="Nuevo" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+               <styleClass>
+                  <String fx:value="main-container" />
+                  <String fx:value="small-container" />
+               </styleClass>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
