@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.MantenimientoController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.MantenimientoController">
    <left>
       <VBox maxWidth="450.0" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="top-center" VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imvMantenimientoIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/img/gear_icon.png" />
                      </image>
@@ -27,13 +26,13 @@
                         <String fx:value="small-text" />
                      </styleClass>
                   </Label>
-                  <MFXButton fx:id="btnDeportes" maxWidth="1.7976931348623157E308" onAction="#onActionBtnDeportes" styleClass="side-button" text="Deportes" />
-                  <MFXButton fx:id="btnEquipos" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEquipos" styleClass="side-button" text="Equipos" />
+                  <MFXButton fx:id="btnDeportes" maxWidth="1.7976931348623157E308" onAction="#onActionBtnDeportes" styleClass="standard-button" text="Deportes" />
+                  <MFXButton fx:id="btnEquipos" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEquipos" styleClass="standard-button" text="Equipos" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="bottom-center" VBox.vgrow="SOMETIMES">
                <children>
-                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" styleClass="side-button" text="Regresar" />
+                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" styleClass="standard-button" text="Regresar" />
                </children>
             </VBox>
          </children>
@@ -47,10 +46,13 @@
       </VBox>
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center-view" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="center-view" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </center>
 </BorderPane>

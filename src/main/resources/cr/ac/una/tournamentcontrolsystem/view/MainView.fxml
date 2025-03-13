@@ -49,7 +49,7 @@
                            <children>
                               <MFXButton fx:id="btnMantenimiento" onAction="#onActionBtnMantenimiento" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Mantenimiento" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image">
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
                                        <image>
                                           <Image url="@../resources/img/gear_icon.png" />
                                        </image></ImageView>
@@ -61,7 +61,7 @@
                            <children>
                               <MFXButton fx:id="btnTorneos" onAction="#onActionBtnTorneos" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Torneos" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image">
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
                                        <image>
                                           <Image url="@../resources/img/bracket_icon.png" />
                                        </image></ImageView>
@@ -73,7 +73,7 @@
                            <children>
                               <MFXButton fx:id="btnEstadisticas" graphicTextGap="0.0" lineSpacing="1.0" onAction="#onActionBtnEstadisticas" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Estadísticas" textOverrun="CLIP" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image">
+                                    <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
                                        <image>
                                           <Image url="@../resources/img/stats_icon.png" />
                                        </image></ImageView>
