@@ -33,7 +33,7 @@ public class DeportesController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
+        btnEliminar.setDisable(true);
     }
 
     @Override

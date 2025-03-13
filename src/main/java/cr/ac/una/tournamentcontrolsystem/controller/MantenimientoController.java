@@ -43,7 +43,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnEquipos(ActionEvent event) {
-        //TODO: Abrir view CRUD de equipos
+        FlowController.getInstance().goView("EquiposView");
     }
 
     @FXML
