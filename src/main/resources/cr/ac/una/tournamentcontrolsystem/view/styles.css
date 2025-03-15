@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   -mfx-main: #6a9c89;
   -mfx-purple: #6a9c89;
@@ -11,15 +14,6 @@
   -fx-orange: #ffa725;
   -fx-orange-shade1: #c77a1d;
   -fx-orange-shade2: #a65e14;
-
-  -fx-font-family: "Montserrat";
-}
-
-@font-face {
-  font-family: "Montserrat";
-  src: url("fonts/Montserrat-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 .root {
@@ -65,6 +59,7 @@
   -fx-pref-height: 30px;
   -fx-max-height: 30px;
   -fx-font-family: "Montserrat";
+  -fx-font-weight: bold;
 }
 
 .mfx-button,
@@ -127,7 +122,7 @@
   -fx-font-size: 20px;
   -fx-font-weight: bold;
   -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
-  -fx-font-family: "Montserrat";
+  -fx-font-family: "Big Shoulders";
 }
 
 .small-text {

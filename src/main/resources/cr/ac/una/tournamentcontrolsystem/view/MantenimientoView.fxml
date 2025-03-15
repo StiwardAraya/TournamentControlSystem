@@ -20,7 +20,7 @@
                         <Image url="@../resources/img/gear_icon.png" />
                      </image>
                   </ImageView>
-                  <Label text="Mantenimiento">
+                  <Label text="MANTENIMIENTO">
                      <styleClass>
                         <String fx:value="title" />
                         <String fx:value="small-text" />

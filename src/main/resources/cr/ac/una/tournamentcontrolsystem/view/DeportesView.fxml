@@ -22,7 +22,7 @@
          <children>
             <HBox prefHeight="60.0" prefWidth="560.0" spacing="5.0" styleClass="left" VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Deportes">
+                  <Label text="DEPORTES">
                      <styleClass>
                         <String fx:value="title" />
                         <String fx:value="small-text" />

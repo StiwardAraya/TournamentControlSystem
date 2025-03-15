@@ -36,56 +36,49 @@
                               <Image url="@../resources/img/App_Logo.png" />
                            </image>
                         </ImageView>
-                        <Label styleClass="title" text="Tournament Control System" />
+                        <Label styleClass="title" text="TOURNAMENT CONTROL SYSTEM" />
                      </children>
                      <styleClass>
                         <String fx:value="small-container" />
                         <String fx:value="left" />
                      </styleClass>
                   </HBox>
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="207.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="207.0" prefWidth="611.0" spacing="5.0" styleClass="center" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                           <children>
-                              <MFXButton fx:id="btnMantenimiento" onAction="#onActionBtnMantenimiento" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Mantenimiento" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                 <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
-                                       <image>
-                                          <Image url="@../resources/img/gear_icon.png" />
-                                       </image></ImageView>
-                                 </graphic>
-                              </MFXButton>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                           <children>
-                              <MFXButton fx:id="btnTorneos" onAction="#onActionBtnTorneos" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Torneos" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                 <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
-                                       <image>
-                                          <Image url="@../resources/img/bracket_icon.png" />
-                                       </image></ImageView>
-                                 </graphic>
-                              </MFXButton>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="240.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                           <children>
-                              <MFXButton fx:id="btnEstadisticas" graphicTextGap="0.0" lineSpacing="1.0" onAction="#onActionBtnEstadisticas" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Estadísticas" textOverrun="CLIP" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
-                                       <image>
-                                          <Image url="@../resources/img/stats_icon.png" />
-                                       </image></ImageView>
-                                 </graphic>
-                              </MFXButton>
-                           </children>
-                        </AnchorPane>
+                        <MFXButton fx:id="btnMantenimiento" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnMantenimiento" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Mantenimiento" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
+                                 <image>
+                                    <Image url="@../resources/img/gear_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnEstadisticas" graphicTextGap="0.0" lineSpacing="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEstadisticas" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Estadísticas" textOverrun="CLIP" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
+                                 <image>
+                                    <Image url="@../resources/img/stats_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnTorneos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnTorneos" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Torneos" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
+                                 <image>
+                                    <Image url="@../resources/img/bracket_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </MFXButton>
                      </children>
-                     <styleClass>
-                        <String fx:value="large-container" />
-                        <String fx:value="center" />
-                     </styleClass>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="20.0" top="30.0" />
+                     </padding>
                   </HBox>
                   <AnchorPane styleClass="small-container" VBox.vgrow="SOMETIMES">
                      <children>

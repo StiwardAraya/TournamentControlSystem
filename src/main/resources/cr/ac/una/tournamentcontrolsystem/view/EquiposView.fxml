@@ -13,14 +13,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.EquiposController">
    <children>
       <VBox layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="left" VBox.vgrow="SOMETIMES">
                <children>
-                  <Label text="Equipos">
+                  <Label text="EQUIPOS">
                      <styleClass>
                         <String fx:value="title" />
                         <String fx:value="small-text" />
