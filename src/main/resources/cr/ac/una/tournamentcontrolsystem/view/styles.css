@@ -42,6 +42,10 @@
   -fx-alignment: CENTER-LEFT;
 }
 
+.right {
+  -fx-alignment: CENTER-RIGHT;
+}
+
 .center {
   -fx-alignment: CENTER;
 }
@@ -112,6 +116,16 @@
   -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
 }
 
+.camera{
+    -fx-fit-width: 300px;
+    -fx-fit-height: 210px;
+    -fx-background-color: -fx-beige;
+    -fx-opacity: 0.2;
+    -fx-border-color: -fx-orange-shade2;
+    -fx-border-width: 2px;
+    -fx-border-type: solid;
+}
+
 .logo {
   -fx-preserve-ratio: false;
   -fx-fit-width: 45px;
@@ -158,11 +172,27 @@
   -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
 }
 
-.search-btn {
+.search-btn,
+.search-btn:armed,
+.search-btn:focused{
   -fx-graphic: url("../resources/img/search_icon_small.png");
   -fx-background-radius: 50% !important;
   -fx-border-color: transparent;
   -fx-border-radius: 50% !important;
   -fx-pref-width: 40px;
   -fx-pref-height: 40px;
+}
+
+.exit-btn,
+.exit-btn:armed,
+.exit-btn:focused{
+  -fx-background-radius: 50% !important;
+  -fx-border-color: transparent;
+  -fx-border-radius: 50% !important;
+  -fx-pref-width: 40px;
+  -fx-pref-height: 40px;
+  -fx-background-color: -fx-orange;
+  -fx-text-fill: #FFFFFF;
+  -fx-font-weight: BOLD;
+  -fx-font-size: 16;
 }

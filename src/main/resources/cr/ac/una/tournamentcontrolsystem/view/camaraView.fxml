@@ -5,37 +5,59 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.CamaraController">
+<AnchorPane fx:id="root" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.CamaraController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
    <children>
-      <VBox layoutX="327.0" layoutY="34.0" prefHeight="200.0" prefWidth="100.0" styleClass="main-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="327.0" layoutY="34.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+            <HBox maxHeight="50.0" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
                <children>
                   <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Label" />
+                        <Label styleClass="title" text="CÁMARA" />
                      </children>
                      <styleClass>
                         <String fx:value="small-container" />
                         <String fx:value="left" />
                      </styleClass>
                   </HBox>
-                  <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
+                  <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="right" HBox.hgrow="SOMETIMES">
                      <children>
-                        <MFXButton styleClass="right" />
+                        <MFXButton fx:id="btnCancelar" onAction="#onActionBtnCancelar" styleClass="exit-btn" text="X" />
                      </children>
                   </HBox>
                </children></HBox>
-            <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
+            <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="center" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="imvCamara" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" styleClass="camera">
+                     <image>
+                        <Image url="@../resources/img/camara_icon.png" />
+                     </image>
+                  </ImageView>
+               </children></HBox>
+            <HBox maxHeight="50.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="center" VBox.vgrow="SOMETIMES">
+               <children>
+                  <MFXButton fx:id="btnEncender" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEncender" styleClass="standard-button" text="Encender" HBox.hgrow="ALWAYS" />
+                  <MFXButton fx:id="btnApagar" layoutX="10.0" layoutY="18.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnApagar" styleClass="standard-button" text="Apagar" HBox.hgrow="ALWAYS" />
+                  <MFXButton fx:id="btnCapturar" layoutX="20.0" layoutY="20.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnCapturar" styleClass="standard-button" text="Capturar" HBox.hgrow="ALWAYS" />
+                  <MFXButton fx:id="btnGuardar" layoutX="300.0" layoutY="20.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnGuardar" styleClass="standard-button" text="Guardar" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+               </padding></HBox>
          </children>
+         <styleClass>
+            <String fx:value="main-container" />
+            <String fx:value="small-container" />
+         </styleClass>
       </VBox>
    </children>
    <padding>
