@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');*/
 
 * {
   -mfx-main: #6a9c89;
@@ -123,7 +123,12 @@
     -fx-opacity: 0.2;
     -fx-border-color: -fx-orange-shade2;
     -fx-border-width: 2px;
-    -fx-border-type: solid;
+}
+
+.camera-container{
+    -fx-border-color: -fx-orange-shade2;
+    -fx-border-width: 2px;
+    -fx-background-color: -fx-beige;
 }
 
 .logo {
@@ -162,6 +167,22 @@
   -fx-text-fill: #ffffff;
 }
 
+.flat-button,
+.flat-button:armed,
+.flat-button:focused {
+  -fx-background-color: #FFFFFF;
+  -fx-font-weight: bold;
+  -fx-text-fill: -fx-green;
+  -fx-border-color: -fx-green;
+  -fx-border-radius: 3px;
+  -fx-background-radius: 5px;
+  -fx-border-width: 2px;
+}
+
+.flat-button:hover{
+   -fx-text-fill: #FFFFFF;
+}
+
 .standard-button:hover {
   -fx-background-color: -fx-orange;
 }
@@ -195,4 +216,8 @@
   -fx-text-fill: #FFFFFF;
   -fx-font-weight: BOLD;
   -fx-font-size: 16;
+}
+
+.exit-btn:hover{
+    -fx-background-color: -fx-orange-shade1;
 }
