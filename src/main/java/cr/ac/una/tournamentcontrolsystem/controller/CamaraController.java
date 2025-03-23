@@ -12,23 +12,24 @@ import javafx.scene.layout.AnchorPane;
 public class CamaraController extends Controller implements Initializable {
 
     @FXML
+    private AnchorPane root;
+    @FXML
     private MFXButton btnCancelar;
     @FXML
     private ImageView imvCamara;
-    @FXML
-    private MFXButton btnEncender;
-    @FXML
-    private MFXButton btnApagar;
     @FXML
     private MFXButton btnCapturar;
     @FXML
     private MFXButton btnGuardar;
     @FXML
-    private AnchorPane root;
+    private MFXButton btnEncenderApagar;
+
+    private boolean cameraOn = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        btnCapturar.setDisable(true);
+        btnGuardar.setDisable(true);
     }
 
     @Override
@@ -41,19 +42,22 @@ public class CamaraController extends Controller implements Initializable {
     }
 
     @FXML
-    private void onActionBtnEncender(ActionEvent event) {
-    }
-
-    @FXML
-    private void onActionBtnApagar(ActionEvent event) {
-    }
-
-    @FXML
     private void onActionBtnCapturar(ActionEvent event) {
     }
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
+    }
+
+    @FXML
+    private void onActionBtnEncenderApagar(ActionEvent event) {
+        cameraOn = !cameraOn;
+        btnEncenderApagar.setText(cameraOn ? "Encender" : "Apagar");
+        if (cameraOn) {
+            // TODO: codigo para apagar la camara
+        } else {
+            // TODO: codigo para encender la camara
+        }
     }
 
 }
