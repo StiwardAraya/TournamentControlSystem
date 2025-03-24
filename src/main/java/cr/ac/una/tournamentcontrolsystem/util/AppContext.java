@@ -1,5 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem.util;
 
+import cr.ac.una.tournamentcontrolsystem.service.GestorArchivo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,9 +14,14 @@ public class AppContext {
 
     private static AppContext INSTANCE = null;
     private static HashMap<String, Object> context = new HashMap<>();
+    private RegistroDeporte registroDeporte;
+    private GestorArchivo gestorArchivo;
+
      
     private AppContext() {
         //cargarPropiedades();
+        registroDeporte = RegistroDeporte.getInstance();
+        gestorArchivo = GestorArchivo.getInstance();
     }
 
     private static void createInstance() {
