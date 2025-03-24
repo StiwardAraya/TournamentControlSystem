@@ -29,11 +29,6 @@
                         <String fx:value="left" />
                      </styleClass>
                   </HBox>
-                  <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="right" HBox.hgrow="SOMETIMES">
-                     <children>
-                        <MFXButton fx:id="btnCancelar" onAction="#onActionBtnCancelar" styleClass="exit-btn" text="X" />
-                     </children>
-                  </HBox>
                </children></HBox>
             <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="center" VBox.vgrow="ALWAYS">
                <children>
