@@ -63,7 +63,8 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnTorneos(ActionEvent event) {
-        //TODO: Abrir ventana de torneos
+        FlowController.getInstance().goMain("TorneosView");
+        ((Stage) root.getScene().getWindow()).close();
     }
 
     @FXML
