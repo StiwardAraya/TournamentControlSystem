@@ -3,6 +3,7 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
+import cr.ac.una.tournamentcontrolsystem.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -14,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class EquiposController extends Controller implements Initializable {
 
@@ -42,6 +45,9 @@ public class EquiposController extends Controller implements Initializable {
     
     RegistroEquipo registroEquipo = RegistroEquipo.getInstance();
     RegistroDeporte registroDeporte = RegistroDeporte.getInstance();
+
+    @FXML
+    private AnchorPane root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -92,7 +98,7 @@ public class EquiposController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnTomarFoto(ActionEvent event) {
-        // TODO: Funcionalidad de camara
+        FlowController.getInstance().goViewInWindowModal("CamaraView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
     }
 
     @FXML
