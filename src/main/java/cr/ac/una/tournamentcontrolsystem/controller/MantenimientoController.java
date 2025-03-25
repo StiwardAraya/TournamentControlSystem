@@ -13,6 +13,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controlador de la ventana de mantenimiento
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class MantenimientoController extends Controller implements Initializable {
 
     @FXML
@@ -52,6 +59,9 @@ public class MantenimientoController extends Controller implements Initializable
         ((Stage) root.getScene().getWindow()).close();
     }
 
+    /**
+     * Inicia la animacion para la rotacion del logo
+     */
     private void startIconRotation() {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(8), imvMantenimientoIcon);
         rotateTransition.setByAngle(360);
