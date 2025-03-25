@@ -105,14 +105,14 @@ public class RegistroDeporte {
             extension = nombreImagen.substring(index); 
         }
 
-        Path nuevaImagenPath = Paths.get("Imágenes Balón", idDeporte + extension);
+        Path nuevaImagenPath = Paths.get("Imagenes Balon", idDeporte + extension);
         System.out.println("Ruta de la nueva imagen: " + nuevaImagenPath.toString());
 
         try {
             Files.copy(imagenSeleccionadaPath, nuevaImagenPath);
-            System.out.println("Imagen guardada exitosamente en la carpeta Imágenes Balón");
+            System.out.println("Imagen guardada exitosamente en la carpeta Imagenes Balon");
         } catch (IOException e) {
-            System.err.println("No se pudo guardar la imagen en la carpeta Imágenes Balón");
+            System.err.println("No se pudo guardar la imagen en la carpeta Imagenes Balon");
         }
     }
     
@@ -164,12 +164,12 @@ public class RegistroDeporte {
 
         if (deporteAEliminar != null) {
             deportes.remove(deporteAEliminar); 
+           // gestorArchivo.eliminarDeporteArchivo(deporteAEliminar.getIdDeporte());
             mensaje.show(Alert.AlertType.INFORMATION, "Deporte Eliminado","El deporte con ID " + idDeporte + " ha sido eliminado.");
         } 
         
         else {
                 mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un deporte con el ID proporcionado.");
             }
-       // gestorArchivo.eliminarDeporteArchivo(deporteAEliminar);
         }
    }

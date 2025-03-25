@@ -165,14 +165,14 @@ public class RegistroEquipo {
             extension = nombreImagen.substring(index); 
         }
 
-        Path nuevaImagenPath = Paths.get("Imágenes Equipos", idEquipo + extension);
+        Path nuevaImagenPath = Paths.get("Imagenes Equipos", idEquipo + extension);
         System.out.println("Ruta de la nueva imagen: " + nuevaImagenPath.toString());
 
         try {
             Files.copy(imagenSeleccionadaPath, nuevaImagenPath);
-            System.out.println("Imagen guardada exitosamente en la carpeta Imágenes Equipos");
+            System.out.println("Imagen guardada exitosamente en la carpeta Imagenes Equipos");
         } catch (IOException e) {
-            System.err.println("No se pudo guardar la imagen en la carpeta Imágenes Balón");
+            System.err.println("No se pudo guardar la imagen en la carpeta Imagenes Equipos");
         }
     }
     
