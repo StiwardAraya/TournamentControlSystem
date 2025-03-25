@@ -38,19 +38,12 @@ public class Deporte {
         this.imagenURL = imagenURL;
     }
     
-   // @Override
-   // public String toString() {
-    //    return "Deporte{" +
-    //            "idDeporte=" + idDeporte +
-    //            ", nombreDeporte='" + nombreDeporte + '\'' +
-    //            ", imagenURL='" + imagenURL + '\'' +
-    //            '}';
-    //}
-    
     @Override
     public String toString() {
-        return nombreDeporte; // Esto es lo que se mostrará en el ComboBox
+            return "Deporte{" +
+            "idDeporte=" + idDeporte +
+            ", nombreDeporte='" + nombreDeporte + '\'' +
+                ", imagenURL='" + imagenURL + '\'' +
+            '}';
     }
-   
-   
 }
