@@ -1,33 +1,41 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+/**
+ * Clase que representa un Equipo.
+ * 
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class Equipo {
     
-    private int idEquipo;
-    private String nombreEquipo;
+    private int id;
+    private String nombre;
     private String fotoURL;
     private boolean enTorneoActivo;
     private int puntosTotales;
-    private String imagenURL;
     private Deporte deporte;
     
-    public Equipo(){}
+    public Equipo(){
+        this(0, "", "", false, 0, new Deporte());
+    }
     
-    public Equipo(int idEquipo, String nombreEquipo, String fotoURL, boolean enTorneoActivo, int puntosTotales, String imagenURL, Deporte deporte) {
-        this.idEquipo = idEquipo;
-        this.nombreEquipo = nombreEquipo;
+    public Equipo(int id, String nombre, String fotoURL, boolean enTorneoActivo, int puntosTotales, Deporte deporte) {
+        this.id = id;
+        this.nombre = nombre;
         this.fotoURL = fotoURL;
         this.enTorneoActivo = enTorneoActivo;
         this.puntosTotales = puntosTotales;
-        this.imagenURL = imagenURL;
         this.deporte = deporte;
     }
 
-    public void setIdEquipo(int idEquipo) {
-        this.idEquipo = idEquipo;
+    // SETTERS
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setNombreEquipo(String nombreEquipo) {
-        this.nombreEquipo = nombreEquipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setFotoURL(String fotoURL) {
@@ -41,21 +49,18 @@ public class Equipo {
     public void setPuntosTotales(int puntosTotales) {
         this.puntosTotales = puntosTotales;
     }
-    
-    public void setImagenURL(String imagenURL) {
-        this.imagenURL = imagenURL;
-    }
 
     public void setDeporte(Deporte deporte) {
         this.deporte = deporte;
     }
 
-    public int getIdEquipo() {
-        return idEquipo;
+    // GETTERS
+    public int getId() {
+        return id;
     }
 
-    public String getNombreEquipo() {
-        return nombreEquipo;
+    public String getNombre() {
+        return nombre;
     }
 
     public String getFotoURL() {
@@ -70,24 +75,13 @@ public class Equipo {
         return puntosTotales;
     }
 
-    public String getImagenURL() {
-        return imagenURL;
-    }
-
     public Deporte getDeporte() {
         return deporte;
     }
 
     @Override
     public String toString() {
-        return "Equipo{" +
-                "idEquipo=" + idEquipo +
-                ", nombreEquipo='" + nombreEquipo + '\'' +
-                ", fotoURL='" + fotoURL + '\'' +
-                ", enTorneoActivo=" + enTorneoActivo +
-                ", puntosTotales=" + puntosTotales +
-                ", deporte=" + deporte +
-                '}';
+        return this.nombre;
     }
     
 }
