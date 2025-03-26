@@ -19,12 +19,34 @@ import java.util.Map;
 public class GestorArchivo {
     
     private File carpetaDeportes = new File("Datos Deportes");
-    private File archivoDeportes = new File(carpetaDeportes, "Deportes");
+    private File archivoDeportes = new File(carpetaDeportes, "DeportesData");
     private File carpetaEquipos = new File("Datos Equipos");
-    private File archivoEquipos = new File(carpetaEquipos, "Equipos");
+    private File archivoEquipos = new File(carpetaEquipos, "EquiposData");
     private static GestorArchivo instance;
+
+    private GestorArchivo() {
+        if (!carpetaDeportes.exists()) {
+            carpetaDeportes.mkdirs();
+        }
+        if (!archivoDeportes.exists()) {
+            try {
+                archivoDeportes.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!carpetaEquipos.exists()) {
+            carpetaEquipos.mkdirs();
+        }
+        if (!archivoEquipos.exists()) {
+            try {
+                archivoEquipos.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     
-    // Método público estático para obtener la instancia
     public static GestorArchivo getInstance() {
         if (instance == null) {
             synchronized (GestorArchivo.class) {
@@ -40,7 +62,7 @@ public class GestorArchivo {
         Map<String, Integer> deportesMap = new HashMap<>();
 
         for (Deporte nuevoDeporte : deportes) {
-            deportesMap.put(nuevoDeporte.getNombreDeporte(), nuevoDeporte.getIdDeporte());
+            deportesMap.put(nuevoDeporte.getNombre(), nuevoDeporte.getId());
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoDeportes))) {
@@ -64,7 +86,7 @@ public class GestorArchivo {
     public void eliminarDeporteArchivo(String nombreDeporte) {
         List<Deporte> deportes = cargarDeportes();
         if (deportes != null) {
-            deportes.removeIf(deporte -> deporte.getNombreDeporte().equalsIgnoreCase(nombreDeporte));
+            deportes.removeIf(deporte -> deporte.getNombre().equalsIgnoreCase(nombreDeporte));
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoDeportes))) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -80,7 +102,7 @@ public class GestorArchivo {
         Map<String, Integer> equiposMap = new HashMap<>();
 
         for (Equipo nuevoEquipo  : equipos) {
-            equiposMap.put(nuevoEquipo.getNombreEquipo(), nuevoEquipo.getIdEquipo());
+            equiposMap.put(nuevoEquipo.getNombre(), nuevoEquipo.getId());
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoEquipos))) {

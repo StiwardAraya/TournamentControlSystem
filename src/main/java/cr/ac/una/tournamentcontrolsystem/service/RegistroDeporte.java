@@ -22,7 +22,7 @@ public class RegistroDeporte {
     Mensaje mensaje = new Mensaje();
     GestorArchivo gestorArchivo = GestorArchivo.getInstance();
 
-    public RegistroDeporte() {
+    private RegistroDeporte() {
         this.deportes = new ArrayList<>(); 
         this.contadorId = 0;
         this.deporte = new Deporte();
@@ -42,6 +42,9 @@ public class RegistroDeporte {
     }
     
     public List<Deporte> getDeportes() {
+        if(deportes.isEmpty()){
+            deportes = gestorArchivo.cargarDeportes();
+        }
         return deportes;
     }
 
@@ -52,7 +55,7 @@ public class RegistroDeporte {
         }
 
         for (Deporte d : deportes) {
-            if (d.getNombreDeporte().equalsIgnoreCase(nombreDeporte)) {
+            if (d.getNombre().equalsIgnoreCase(nombreDeporte)) {
                 mensaje.show(Alert.AlertType.ERROR, "Error", "Deporte ya existente, por favor agregue otro.");
                 return;
             }
@@ -64,11 +67,11 @@ public class RegistroDeporte {
         }
 
         Deporte nuevoDeporte = new Deporte();
-        nuevoDeporte.setNombreDeporte(nombreDeporte);
+        nuevoDeporte.setNombre(nombreDeporte);
         nuevoDeporte.setIdDeporte(++contadorId); 
 
         deportes.add(nuevoDeporte);
-        guardarImagen(nuevoDeporte.getIdDeporte());
+        guardarImagen(nuevoDeporte.getId());
         gestorArchivo.guardarDeporteArchivo(deportes);
         
         mensaje.show(Alert.AlertType.INFORMATION, "Éxito", "Deporte agregado exitosamente. Deporte: " + nuevoDeporte.getNombreDeporte() + ", ID: " + nuevoDeporte.getIdDeporte());
@@ -126,10 +129,10 @@ public class RegistroDeporte {
     }
 
     public Deporte buscarDeporte(int idDeporte) {
-        for (Deporte d : deportes) {
-            if (d.getIdDeporte() == idDeporte) {
-            mensaje.show(Alert.AlertType.INFORMATION, "Deporte Encontrado", "ID: " + d.getIdDeporte() + ", Nombre: " + d.getNombreDeporte());
-                    return d; 
+        for (Deporte deporte : deportes) {
+            if (deporte.getId() == idDeporte) {
+            mensaje.show(Alert.AlertType.INFORMATION, "Deporte Encontrado", "ID: " + deporte.getId() + ", Nombre: " + deporte.getNombre());
+                    return deporte; 
                 }
             }
 
@@ -142,7 +145,7 @@ public class RegistroDeporte {
         Deporte deporte = buscarDeporte(idDeporte);
 
         if (deporte != null) { 
-           deporte.setNombreDeporte(nuevoNombre);
+           deporte.setNombre(nuevoNombre);
 
         mensaje.show(Alert.AlertType.INFORMATION, "Cambios guardados exitosamente","Nuevo nombre del deporte: " + nuevoNombre);
         } 
@@ -156,9 +159,9 @@ public class RegistroDeporte {
         Deporte deporteAEliminar = null;
 
         for (Deporte d : deportes) {
-            if (d.getIdDeporte() == idDeporte) {
-            deporteAEliminar = d; 
-            break;
+                if (d.getId() == idDeporte) {
+                deporteAEliminar = d; 
+                break;
             }
         }
 
@@ -166,10 +169,10 @@ public class RegistroDeporte {
             deportes.remove(deporteAEliminar); 
             mensaje.show(Alert.AlertType.INFORMATION, "Deporte Eliminado","El deporte con ID " + idDeporte + " ha sido eliminado.");
         } 
-        
+            
         else {
-                mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un deporte con el ID proporcionado.");
-            }
-       // gestorArchivo.eliminarDeporteArchivo(deporteAEliminar);
+            mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un deporte con el ID proporcionado.");
         }
-   }
+        // gestorArchivo.eliminarDeporteArchivo(deporteAEliminar);
+    }
+}
