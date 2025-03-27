@@ -1,83 +1,87 @@
 package cr.ac.una.tournamentcontrolsystem.service;
 
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
-import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
+import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.Alert;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class RegistroDeporte {
 
     private List<Deporte> deportes;
-    private int contadorId;
-    private Deporte deporte;
-    private static RegistroDeporte instance;
-    Mensaje mensaje = new Mensaje();
-    GestorArchivo gestorArchivo = GestorArchivo.getInstance();
+    private static RegistroDeporte INSTANCE;
 
     private RegistroDeporte() {
         this.deportes = new ArrayList<>();
-        this.contadorId = 0;
-        this.deporte = new Deporte();
-
     }
 
-    // Método público estático para obtener la instancia
     public static RegistroDeporte getInstance() {
-        if (instance == null) {
+        if (INSTANCE == null) {
             synchronized (RegistroDeporte.class) {
-                if (instance == null) {
-                    instance = new RegistroDeporte();
+                if (INSTANCE == null) {
+                    INSTANCE = new RegistroDeporte();
                 }
             }
         }
-        return instance;
+        return INSTANCE;
     }
 
-    public List<Deporte> getDeportes() {
-        if (deportes.isEmpty()) {
-            deportes = gestorArchivo.cargarDeportes();
+    public Respuesta buscarDeporte(int idDeporte) {
+        for (Deporte deporte : deportes) {
+            if (deporte.getId() == idDeporte) {
+                return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
+            }
         }
-        return deportes;
+        return new Respuesta(false, "El deporte no se encuentra registrado", "Deporte no existente");
     }
 
-    public void agregarDeporte(String nombreDeporte) {
-        if (nombreDeporte == null || nombreDeporte.isEmpty()) {
-            mensaje.show(Alert.AlertType.ERROR, "Error", "Por favor, ingrese un deporte.");
-            return;
-        }
+    public Respuesta getDeportes() {
+        return GestorArchivo.getInstance().cargarDeportes();
+    }
+
+    public Respuesta guardarDeporte(Deporte deporte, File selectedImage) {
 
         for (Deporte d : deportes) {
-            if (d.getNombre().equalsIgnoreCase(nombreDeporte)) {
-                mensaje.show(Alert.AlertType.ERROR, "Error", "Deporte ya existente, por favor agregue otro.");
-                return;
+            if (deporte.getNombre().equals(d.getNombre()) && deporte.getId() != d.getId()) {
+                return new Respuesta(false, "Ya existe un deporte con ese nombre", "Deporte repetido");
             }
         }
 
-        if (!ImagenCargada()) {
-            mensaje.show(Alert.AlertType.WARNING, "Advertencia", "Debe seleccionar la imagen del balón.");
-            return;
+        if (buscarDeporte(deporte.getId()).getEstado()) {
+            int indexDeporteEncontrado = deportes.indexOf(deporte);
+            deportes.set(indexDeporteEncontrado, deporte);
+            if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
+                return new Respuesta(true, "Deporte actualizado con exito!", null);
+            } else {
+                return new Respuesta(false, "No se pudo actualizar el deporte", "Error al guardar la lista de deportes");
+            }
+
         }
 
-        Deporte nuevoDeporte = new Deporte();
-        nuevoDeporte.setNombre(nombreDeporte);
-        nuevoDeporte.setIdDeporte(++contadorId);
-
-        deportes.add(nuevoDeporte);
-        guardarImagen(nuevoDeporte.getId());
-        gestorArchivo.guardarDeporteArchivo(deportes);
-
-        mensaje.show(Alert.AlertType.INFORMATION, "Éxito", "Deporte agregado exitosamente. Deporte: " + nuevoDeporte.getNombre() + ", ID: " + nuevoDeporte.getId());
+        deportes.add(deporte);
+        if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
+            return new Respuesta(true, "Deporte agregado con exito!", null);
+        } else {
+            return new Respuesta(false, "No se pudo agregar el deporte", "Error al guardar la lista de deportes");
+        }
     }
 
-    public void seleccionarImagen() {
+    public Respuesta eliminarDeporte(int idDeporte) {
+        Respuesta respuestaBuscarDeporte = buscarDeporte(idDeporte);
+        if (!respuestaBuscarDeporte.getEstado()) {
+            return respuestaBuscarDeporte;
+        }
+
+        deportes.remove(respuestaBuscarDeporte.getResultado("deporteEncontrado"));
+
+        if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
+            return new Respuesta(true, "Deporte eliminado con exito!", null);
+        } else {
+            return new Respuesta(false, "No se pudo eliminar el deporte", "Error al guardar la lista de deportes");
+        }
+    }
+
+    /*public void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccione una imagen");
         fileChooser.getExtensionFilters().addAll(
@@ -85,19 +89,9 @@ public class RegistroDeporte {
         );
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
+    }*/
 
-        if (selectedFile != null) {
-            if (deporte != null) {
-                deporte.setImagenURL(selectedFile.getAbsolutePath());
-
-                System.out.println("Ruta de la imagen seleccionada: " + selectedFile.getAbsolutePath());
-            } else {
-                System.out.println("No se seleccionó ninguna imagen");
-            }
-        }
-    }
-
-    public void guardarImagen(int idDeporte) {
+ /*public void guardarImagen(int idDeporte) {
         String imagenURL = deporte.getImagenURL();
         Path imagenSeleccionadaPath = Paths.get(imagenURL);
 
@@ -117,59 +111,14 @@ public class RegistroDeporte {
         } catch (IOException e) {
             System.err.println("No se pudo guardar la imagen en la carpeta Imagenes Balon");
         }
-    }
+    }/*
 
-    public boolean ImagenCargada() {
+ /*public boolean ImagenCargada() {
         if (deporte != null) {
             String imagen = deporte.getImagenURL();
             return imagen != null && !imagen.isEmpty();
         }
 
         return false;
-    }
-
-    public Deporte buscarDeporte(int idDeporte) {
-        for (Deporte deporte : deportes) {
-            if (deporte.getId() == idDeporte) {
-                mensaje.show(Alert.AlertType.INFORMATION, "Deporte Encontrado", "ID: " + deporte.getId() + ", Nombre: " + deporte.getNombre());
-                return deporte;
-            }
-        }
-
-        mensaje.show(Alert.AlertType.ERROR, "Error", "El ID ingresado no coincide con ningún deporte.");
-
-        return null;
-    }
-
-    public void editarDeporte(int idDeporte, String nuevoNombre) {
-        Deporte deporte = buscarDeporte(idDeporte);
-
-        if (deporte != null) {
-            deporte.setNombre(nuevoNombre);
-
-            mensaje.show(Alert.AlertType.INFORMATION, "Cambios guardados exitosamente", "Nuevo nombre del deporte: " + nuevoNombre);
-        } else {
-            mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un deporte con el ID proporcionado.");
-        }
-    }
-
-    public void eliminarDeporte(int idDeporte) {
-        Deporte deporteAEliminar = null;
-
-        for (Deporte d : deportes) {
-            if (d.getId() == idDeporte) {
-                deporteAEliminar = d;
-                break;
-            }
-        }
-
-        if (deporteAEliminar != null) {
-            deportes.remove(deporteAEliminar);
-            // gestorArchivo.eliminarDeporteArchivo(deporteAEliminar.getIdDeporte());
-            mensaje.show(Alert.AlertType.INFORMATION, "Deporte Eliminado", "El deporte con ID " + idDeporte + " ha sido eliminado.");
-        } else {
-            mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un deporte con el ID proporcionado.");
-        }
-
-    }
+    }*/
 }
