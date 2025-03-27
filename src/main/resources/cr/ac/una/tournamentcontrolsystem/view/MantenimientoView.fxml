@@ -32,7 +32,11 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="bottom-center" VBox.vgrow="SOMETIMES">
                <children>
-                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" styleClass="standard-button" text="Regresar" />
+                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" text="Regresar">
+                     <styleClass>
+                        <String fx:value="standard-button" />
+                        <String fx:value="flat-button" />
+                     </styleClass></MFXButton>
                </children>
             </VBox>
          </children>
@@ -40,8 +44,8 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
          <styleClass>
-            <String fx:value="small-container" />
             <String fx:value="side-container" />
+            <String fx:value="small-container" />
          </styleClass>
       </VBox>
    </left>
