@@ -114,6 +114,18 @@ public class GestorArchivo {
     }
 
     // METODOS PERSIST
+    /**
+     * Los metodos persist reciben una lista de objetos correspondientes al
+     * modelo de datos y usa un gsonBuilder para transformar esa lista en un
+     * documento formato JavaScript Object Notation y sobreescribe el archivo
+     * .json almacenado.
+     *
+     * Retorna un objeto tipo respuesta con el paquete de datos correspondiente
+     * al resultado de toda la operación
+     *
+     * @param deportes
+     * @return Respuesta
+     */
     public Respuesta persistDeportes(List<Deporte> deportes) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String deportesJSON = gson.toJson(deportes);
@@ -181,15 +193,21 @@ public class GestorArchivo {
     }
 
     // METODOS CARGAR
+    /**
+     * Los métodos cargar inicializan una lista vacia del tipo correspondiente
+     * al tipo de dato que se pretende cargar, usa un objeto Gson, un
+     * BufferedReader y un FileReader para hacer toda la operación, además, usa
+     * un objeto Type para que el objeto gson sepa el tipo de dato que está
+     * leyendo, en estos casos, una Lista del tipo indicado, con todo esto carga
+     * la lista en la lista vacia y la retorna dentro de una Respuesta
+     *
+     * @return Respuesta
+     */
     public Respuesta cargarDeportes() {
         List<Deporte> deportes = new ArrayList<>();
         Gson gson = new Gson();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(archivoDeportes))) {
-            /*
-                Para que el reader del archivo sepa que tipo de objeto esta leyendo,
-                Se crea un objeto tipo Type
-             */
             Type listType = new TypeToken<List<Deporte>>() {
             }.getType();
 
