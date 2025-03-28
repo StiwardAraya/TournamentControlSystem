@@ -23,7 +23,8 @@ public class Deporte {
         this.imagenURL = imagenURL;
     }
 
-    public void setIdDeporte(int id) {
+    // SETTERS
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,6 +36,7 @@ public class Deporte {
         this.imagenURL = imagenURL;
     }
 
+    // GETTERS
     public int getId() {
         return id;
     }
