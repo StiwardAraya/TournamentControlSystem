@@ -3,16 +3,27 @@ package cr.ac.una.tournamentcontrolsystem.service;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RegistroDeporte {
 
     private List<Deporte> deportes;
     private static RegistroDeporte INSTANCE;
+    static final Logger logger = Logger.getLogger(RegistroDeporte.class.getName());
+    int lastId = getLastId();
 
     private RegistroDeporte() {
-        this.deportes = new ArrayList<>();
+        this.deportes = (List<Deporte>) getDeportes().getResultado("deportes");
+        if (lastId == -1) {
+            lastId = 0;
+        }
     }
 
     public static RegistroDeporte getInstance() {
@@ -48,6 +59,7 @@ public class RegistroDeporte {
         }
 
         if (buscarDeporte(deporte.getId()).getEstado()) {
+            deporte.setImagenURL(guardarImagen(deporte, selectedImage).toString());
             int indexDeporteEncontrado = deportes.indexOf(deporte);
             deportes.set(indexDeporteEncontrado, deporte);
             if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
@@ -55,9 +67,10 @@ public class RegistroDeporte {
             } else {
                 return new Respuesta(false, "No se pudo actualizar el deporte", "Error al guardar la lista de deportes");
             }
-
         }
 
+        deporte.setId(lastId + 1);
+        deporte.setImagenURL(guardarImagen(deporte, selectedImage).toString());
         deportes.add(deporte);
         if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
             return new Respuesta(true, "Deporte agregado con exito!", null);
@@ -72,7 +85,8 @@ public class RegistroDeporte {
             return respuestaBuscarDeporte;
         }
 
-        deportes.remove(respuestaBuscarDeporte.getResultado("deporteEncontrado"));
+        eliminarImagen((Deporte) respuestaBuscarDeporte.getResultado("deporteEncontrado"));
+        deportes.remove((Deporte) respuestaBuscarDeporte.getResultado("deporteEncontrado"));
 
         if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
             return new Respuesta(true, "Deporte eliminado con exito!", null);
@@ -81,17 +95,7 @@ public class RegistroDeporte {
         }
     }
 
-    /*public void seleccionarImagen() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccione una imagen");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif")
-        );
-
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-    }*/
-
- /*public void guardarImagen(int idDeporte) {
+    private Path guardarImagen(Deporte deporte, File selectedImage) {
         String imagenURL = deporte.getImagenURL();
         Path imagenSeleccionadaPath = Paths.get(imagenURL);
 
@@ -102,23 +106,39 @@ public class RegistroDeporte {
             extension = nombreImagen.substring(index);
         }
 
-        Path nuevaImagenPath = Paths.get("Imagenes Balon", idDeporte + extension);
-        System.out.println("Ruta de la nueva imagen: " + nuevaImagenPath.toString());
+        Path nuevaImagenPath = Paths.get("Imagenes Balon", deporte.getId() + extension);
 
         try {
             Files.copy(imagenSeleccionadaPath, nuevaImagenPath);
-            System.out.println("Imagen guardada exitosamente en la carpeta Imagenes Balon");
         } catch (IOException e) {
-            System.err.println("No se pudo guardar la imagen en la carpeta Imagenes Balon");
+            logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
         }
-    }/*
+        return nuevaImagenPath;
+    }
 
- /*public boolean ImagenCargada() {
-        if (deporte != null) {
-            String imagen = deporte.getImagenURL();
-            return imagen != null && !imagen.isEmpty();
+    private void eliminarImagen(Deporte deporte) {
+        String imagenURL = deporte.getImagenURL();
+        if (imagenURL == null || imagenURL.isEmpty()) {
+            logger.log(Level.WARNING, "No se puede eliminar la imagen: la URL está vacía o es nula.");
+            return;
         }
 
-        return false;
-    }*/
+        Path imagenPath = Paths.get(imagenURL);
+
+        try {
+            Files.delete(imagenPath);
+            logger.log(Level.INFO, "Imagen eliminada con éxito: " + imagenPath);
+        } catch (NoSuchFileException e) {
+            logger.log(Level.WARNING, "No se encontró el archivo para eliminar: " + imagenPath, e);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error al eliminar la imagen: " + imagenPath, e);
+        }
+    }
+
+    private int getLastId() {
+        if (deportes != null && !deportes.isEmpty()) {
+            return deportes.getLast().getId();
+        }
+        return -1;
+    }
 }

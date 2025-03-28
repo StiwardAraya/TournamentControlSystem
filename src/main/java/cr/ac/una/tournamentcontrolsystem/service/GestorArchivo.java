@@ -134,7 +134,7 @@ public class GestorArchivo {
             Type listType = new TypeToken<List<Deporte>>() {
             }.getType();
 
-            deportes = gson.fromJson(bufferedReader, listType); //carga la lista leyendo el archivo
+            deportes = gson.fromJson(bufferedReader, listType); //carga la lista leyendo el archivo y considerando el tipo
 
             if (deportes == null || deportes.isEmpty()) {
                 return new Respuesta(false, "El archivo de Deportes se encuentra vacío", "No hay deportes registrados");
@@ -190,6 +190,7 @@ public class GestorArchivo {
         }
     }
 
+    // TODO: cargarPartido
     // TODO: cargarRelacionesEquipoTorneo
     // TODO: cargarRelacionesEquipoPartido
 }// Fin Gestor archivos
