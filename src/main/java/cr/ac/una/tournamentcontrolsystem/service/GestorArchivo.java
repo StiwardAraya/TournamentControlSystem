@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import java.io.BufferedReader;
@@ -35,6 +38,9 @@ public class GestorArchivo {
     private File archivoDeportes = new File(carpetaData, "Deportes.json");
     private File archivoEquipos = new File(carpetaData, "Equipos.json");
     private File archivoTorneos = new File(carpetaData, "Torneos.json");
+    private File archivoPartidos = new File(carpetaData, "Partidos.json");
+    private File archivoEquiposTorneos = new File(carpetaData, "EquiposTorneos.json");
+    private File archivoEquiposPartidos = new File(carpetaData, "EquiposPartidos.json");
     static final Logger logger = Logger.getLogger(GestorArchivo.class.getName());
     private static GestorArchivo INSTANCE;
 
@@ -71,7 +77,29 @@ public class GestorArchivo {
             }
         }
 
-        // TODO: condiciones para archivos partido, equipoTorneo, equipoPartido
+        if (!archivoPartidos.exists()) {
+            try {
+                archivoPartidos.createNewFile();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error en GestorArchivo al crear el archivo JSON para Partidos", e);
+            }
+        }
+
+        if (!archivoEquiposPartidos.exists()) {
+            try {
+                archivoEquiposPartidos.createNewFile();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error en GestorArchivo al crear el archivo JSON para EquiposPartidos", e);
+            }
+        }
+
+        if (!archivoEquiposTorneos.exists()) {
+            try {
+                archivoEquiposTorneos.createNewFile();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error en GestorArchivo al crear el archivo JSON para EquiposTorneos", e);
+            }
+        }
     }
 
     public static GestorArchivo getInstance() {
@@ -119,8 +147,39 @@ public class GestorArchivo {
         }
     }
 
-    // TODO: persistEquipoTorneo
-    // TODO: persistEquipoPartido
+    public Respuesta persistPartidos(List<Partido> partidos) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String partidosJSON = gson.toJson(partidos);
+        try (FileWriter writer = new FileWriter(archivoPartidos)) {
+            writer.write(partidosJSON);
+            return new Respuesta(true, "Partidos actualizados correctamente!", null);
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al actualizar la lista de Partidos", e.getMessage());
+        }
+    }
+
+    public Respuesta persistEquiposPartidos(List<EquipoPartido> equiposPartidos) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String equiposPartidosJSON = gson.toJson(equiposPartidos);
+        try (FileWriter writer = new FileWriter(archivoEquiposPartidos)) {
+            writer.write(equiposPartidosJSON);
+            return new Respuesta(true, "EquiposPartidos actualizados correctamente!", null);
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al actualizar la lista de EquiposPartidos", e.getMessage());
+        }
+    }
+
+    public Respuesta persistEquiposTorneos(List<EquipoTorneo> equiposTorneos) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String equiposTorneosJSON = gson.toJson(equiposTorneos);
+        try (FileWriter writer = new FileWriter(archivoEquiposTorneos)) {
+            writer.write(equiposTorneosJSON);
+            return new Respuesta(true, "EquiposTorneos actualizados correctamente!", null);
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al actualizar la lista de EquiposTorneos", e.getMessage());
+        }
+    }
+
     // METODOS CARGAR
     public Respuesta cargarDeportes() {
         List<Deporte> deportes = new ArrayList<>();
@@ -190,7 +249,67 @@ public class GestorArchivo {
         }
     }
 
-    // TODO: cargarPartido
-    // TODO: cargarRelacionesEquipoTorneo
-    // TODO: cargarRelacionesEquipoPartido
+    public Respuesta cargarPartidos() {
+        List<Partido> partidos = new ArrayList<>();
+        Gson gson = new Gson();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(archivoPartidos))) {
+            Type listType = new TypeToken<List<Partido>>() {
+            }.getType();
+
+            partidos = gson.fromJson(bufferedReader, listType);
+            if (partidos == null || partidos.isEmpty()) {
+                return new Respuesta(false, "El archivo de Partidos se encuentra vacío", "No hay partidos registrados");
+            } else {
+                return new Respuesta(true, "Partidos cargados con exito!", null, "partidos", partidos);
+            }
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al leer el archivo de partidos", e.getMessage());
+        } catch (Exception e) {
+            return new Respuesta(false, "Error inesperado al cargar partidos", e.getMessage());
+        }
+    }
+
+    public Respuesta cargarEquiposPartidos() {
+        List<EquipoPartido> equiposPartidos = new ArrayList<>();
+        Gson gson = new Gson();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(archivoEquiposPartidos))) {
+            Type listType = new TypeToken<List<EquipoPartido>>() {
+            }.getType();
+
+            equiposPartidos = gson.fromJson(bufferedReader, listType);
+            if (equiposPartidos == null || equiposPartidos.isEmpty()) {
+                return new Respuesta(false, "El archivo de EquiposPartidos se encuentra vacío", "No hay EquiposPartidos registrados");
+            } else {
+                return new Respuesta(true, "EquiposPartidos cargados con exito!", null, "EquiposPartidos", equiposPartidos);
+            }
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al leer el archivo de EquiposPartidos", e.getMessage());
+        } catch (Exception e) {
+            return new Respuesta(false, "Error inesperado al cargar EquiposPartidos", e.getMessage());
+        }
+    }
+
+    public Respuesta cargarEquiposTorneos() {
+        List<EquipoTorneo> equiposTorneos = new ArrayList<>();
+        Gson gson = new Gson();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(archivoEquiposTorneos))) {
+            Type listType = new TypeToken<List<EquipoTorneo>>() {
+            }.getType();
+
+            equiposTorneos = gson.fromJson(bufferedReader, listType);
+            if (equiposTorneos == null || equiposTorneos.isEmpty()) {
+                return new Respuesta(false, "El archivo de EquiposTorneos se encuentra vacío", "No hay EquiposTorneos registrados");
+            } else {
+                return new Respuesta(true, "EquiposTorneos cargados con exito!", null, "EquiposTorneos", equiposTorneos);
+            }
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al leer el archivo de EquiposTorneos", e.getMessage());
+        } catch (Exception e) {
+            return new Respuesta(false, "Error inesperado al cargar EquiposTorneos", e.getMessage());
+        }
+    }
+
 }// Fin Gestor archivos
