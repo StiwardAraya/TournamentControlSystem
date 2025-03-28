@@ -5,9 +5,6 @@
  */
 package cr.ac.una.tournamentcontrolsystem.controller;
 
-import cr.ac.una.tournamentcontrolsystem.service.GestorArchivo;
-import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
-import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
 import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,7 +15,7 @@ public abstract class Controller {
     private Stage stage;
     private String accion;
     private String nombreVista;
-    
+
     public String getAccion() {
         return accion;
     }
@@ -50,7 +47,4 @@ public abstract class Controller {
     }
 
     public abstract void initialize();
-        RegistroDeporte registrodeporte = RegistroDeporte.getInstance();
-        RegistroEquipo registroEquipo = RegistroEquipo.getInstance();
-        GestorArchivo gestorArchivo = GestorArchivo.getInstance();
-    }
+}
