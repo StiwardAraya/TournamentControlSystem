@@ -54,15 +54,6 @@
                               </ImageView>
                            </graphic>
                         </MFXButton>
-                        <MFXButton fx:id="btnEstadisticas" graphicTextGap="0.0" lineSpacing="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEstadisticas" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Estadísticas" textOverrun="CLIP" HBox.hgrow="ALWAYS">
-                           <graphic>
-                              <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
-                                 <image>
-                                    <Image url="@../resources/img/stats_icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MFXButton>
                         <MFXButton fx:id="btnTorneos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnTorneos" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Torneos" HBox.hgrow="ALWAYS">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
@@ -74,6 +65,15 @@
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
+                        </MFXButton>
+                        <MFXButton fx:id="btnEstadisticas" graphicTextGap="0.0" lineSpacing="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEstadisticas" rippleColor="#3b5b52" styleClass="btn-main-menu" text="Estadísticas" textOverrun="CLIP" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" styleClass="btn-image-large">
+                                 <image>
+                                    <Image url="@../resources/img/stats_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </MFXButton>
                      </children>
                      <padding>

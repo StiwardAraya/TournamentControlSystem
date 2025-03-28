@@ -15,7 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class RegistroEquipo {
-    
+
     private List<Equipo> equipos;
     private int contadorId;
     private Equipo equipo;
@@ -23,18 +23,18 @@ public class RegistroEquipo {
     private static RegistroEquipo instance;
     Mensaje mensaje = new Mensaje();
     GestorArchivo gestorArchivo = GestorArchivo.getInstance();
-    
-     public RegistroEquipo() {
-        this.equipos = new ArrayList<>(); 
+
+    public RegistroEquipo() {
+        this.equipos = new ArrayList<>();
         this.contadorId = 0;
         this.equipo = new Equipo();
         this.deporteSeleccionado = new Deporte();
     }
-    
+
     public List<Equipo> getEquipos() {
         return equipos;
     }
-   
+
     public static RegistroEquipo getInstance() {
         if (instance == null) {
             synchronized (RegistroEquipo.class) {
@@ -51,101 +51,97 @@ public class RegistroEquipo {
             System.out.println(equipo);
         }
     }
-    
+
     public void agregarEquipo(String nombreEquipo, Deporte deporteSeleccionado) {
         if (nombreEquipo == null || nombreEquipo.isEmpty()) {
             mensaje.show(Alert.AlertType.ERROR, "Error", "Debe de ingresar el nombre del equipo ");
-            return; 
+            return;
         }
-        
+
         for (Equipo e : equipos) {
-            if (e.getNombreEquipo().equalsIgnoreCase(nombreEquipo)) {
+            if (e.getNombre().equalsIgnoreCase(nombreEquipo)) {
                 mensaje.show(Alert.AlertType.ERROR, "Error", "Equipo ya existe");
-                return; 
+                return;
             }
         }
-        
+
         if (deporteSeleccionado == null) {
             mensaje.show(Alert.AlertType.ERROR, "Error", "Debe seleccionar un deporte.");
-            return; 
+            return;
         }
-        
+
         if (!hayImagenCargada()) {
             mensaje.show(Alert.AlertType.WARNING, "Advertencia", "Debe seleccionar la imagen del balón.");
             return;
         }
-        
+
         Equipo nuevoEquipo = new Equipo();
-        nuevoEquipo.setNombreEquipo(nombreEquipo);
-        nuevoEquipo.setIdEquipo(++contadorId);
-        nuevoEquipo.setDeporte(deporteSeleccionado); 
+        nuevoEquipo.setNombre(nombreEquipo);
+        nuevoEquipo.setId(++contadorId);
+        nuevoEquipo.setDeporte(deporteSeleccionado);
 
         equipos.add(nuevoEquipo);
-        guardarImagen(nuevoEquipo.getIdEquipo());
+        guardarImagen(nuevoEquipo.getId());
         gestorArchivo.guardarEquipoArchivo(equipos);
 
-        mensaje.show(Alert.AlertType.INFORMATION, "Éxito", "Equipo agregado exitosamente. Equipo: " + nuevoEquipo.getNombreEquipo() + ", ID: " + nuevoEquipo.getIdEquipo());
+        mensaje.show(Alert.AlertType.INFORMATION, "Éxito", "Equipo agregado exitosamente. Equipo: " + nuevoEquipo.getNombre() + ", ID: " + nuevoEquipo.getId());
     }
-    
+
     public Equipo buscarEquipo(int idEquipo) {
         for (Equipo e : equipos) {
-            if (e.getIdEquipo() == idEquipo) {
-            mensaje.show(Alert.AlertType.INFORMATION, "Equipo Encontrado", "ID: " + e.getIdEquipo()+ ", Nombre: " + e.getNombreEquipo());
-                    return e; 
-                }
+            if (e.getId() == idEquipo) {
+                mensaje.show(Alert.AlertType.INFORMATION, "Equipo Encontrado", "ID: " + e.getId() + ", Nombre: " + e.getNombre());
+                return e;
             }
+        }
 
         mensaje.show(Alert.AlertType.ERROR, "Error", "El ID ingresado no coincide con ningún equipo.");
 
-        return null; 
+        return null;
     }
-    
+
     public void eliminarEquipo(int idEquipo) {
         Equipo equipoEliminar = null;
 
         for (Equipo e : equipos) {
-            if (e.getIdEquipo() == idEquipo) {
-            equipoEliminar = e; 
-            break;
+            if (e.getId() == idEquipo) {
+                equipoEliminar = e;
+                break;
             }
         }
 
         if (equipoEliminar != null) {
-            equipos.remove(equipoEliminar); 
-            mensaje.show(Alert.AlertType.INFORMATION, "Equipo Eliminado","El equipo con ID " + idEquipo + " ha sido eliminado.");
-        } 
-        
-        else {
-                mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un equipo con el ID proporcionado.");
-            }
-    }
-    
-    public void editarEquipo(int idEquipo, String nuevoNombreEquipo) {
-        Equipo equipo = buscarEquipo(idEquipo);
-
-        if (equipo != null) { 
-           equipo.setNombreEquipo(nuevoNombreEquipo);
-
-        mensaje.show(Alert.AlertType.INFORMATION, "Cambios guardados exitosamente","Nuevo nombre del equipo: " + nuevoNombreEquipo);
-        } 
-        
-        else {
+            equipos.remove(equipoEliminar);
+            mensaje.show(Alert.AlertType.INFORMATION, "Equipo Eliminado", "El equipo con ID " + idEquipo + " ha sido eliminado.");
+        } else {
             mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un equipo con el ID proporcionado.");
         }
     }
-    
+
+    public void editarEquipo(int idEquipo, String nuevoNombreEquipo) {
+        Equipo equipo = buscarEquipo(idEquipo);
+
+        if (equipo != null) {
+            equipo.setNombre(nuevoNombreEquipo);
+
+            mensaje.show(Alert.AlertType.INFORMATION, "Cambios guardados exitosamente", "Nuevo nombre del equipo: " + nuevoNombreEquipo);
+        } else {
+            mensaje.show(Alert.AlertType.ERROR, "Error", "No se encontró un equipo con el ID proporcionado.");
+        }
+    }
+
     public void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccione una imagen");
         fileChooser.getExtensionFilters().addAll(
-           new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif")
         );
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
             if (equipo != null) {
-                equipo.setImagenURL(selectedFile.getAbsolutePath());
+                equipo.setFotoURL(selectedFile.getAbsolutePath());
 
                 System.out.println("Ruta de la imagen seleccionada: " + selectedFile.getAbsolutePath());
             } else {
@@ -153,16 +149,16 @@ public class RegistroEquipo {
             }
         }
     }
-    
+
     public void guardarImagen(int idEquipo) {
-        String imagenURL = equipo.getImagenURL();
-        Path imagenSeleccionadaPath = Paths.get(imagenURL); 
+        String imagenURL = equipo.getFotoURL();
+        Path imagenSeleccionadaPath = Paths.get(imagenURL);
 
         String extension = "";
         String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
         int index = nombreImagen.lastIndexOf('.');
         if (index > 0) {
-            extension = nombreImagen.substring(index); 
+            extension = nombreImagen.substring(index);
         }
 
         Path nuevaImagenPath = Paths.get("Imagenes Equipos", idEquipo + extension);
@@ -175,13 +171,13 @@ public class RegistroEquipo {
             System.err.println("No se pudo guardar la imagen en la carpeta Imagenes Equipos");
         }
     }
-    
+
     public boolean hayImagenCargada() {
         if (equipo != null) {
-            String imagen = equipo.getImagenURL(); 
+            String imagen = equipo.getFotoURL();
             return imagen != null && !imagen.isEmpty();
-            }
-        
-           return false; 
+        }
+
+        return false;
     }
 }

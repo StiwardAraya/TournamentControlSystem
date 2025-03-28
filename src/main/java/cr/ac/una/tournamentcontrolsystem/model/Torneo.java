@@ -1,57 +1,43 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
 /**
- *
- 
-@author KEVIN*/
+ * Clase que representa un Torneo.
+ * 
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class Torneo {
 
-    private int idTorneo;
+    private int id;
     private int tiempoPorPartido;
-    private String nombreTorneo;
+    private String nombre;
     private boolean finalizado;
     private Deporte deporte;
 
-        public Torneo(int idTorneo, int tiempoPorPartido, String nombreTorneo, boolean finalizado, Deporte deporte) {
-        this.idTorneo = idTorneo;
+    public Torneo() {
+        this(0, 0, "", false, new Deporte());
+    }
+
+    public Torneo(int id, int tiempoPorPartido, String nombre, boolean finalizado, Deporte deporte) {
+        this.id = id;
         this.tiempoPorPartido = tiempoPorPartido;
-        this.nombreTorneo = nombreTorneo;
+        this.nombre = nombre;
         this.finalizado = finalizado;
         this.deporte = deporte;
     }
 
-    public Torneo() {}
-
-    public int getIdTorneo() {
-        return idTorneo;
-    }
-
-    public int getTiempoPorPartido() {
-        return tiempoPorPartido;
-    }
-
-    public String getNombreTorneo() {
-        return nombreTorneo;
-    }
-
-    public boolean getFinalizado() {
-        return finalizado;
-    }
-
-    public Deporte getDeporte() {
-        return deporte;
-    }
-
-    public void setIdTorneo(int idTorneo) {
-        this.idTorneo = idTorneo;
+    // SETTERS
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTiempoPorPartido(int tiempoPorPartido) {
         this.tiempoPorPartido = tiempoPorPartido;
     }
 
-    public void setNombreTorneo(String nombreTorneo) {
-        this.nombreTorneo = nombreTorneo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setFinalizado(boolean finalizado) {
@@ -62,15 +48,30 @@ public class Torneo {
         this.deporte = deporte;
     }
 
+    // GETTERS
+    public int getId() {
+        return id;
+    }
+
+    public int getTiempoPorPartido() {
+        return tiempoPorPartido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public boolean getFinalizado() {
+        return finalizado;
+    }
+
+    public Deporte getDeporte() {
+        return deporte;
+    }
+
     @Override
     public String toString() {
-        return "Torneo{" +
-                "idTorneo=" + idTorneo +
-                ", tiempoPorPartido=" + tiempoPorPartido +
-                ", nombreTorneo='" + nombreTorneo + '/' +
-                ", finalizado=" + finalizado +
-                ", deporte=" + deporte +
-                 '}';
+        return this.nombre;
     }
 
 }
