@@ -2,6 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.NuevoTorneoController">
+<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.NuevoTorneoController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -38,6 +39,9 @@
                   <HBox prefHeight="27.0" prefWidth="540.0" VBox.vgrow="SOMETIMES">
                      <children>
                         <MFXComboBox fx:id="mcbDeporte" floatMode="BORDER" floatingText="Deporte" />
+                        <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <MFXTextField fx:id="txfId" floatingText="Id" layoutX="154.0" layoutY="20.0" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
+                        <MFXButton fx:id="btnBuscar" onAction="#onActionBtnBuscar" styleClass="search-btn" />
                      </children>
                      <styleClass>
                         <String fx:value="left" />
@@ -54,9 +58,9 @@
                                     <String fx:value="small-text" />
                                  </styleClass>
                               </Label>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                              <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="225.0">
+                                    <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="721.0">
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
@@ -74,9 +78,9 @@
                                     <String fx:value="small-text" />
                                  </styleClass>
                               </Label>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                              <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="225.0">
+                                    <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="615.0">
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
