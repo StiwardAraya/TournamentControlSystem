@@ -88,7 +88,10 @@ public class DeportesController extends Controller implements Initializable {
             return;
         }
 
-        // TODO: Cargar el objeto deporte con los datos de la ventana
+        if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
+            deporte.setId(0);
+        }
+        deporte.setNombre(txfNombre.getText());
         Respuesta respuestaGuardarDeporte = RegistroDeporte.getInstance().guardarDeporte(deporte, imagen);
         if (!respuestaGuardarDeporte.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
@@ -163,11 +166,10 @@ public class DeportesController extends Controller implements Initializable {
         imagen = selectedFile;
     }
 
-    //TODO: convertir a la validacion del ImageView
     private boolean imagenCargada() {
         if (deporte != null) {
-            String imagen = deporte.getImagenURL();
-            return imagen != null && !imagen.isEmpty();
+            String imagenURL = imvPhoto.getImage().getUrl();
+            return imagenURL.equals("../resources/img/camara_icon.png");
         }
         return false;
     }
