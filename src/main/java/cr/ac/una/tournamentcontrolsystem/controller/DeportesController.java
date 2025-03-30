@@ -62,7 +62,7 @@ public class DeportesController extends Controller implements Initializable {
             return;
         }
 
-        Respuesta respuestaBuscarDeporte = RegistroDeporte.getInstance().buscarDeporte(Integer.parseInt(txfIdentificador.getText().equals("") ? "0" : txfIdentificador.getText()));
+        Respuesta respuestaBuscarDeporte = RegistroDeporte.getInstance().buscarDeporte(Integer.parseInt(txfIdentificador.getText()));
         if (!respuestaBuscarDeporte.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Deporte", respuestaBuscarDeporte.getMensaje());
         } else {
