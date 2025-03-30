@@ -51,7 +51,7 @@ public class EquiposController extends Controller implements Initializable {
     private MFXButton btnEliminar;
     @FXML
     private MFXButton btnNuevo;
-  
+
     private Equipo equipo;
     private Deporte deporte;
     private File imagen;
@@ -69,10 +69,10 @@ public class EquiposController extends Controller implements Initializable {
     public void initialize() {
         // TODO
     }
-    
+
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-          if (!txfIdentificador.getText().isBlank() || !txfIdentificador.getText().isEmpty()) {
+        if (!txfIdentificador.getText().isBlank() || !txfIdentificador.getText().isEmpty()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un equipo");
             return;
         }
@@ -91,16 +91,15 @@ public class EquiposController extends Controller implements Initializable {
             btnGuardar.setText("Actualizar");
         }
     }
-    
+
     @FXML
     private void onActionBtnVerEquipos(ActionEvent event) {
-         //TODO: Desplegar una tabla con todos los equipos registrados
+        //TODO: Desplegar una tabla con todos los equipos registrados
     }
 
-  
     @FXML
     private void onDragDroppedStackPhoto(DragEvent event) {
-          Dragboard db = event.getDragboard();
+        Dragboard db = event.getDragboard();
         boolean success = false;
 
         if (db.hasImage()) {
@@ -112,7 +111,7 @@ public class EquiposController extends Controller implements Initializable {
         event.setDropCompleted(success);
         event.consume();
     }
-    
+
     @FXML
     private void onDragOverStackPhoto(DragEvent event) {
         if (event.getGestureSource() != imvFoto && event.getDragboard().hasImage()) {
@@ -152,7 +151,7 @@ public class EquiposController extends Controller implements Initializable {
         } else {
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         }
-    }   
+    }
 
     @FXML
     private void onActionBtnEliminar(ActionEvent event) {
@@ -172,10 +171,10 @@ public class EquiposController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnNuevo(ActionEvent event) {
-      reiniciarVentana();
+        reiniciarVentana();
     }
-    
-     private void seleccionarImagen() {
+
+    private void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccione una imagen");
         fileChooser.getExtensionFilters().addAll(
@@ -202,22 +201,18 @@ public class EquiposController extends Controller implements Initializable {
         txfNombre.clear();
         imvFoto.setImage(new Image(new File("../resources/img/camara_icon.png").toURI().toString()));
     }
-    
-     private void loadDeportes() { 
-        List<Deporte> deportes = (List<Deporte>) RegistroDeporte.getInstance().getDeportes(); 
-        System.out.println("Deportes disponibles: " + deportes); 
+
+    private void loadDeportes() {
+        List<Deporte> deportes = (List<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
+        System.out.println("Deportes disponibles: " + deportes);
 
         cmbDeporte.getItems().clear();
 
         if (deportes != null && !deportes.isEmpty()) {
             cmbDeporte.getItems().addAll(deportes);
         } else {
-            System.out.println("No hay deportes disponibles para mostrar."); 
+            System.out.println("No hay deportes disponibles para mostrar.");
         }
     }
 
 }
-
-
-   
-  
