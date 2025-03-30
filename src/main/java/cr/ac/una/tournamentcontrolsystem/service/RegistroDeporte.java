@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,13 @@ public class RegistroDeporte {
     int lastId = getLastId();
 
     private RegistroDeporte() {
-        this.deportes = (List<Deporte>) getDeportes().getResultado("deportes");
+        Respuesta respuestaGetDeportes = getDeportes();
+        if (respuestaGetDeportes.getEstado()) {
+            deportes = (List<Deporte>) respuestaGetDeportes.getResultado("deportes");
+        } else {
+            deportes = new ArrayList<>();
+        }
+
         if (lastId == -1) {
             lastId = 0;
         }
@@ -38,11 +45,9 @@ public class RegistroDeporte {
     }
 
     public Respuesta buscarDeporte(int idDeporte) {
-        if (deportes != null) {
-            for (Deporte deporte : deportes) {
-                if (deporte.getId() == idDeporte) {
-                    return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
-                }
+        for (Deporte deporte : deportes) {
+            if (deporte.getId() == idDeporte) {
+                return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
             }
         }
         return new Respuesta(false, "El deporte no se encuentra registrado", "Deporte no existente");

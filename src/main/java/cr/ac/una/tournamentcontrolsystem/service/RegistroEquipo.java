@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,13 @@ public class RegistroEquipo {
     int lastId = getLastId();
 
     private RegistroEquipo() {
-        this.equipos = (List<Equipo>) getEquipos().getResultado("equipos");
+        Respuesta respuestaGetEquipos = getEquipos();
+        if (respuestaGetEquipos.getEstado()) {
+            equipos = (List<Equipo>) respuestaGetEquipos.getResultado("deportes");
+        } else {
+            equipos = new ArrayList<>();
+        }
+
         if (lastId == -1) {
             lastId = 0;
         }
@@ -38,13 +45,12 @@ public class RegistroEquipo {
     }
 
     public Respuesta buscarEquipo(int idEquipo) {
-        if (equipos != null) {
-            for (Equipo equipo : equipos) {
-                if (equipo.getId() == idEquipo) {
-                    return new Respuesta(true, "Equipo encontrado con exito", "Equipo cargado", "equipoEncontrado", equipo);
-                }
+        for (Equipo equipo : equipos) {
+            if (equipo.getId() == idEquipo) {
+                return new Respuesta(true, "Equipo encontrado con exito", "Equipo cargado", "equipoEncontrado", equipo);
             }
         }
+
         return new Respuesta(false, "El equipo no se encuentra registrado", "Equipo no existente");
     }
 
