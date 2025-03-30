@@ -57,12 +57,12 @@ public class DeportesController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-        if (!txfIdentificador.getText().isBlank() || !txfIdentificador.getText().isEmpty()) {
+        if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un deporte");
             return;
         }
 
-        Respuesta respuestaBuscarDeporte = RegistroDeporte.getInstance().buscarDeporte(Integer.parseInt(txfIdentificador.getText()));
+        Respuesta respuestaBuscarDeporte = RegistroDeporte.getInstance().buscarDeporte(Integer.parseInt(txfIdentificador.getText().equals("") ? "0" : txfIdentificador.getText()));
         if (!respuestaBuscarDeporte.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Deporte", respuestaBuscarDeporte.getMensaje());
         } else {
