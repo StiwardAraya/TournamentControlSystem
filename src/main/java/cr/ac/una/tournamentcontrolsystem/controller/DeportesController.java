@@ -44,6 +44,7 @@ public class DeportesController extends Controller implements Initializable {
 
     private Deporte deporte;
     private File imagen;
+    private Boolean imagenCargada = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +73,7 @@ public class DeportesController extends Controller implements Initializable {
             txfIdentificador.setEditable(false);
             txfNombre.setText(deporte.getNombre());
             imvPhoto.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+            imagenCargada = true;
             btnEliminar.setDisable(false);
             btnGuardar.setText("Actualizar");
         }
@@ -83,20 +85,25 @@ public class DeportesController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar Deporte", "Debe llenar el espacio nombre");
             return;
         }
-        if (!imagenCargada()) {
+        if (!imagenCargada) {
             new Mensaje().show(Alert.AlertType.ERROR, "No hay imagen", "Debe subir una imagen");
             return;
         }
 
+        deporte = new Deporte();
+
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
             deporte.setId(0);
         }
+
         deporte.setNombre(txfNombre.getText());
         Respuesta respuestaGuardarDeporte = RegistroDeporte.getInstance().guardarDeporte(deporte, imagen);
         if (!respuestaGuardarDeporte.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         } else {
-            new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
+            reiniciarVentana();
+            deporte = null;
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         }
     }
 
@@ -110,7 +117,9 @@ public class DeportesController extends Controller implements Initializable {
         Respuesta respuestaEliminarDeporte = RegistroDeporte.getInstance().eliminarDeporte(deporte.getId());
 
         if (respuestaEliminarDeporte.getEstado()) {
-            new Mensaje().show(Alert.AlertType.CONFIRMATION, "Eliminar Deporte", respuestaEliminarDeporte.getMensaje());
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Eliminar Deporte", respuestaEliminarDeporte.getMensaje());
+            reiniciarVentana();
+            deporte = null;
         } else {
             new Mensaje().show(Alert.AlertType.ERROR, "Eliminar Deporte", respuestaEliminarDeporte.getMensaje());
         }
@@ -163,15 +172,8 @@ public class DeportesController extends Controller implements Initializable {
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         imvPhoto.setImage(new Image(selectedFile.toURI().toString()));
+        imagenCargada = true;
         imagen = selectedFile;
-    }
-
-    private boolean imagenCargada() {
-        if (deporte != null) {
-            String imagenURL = imvPhoto.getImage().getUrl();
-            return imagenURL.equals("../resources/img/camara_icon.png");
-        }
-        return false;
     }
 
     private void reiniciarVentana() {
@@ -179,6 +181,7 @@ public class DeportesController extends Controller implements Initializable {
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
         txfNombre.clear();
-        imvPhoto.setImage(new Image(new File("../resources/img/camara_icon.png").toURI().toString()));
+        imvPhoto.setImage(new Image("../resources/img/camara_icon.png"));
+        imagenCargada = false;
     }
 }
