@@ -38,9 +38,11 @@ public class RegistroDeporte {
     }
 
     public Respuesta buscarDeporte(int idDeporte) {
-        for (Deporte deporte : deportes) {
-            if (deporte.getId() == idDeporte) {
-                return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
+        if (deportes != null) {
+            for (Deporte deporte : deportes) {
+                if (deporte.getId() == idDeporte) {
+                    return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
+                }
             }
         }
         return new Respuesta(false, "El deporte no se encuentra registrado", "Deporte no existente");

@@ -38,9 +38,11 @@ public class RegistroEquipo {
     }
 
     public Respuesta buscarEquipo(int idEquipo) {
-        for (Equipo equipo : equipos) {
-            if (equipo.getId() == idEquipo) {
-                return new Respuesta(true, "Equipo encontrado con exito", "Equipo cargado", "equipoEncontrado", equipo);
+        if (equipos != null) {
+            for (Equipo equipo : equipos) {
+                if (equipo.getId() == idEquipo) {
+                    return new Respuesta(true, "Equipo encontrado con exito", "Equipo cargado", "equipoEncontrado", equipo);
+                }
             }
         }
         return new Respuesta(false, "El equipo no se encuentra registrado", "Equipo no existente");
