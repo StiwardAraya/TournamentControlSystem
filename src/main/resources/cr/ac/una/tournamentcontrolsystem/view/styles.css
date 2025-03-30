@@ -171,7 +171,7 @@
   -fx-background-color: -fx-green;
   -fx-font-weight: bold;
   -fx-text-fill: #ffffff;
-  -fx-content-display: CENTER-LEFT;
+  -fx-content-display: LEFT;
   -fx-graphic-text-gap: 5px;
 }
 
