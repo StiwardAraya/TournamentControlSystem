@@ -55,6 +55,7 @@ public class EquiposController extends Controller implements Initializable {
     private Equipo equipo;
     private Deporte deporte;
     private File imagen;
+    private Boolean imagenCargada = false;
 
     @FXML
     private AnchorPane root;
@@ -87,6 +88,7 @@ public class EquiposController extends Controller implements Initializable {
             txfIdentificador.setEditable(false);
             txfNombre.setText(equipo.getNombre());
             imvFoto.setImage(new Image(new File(imagennEquipoURL).toURI().toString()));
+            imagenCargada = true;
             btnEliminar.setDisable(false);
             btnGuardar.setText("Actualizar");
         }
@@ -136,7 +138,7 @@ public class EquiposController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar Equipo", "Debe llenar el espacio nombre");
             return;
         }
-        if (!imagenCargada()) {
+        if (!imagenCargada) {
             new Mensaje().show(Alert.AlertType.ERROR, "No hay imagen", "Debe subir una imagen");
             return;
         }
@@ -183,15 +185,8 @@ public class EquiposController extends Controller implements Initializable {
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         imvFoto.setImage(new Image(selectedFile.toURI().toString()));
+        imagenCargada = true;
         imagen = selectedFile;
-    }
-
-    private boolean imagenCargada() {
-        if (equipo != null) {
-            String imagenURL = imvFoto.getImage().getUrl();
-            return imagenURL.equals("../resources/img/camara_icon.png");
-        }
-        return false;
     }
 
     private void reiniciarVentana() {
@@ -200,6 +195,7 @@ public class EquiposController extends Controller implements Initializable {
         btnGuardar.setText("Guardar");
         txfNombre.clear();
         imvFoto.setImage(new Image(new File("../resources/img/camara_icon.png").toURI().toString()));
+        imagenCargada = false;
     }
 
     private void loadDeportes() {
