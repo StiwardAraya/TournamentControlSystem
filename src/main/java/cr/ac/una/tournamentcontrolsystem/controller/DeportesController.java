@@ -181,7 +181,7 @@ public class DeportesController extends Controller implements Initializable {
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
         txfNombre.clear();
-        imvPhoto.setImage(new Image("../resources/img/camara_icon.png"));
+        //imvPhoto.setImage(new Image("../resources/img/camara_icon.png"));
         imagenCargada = false;
     }
 }
