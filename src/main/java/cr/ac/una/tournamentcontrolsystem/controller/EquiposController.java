@@ -143,6 +143,8 @@ public class EquiposController extends Controller implements Initializable {
             return;
         }
 
+        equipo = new Equipo();
+
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
             equipo.setId(0);
         }
@@ -151,6 +153,8 @@ public class EquiposController extends Controller implements Initializable {
         if (!respuestaGuardarEquipo.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         } else {
+            reiniciarVentana();
+            deporte = null;
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         }
     }
