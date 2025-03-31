@@ -73,7 +73,7 @@ public class EquiposController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-        if (!txfIdentificador.getText().isBlank() || !txfIdentificador.getText().isEmpty()) {
+        if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un equipo");
             return;
         }
@@ -149,6 +149,7 @@ public class EquiposController extends Controller implements Initializable {
             equipo.setId(0);
         }
         equipo.setNombre(txfNombre.getText());
+        equipo.setDeporte(cmbDeporte.getSelectedItem());
         Respuesta respuestaGuardarEquipo = RegistroEquipo.getInstance().guardarEquipo(equipo, imagen);
         if (!respuestaGuardarEquipo.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
