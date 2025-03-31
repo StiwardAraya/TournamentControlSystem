@@ -32,3 +32,9 @@ Thumbs.db
 # Archivos de configuración local
 *.properties
 *.env
+
+# Archivos de almacenamiento de datos
+*.json
+*.png
+*.jpeg
+*.jpg
