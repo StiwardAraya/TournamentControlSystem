@@ -45,6 +45,7 @@ public class RegistroDeporte {
     }
 
     public Respuesta buscarDeporte(int idDeporte) {
+
         for (Deporte deporte : deportes) {
             if (deporte.getId() == idDeporte) {
                 return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
@@ -77,6 +78,7 @@ public class RegistroDeporte {
         }
 
         deporte.setId(lastId + 1);
+        lastId++;
         deporte.setImagenURL(guardarImagen(deporte, selectedImage).toString());
         deportes.add(deporte);
         if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
