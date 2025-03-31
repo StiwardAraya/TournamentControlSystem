@@ -23,7 +23,7 @@ public class RegistroEquipo {
     private RegistroEquipo() {
         Respuesta respuestaGetEquipos = getEquipos();
         if (respuestaGetEquipos.getEstado()) {
-            equipos = (List<Equipo>) respuestaGetEquipos.getResultado("deportes");
+            equipos = (List<Equipo>) respuestaGetEquipos.getResultado("equipos");
         } else {
             equipos = new ArrayList<>();
         }
