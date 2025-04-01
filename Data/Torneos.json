@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "tiempoPorPartido": 0,
+    "nombre": "EquipoA",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "Imagenes Balon\\1"
+    }
+  },
+  {
+    "id": 1,
+    "tiempoPorPartido": 0,
+    "nombre": "EquipoB",
+    "finalizado": false,
+    "deporte": {
+      "id": 2,
+      "nombre": "Basket",
+      "imagenURL": "Imagenes Balon\\2"
+    }
+  },
+  {
+    "id": 1,
+    "tiempoPorPartido": 0,
+    "nombre": "TorneoC",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "Imagenes Balon\\1"
+    }
+  },
+  {
+    "id": 1,
+    "tiempoPorPartido": 0,
+    "nombre": "EquipoD",
+    "finalizado": false,
+    "deporte": {
+      "id": 2,
+      "nombre": "Basket",
+      "imagenURL": "Imagenes Balon\\2"
+    }
+  }
+]

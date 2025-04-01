@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -105,25 +106,26 @@ public class RegistroDeporte {
     }
 
     private Path guardarImagen(Deporte deporte, File selectedImage) {
-        String imagenURL = deporte.getImagenURL();
-        Path imagenSeleccionadaPath = Paths.get(imagenURL);
+    String imagenURL = deporte.getImagenURL();
+    Path imagenSeleccionadaPath = Paths.get(imagenURL);
 
-        String extension = "";
-        String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
-        int index = nombreImagen.lastIndexOf('.');
-        if (index > 0) {
-            extension = nombreImagen.substring(index);
-        }
-
-        Path nuevaImagenPath = Paths.get("Imagenes Balon", deporte.getId() + extension);
-
-        try {
-            Files.copy(imagenSeleccionadaPath, nuevaImagenPath);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
-        }
-        return nuevaImagenPath;
+    String extension = "";
+    String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
+    int index = nombreImagen.lastIndexOf('.');
+    if (index > 0) {
+        extension = nombreImagen.substring(index);
     }
+
+    String nuevoNombreImagen = deporte.getId() + extension;
+    Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
+
+    try {
+        Files.copy(imagenSeleccionadaPath, nuevaImagenPath, StandardCopyOption.REPLACE_EXISTING);
+    } catch (IOException e) {
+        logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
+    }
+    return nuevaImagenPath;
+}
 
     private void eliminarImagen(Deporte deporte) {
         String imagenURL = deporte.getImagenURL();

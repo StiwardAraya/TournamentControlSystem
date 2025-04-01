@@ -1,13 +1,73 @@
 [
   {
     "id": 1,
-    "nombre": "Furvo",
+    "nombre": "EquipoA",
     "fotoURL": "Imagenes Equipo\\1",
     "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
-      "nombre": "Furvol",
+      "nombre": "Futbol",
+      "imagenURL": "Imagenes Balon\\1"
+    }
+  },
+  {
+    "id": 1,
+    "nombre": "EquipoB",
+    "fotoURL": "Imagenes Equipo\\1",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Basket",
+      "imagenURL": "Imagenes Balon\\2"
+    }
+  },
+  {
+    "id": 1,
+    "nombre": "EquipoC",
+    "fotoURL": "Imagenes Equipo\\1",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "Imagenes Balon\\1"
+    }
+  },
+  {
+    "id": 1,
+    "nombre": "EquipoX",
+    "fotoURL": "Imagenes Equipo\\1",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "Imagenes Balon\\1"
+    }
+  },
+  {
+    "id": 1,
+    "nombre": "EquipoD",
+    "fotoURL": "Imagenes Equipo\\1",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Basket",
+      "imagenURL": "Imagenes Balon\\2"
+    }
+  },
+  {
+    "id": 2,
+    "nombre": "EquipoF",
+    "fotoURL": "Imagenes Equipo\\2",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
       "imagenURL": "Imagenes Balon\\1"
     }
   }

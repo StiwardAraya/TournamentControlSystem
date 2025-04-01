@@ -28,9 +28,7 @@ public class RegistroEquipo {
             equipos = new ArrayList<>();
         }
 
-        if (lastId == -1) {
-            lastId = 0;
-        }
+        lastId = getLastId();
     }
 
     public static RegistroEquipo getInstance() {
@@ -55,7 +53,11 @@ public class RegistroEquipo {
     }
 
     public Respuesta getEquipos() {
-        return GestorArchivo.getInstance().cargarEquipos();
+    Respuesta respuesta = GestorArchivo.getInstance().cargarEquipos();
+        if (!respuesta.getEstado()) {
+            logger.log(Level.SEVERE, "Error al cargar equipos: " + respuesta.getMensaje());
+        }
+        return respuesta;
     }
 
     public Respuesta guardarEquipo(Equipo equipo, File selectedImage) {
@@ -78,6 +80,7 @@ public class RegistroEquipo {
         }
 
         equipo.setId(lastId + 1);
+        lastId++;
         equipo.setFotoURL(guardarImagen(equipo, selectedImage).toString());
         equipos.add(equipo);
         if (GestorArchivo.getInstance().persistEquipos(equipos).getEstado()) {
@@ -149,4 +152,6 @@ public class RegistroEquipo {
         }
         return -1;
     }
+    
+    
 }
