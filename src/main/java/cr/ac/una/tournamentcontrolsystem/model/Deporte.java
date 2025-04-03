@@ -59,6 +59,6 @@ public class Deporte {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Deporte deporte = (Deporte) obj;
-        return id == deporte.id; // Asegúrate de que estás comparando el campo correcto
+        return id == deporte.id; 
     }
 }
