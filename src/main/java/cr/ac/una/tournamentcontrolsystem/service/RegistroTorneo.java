@@ -1,7 +1,9 @@
 package cr.ac.una.tournamentcontrolsystem.service;
 
+import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -14,11 +16,9 @@ public class RegistroTorneo {
 
     private RegistroTorneo() {
         torneos = (List<Torneo>) GestorArchivo.getInstance().cargarTorneos().getResultado("torneos");
-        if (lastId == -1) {
-            lastId = 0;
-        }
+        lastId = getLastId();
     }
-
+    
     public static RegistroTorneo getInstance() {
         if (INSTANCE == null) {
             synchronized (RegistroTorneo.class) {
@@ -43,13 +43,19 @@ public class RegistroTorneo {
         return GestorArchivo.getInstance().cargarTorneos();
     }
 
-    public Respuesta guardarTorneo(Torneo torneo) {
+    public Respuesta guardarTorneo(Torneo torneo, Deporte deporteSeleccionado) {
+        
+        if (torneos == null) {
+            torneos = new ArrayList<>();
+        }   
 
         for (Torneo torn : torneos) {
             if (torneo.getNombre().equals(torn.getNombre()) && torneo.getId() != torn.getId()) {
                 return new Respuesta(false, "Ya existe un torneo con ese nombre", "Torneo repetido");
             }
         }
+        
+        torneo.setDeporte(deporteSeleccionado);
 
         if (buscarTorneo(torneo.getId()).getEstado()) {
             int indexTorneoEncontrado = torneos.indexOf(torneo);
@@ -62,6 +68,7 @@ public class RegistroTorneo {
         }
 
         torneo.setId(lastId + 1);
+        lastId++;
         torneos.add(torneo);
         if (GestorArchivo.getInstance().persistTorneos(torneos).getEstado()) {
             return new Respuesta(true, "Torneo agregado con exito!", null);

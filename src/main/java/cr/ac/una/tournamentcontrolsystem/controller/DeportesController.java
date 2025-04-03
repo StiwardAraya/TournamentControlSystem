@@ -49,6 +49,7 @@ public class DeportesController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnEliminar.setDisable(true);
+        this.deporte = new Deporte();
     }
 
     @Override
@@ -171,9 +172,21 @@ public class DeportesController extends Controller implements Initializable {
         );
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-        imvPhoto.setImage(new Image(selectedFile.toURI().toString()));
-        imagenCargada = true;
-        imagen = selectedFile;
+
+        if (selectedFile != null) {
+            imvPhoto.setImage(new Image(selectedFile.toURI().toString()));
+            imagenCargada = true;
+            imagen = selectedFile;
+
+            if (deporte != null) {
+                deporte.setImagenURL(selectedFile.getAbsolutePath());
+            } else {
+                
+                new Mensaje().show(Alert.AlertType.ERROR, "Error", "Debes buscar un deporte antes de seleccionar una imagen.");
+            }
+        } else {
+            new Mensaje().show(Alert.AlertType.WARNING, "Advertencia", "No se seleccionó ninguna imagen.");
+        }
     }
 
     private void reiniciarVentana() {
