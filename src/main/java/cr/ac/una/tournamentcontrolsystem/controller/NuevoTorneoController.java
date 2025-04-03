@@ -17,11 +17,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.control.Alert;
 
 public class NuevoTorneoController extends Controller implements Initializable {
 
@@ -41,21 +41,21 @@ public class NuevoTorneoController extends Controller implements Initializable {
     private MFXTextField txfId;
     @FXML
     private MFXButton btnBuscar;
-    
+
     private Equipo equipo;
     private Deporte deporte;
-    private Torneo torneo;  
+    private Torneo torneo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.torneo = new Torneo();
         cargarDeportes();
         mcbDeporte.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        cargarEquipos(); 
-    });
-        
-    dragAndDrop(lvEquipos, lvTorneo);
-    dragAndDrop(lvTorneo, lvEquipos);
+            cargarEquipos();
+        });
+
+        dragAndDrop(lvEquipos, lvTorneo);
+        dragAndDrop(lvTorneo, lvEquipos);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
         torneo = new Torneo();
 
-        int cantidadEquipos = lvTorneo.getItems().size(); 
+        int cantidadEquipos = lvTorneo.getItems().size();
 
         if (cantidadEquipos <= 1 || !esPotenciaDeDos(cantidadEquipos)) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar Torneo", "La cantidad de equipos debe ser una potencia de 2 y mayor que 1.");
@@ -105,42 +105,42 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-      if (txfId.getText().isBlank() || txfId.getText().isEmpty()) {
-          new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un Torneo");
-          return;
-      }
+        if (txfId.getText().isBlank() || txfId.getText().isEmpty()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un Torneo");
+            return;
+        }
 
-      Respuesta respuestaBuscarTorneo = RegistroTorneo.getInstance().buscarTorneo(Integer.parseInt(txfId.getText()));
-      if (!respuestaBuscarTorneo.getEstado()) {
-          new Mensaje().show(Alert.AlertType.ERROR, "Deporte", respuestaBuscarTorneo.getMensaje());
-      } else {
-          torneo = (Torneo) respuestaBuscarTorneo.getResultado("torneoEncontrado");
-          txfId.setText(String.valueOf(torneo.getId()));
-          txfId.setEditable(false); 
-          txfNombre.setText(torneo.getNombre());
-          btnGuardar.setText("Actualizar");
-      }   
+        Respuesta respuestaBuscarTorneo = RegistroTorneo.getInstance().buscarTorneo(Integer.parseInt(txfId.getText()));
+        if (!respuestaBuscarTorneo.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Deporte", respuestaBuscarTorneo.getMensaje());
+        } else {
+            torneo = (Torneo) respuestaBuscarTorneo.getResultado("torneoEncontrado");
+            txfId.setText(String.valueOf(torneo.getId()));
+            txfId.setEditable(false);
+            txfNombre.setText(torneo.getNombre());
+            btnGuardar.setText("Actualizar");
+        }
     }
-    
+
     private void reiniciarVentana() {
         txfId.clear();
         txfId.setEditable(true);
         btnGuardar.setText("Guardar");
         txfNombre.clear();
-        lvEquipos.getItems().clear(); 
-        lvTorneo.getItems().clear(); 
-        mcbDeporte.getSelectionModel().clearSelection(); 
+        lvEquipos.getItems().clear();
+        lvTorneo.getItems().clear();
+        mcbDeporte.getSelectionModel().clearSelection();
     }
 
     private void cargarEquipos() {
-        Respuesta respuestaEquipos = RegistroEquipo.getInstance().getEquipos(); 
-        lvEquipos.getItems().clear(); 
+        Respuesta respuestaEquipos = RegistroEquipo.getInstance().getEquipos();
+        lvEquipos.getItems().clear();
 
-        Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem(); 
+        Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem();
         System.out.println("Deporte seleccionado: " + deporteSeleccionado);
 
-        if (respuestaEquipos.getEstado()) { 
-            List<Equipo> equipos = (List<Equipo>) respuestaEquipos.getResultado("equipos"); 
+        if (respuestaEquipos.getEstado()) {
+            List<Equipo> equipos = (List<Equipo>) respuestaEquipos.getResultado("equipos");
 
             if (equipos != null && !equipos.isEmpty()) {
                 for (Equipo equipo : equipos) {
@@ -151,24 +151,24 @@ public class NuevoTorneoController extends Controller implements Initializable {
             } else {
                 new Mensaje().show(Alert.AlertType.WARNING, "Cargar Equipos", "No se encontraron equipos disponibles.");
             }
-        } 
+        }
     }
-    
-    private void cargarDeportes() { 
+
+    private void cargarDeportes() {
         try {
-            Respuesta respuesta = RegistroDeporte.getInstance().getDeportes(); 
+            Respuesta respuesta = RegistroDeporte.getInstance().getDeportes();
 
-            if (respuesta.getEstado()) { 
-                List<Deporte> deportes = (List<Deporte>) respuesta.getResultado("deportes"); 
+            if (respuesta.getEstado()) {
+                List<Deporte> deportes = (List<Deporte>) respuesta.getResultado("deportes");
 
-                mcbDeporte.getItems().clear(); 
+                mcbDeporte.getItems().clear();
 
                 if (deportes != null && !deportes.isEmpty()) {
-                    mcbDeporte.getItems().addAll(deportes); 
-                } 
-            } 
+                    mcbDeporte.getItems().addAll(deportes);
+                }
+            }
         } catch (Exception e) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Error al cargar deportes", e.getMessage()); 
+            new Mensaje().show(Alert.AlertType.ERROR, "Error al cargar deportes", e.getMessage());
         }
     }
 
@@ -209,7 +209,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
             event.consume();
         });
     }
-    
+
     private boolean esPotenciaDeDos(int numero) {
         return (numero > 0) && ((numero & (numero - 1)) == 0);
     }

@@ -86,14 +86,13 @@ public class DeportesController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar Deporte", "Debe llenar el espacio nombre");
             return;
         }
+
         if (!imagenCargada) {
             new Mensaje().show(Alert.AlertType.ERROR, "No hay imagen", "Debe subir una imagen");
             return;
         }
 
-        deporte = new Deporte();
-
-        if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
+        if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
             deporte.setId(0);
         }
 
@@ -181,7 +180,7 @@ public class DeportesController extends Controller implements Initializable {
             if (deporte != null) {
                 deporte.setImagenURL(selectedFile.getAbsolutePath());
             } else {
-                
+
                 new Mensaje().show(Alert.AlertType.ERROR, "Error", "Debes buscar un deporte antes de seleccionar una imagen.");
             }
         } else {
@@ -194,7 +193,7 @@ public class DeportesController extends Controller implements Initializable {
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
         txfNombre.clear();
-        //imvPhoto.setImage(new Image("../resources/img/camara_icon.png"));
+        imvPhoto.setImage(null);
         imagenCargada = false;
     }
 }

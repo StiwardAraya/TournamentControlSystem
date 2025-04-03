@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class TorneosController extends Controller implements Initializable {
-    
+
     @FXML
     private BorderPane root;
     @FXML
@@ -27,35 +27,36 @@ public class TorneosController extends Controller implements Initializable {
     private MFXButton btnPartido;
     @FXML
     private MFXButton btnRegresar;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         shakeLogo(imvTorneos);
     }
-    
+
     @Override
     public void initialize() {
     }
-    
+
     @FXML
     private void onActionBtnNuevo(ActionEvent event) {
         FlowController.getInstance().goView("NuevoTorneoView");
     }
-    
+
     @FXML
     private void onActionBtnPosiciones(ActionEvent event) {
+        FlowController.getInstance().goView("LlavesTorneosView");
     }
-    
+
     @FXML
     private void onActionBtnPartido(ActionEvent event) {
     }
-    
+
     @FXML
     private void onActionBtnRegresar(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("MainView");
         ((Stage) root.getScene().getWindow()).close();
     }
-    
+
     private void shakeLogo(ImageView logo) {
         //System.out.println("cr.ac.una.tournamentcontrolsystem.controller.TorneosController.shakeLogo()");
         TranslateTransition shake = new TranslateTransition(Duration.millis(100), logo);
@@ -65,5 +66,5 @@ public class TorneosController extends Controller implements Initializable {
         shake.setAutoReverse(true);
         shake.play();
     }
-    
+
 }
