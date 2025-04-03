@@ -106,21 +106,40 @@ public class RegistroDeporte {
     }
 
     private Path guardarImagen(Deporte deporte, File selectedImage) {
-    String imagenURL = deporte.getImagenURL();
-    Path imagenSeleccionadaPath = Paths.get(imagenURL);
+        String imagenURL = deporte.getImagenURL();
+        Path imagenSeleccionadaPath = Paths.get(imagenURL);
+        System.out.println("Ruta de la imagen a guardar: " + imagenSeleccionadaPath.toString());
 
-    String extension = "";
-    String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
-    int index = nombreImagen.lastIndexOf('.');
-    if (index > 0) {
-        extension = nombreImagen.substring(index);
-    }
+        if (!Files.exists(imagenSeleccionadaPath)) {
+            logger.log(Level.SEVERE, "La imagen seleccionada no existe: " + imagenSeleccionadaPath);
+            return null; 
+        }
 
-    String nuevoNombreImagen = deporte.getId() + extension;
-    Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
+        String extension = "";
+        String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
+        int index = nombreImagen.lastIndexOf('.');
+        if (index > 0) {
+            extension = nombreImagen.substring(index);
+        }
+
+        String nuevoNombreImagen = deporte.getId() + extension;
+        Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
+
+        Path directorioDestino = Paths.get("Imagenes Balon");
+        if (!Files.exists(directorioDestino)) {
+            try {
+                Files.createDirectories(directorioDestino);
+                System.out.println("Directorio creado: " + directorioDestino);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error al crear el directorio de destino", e);
+                return null; 
+            }
+        }
 
     try {
+      
         Files.copy(imagenSeleccionadaPath, nuevaImagenPath, StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("Imagen guardada exitosamente en: " + nuevaImagenPath.toString());
     } catch (IOException e) {
         logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
     }
