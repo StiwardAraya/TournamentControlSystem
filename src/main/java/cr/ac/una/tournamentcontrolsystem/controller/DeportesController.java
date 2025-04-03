@@ -8,6 +8,8 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -177,16 +179,9 @@ public class DeportesController extends Controller implements Initializable {
             imvPhoto.setImage(new Image(selectedFile.toURI().toString()));
             imagenCargada = true;
             imagen = selectedFile;
-
-            if (deporte != null) {
-                deporte.setImagenURL(selectedFile.getAbsolutePath());
-            } else {
-                
-                new Mensaje().show(Alert.AlertType.ERROR, "Error", "Debes buscar un deporte antes de seleccionar una imagen.");
+          
+            deporte.setImagenURL(selectedFile.getAbsolutePath());
             }
-        } else {
-            new Mensaje().show(Alert.AlertType.WARNING, "Advertencia", "No se seleccionó ninguna imagen.");
-        }
     }
 
     private void reiniciarVentana() {
