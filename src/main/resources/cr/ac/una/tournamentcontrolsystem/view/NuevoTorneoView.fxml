@@ -14,99 +14,102 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.NuevoTorneoController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.NuevoTorneoController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
    <children>
-      <VBox layoutX="282.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="top-center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="main-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="27.0" prefWidth="560.0" VBox.vgrow="SOMETIMES">
-               <styleClass>
-                  <String fx:value="left" />
-                  <String fx:value="small-container" />
-               </styleClass>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="top-center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label styleClass="title" text="Nuevo Torneo" />
-               </children>
-            </HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-               <styleClass>
-                  <String fx:value="main-container" />
-                  <String fx:value="small-container" />
-               </styleClass>
-               <children>
-                  <HBox prefHeight="27.0" prefWidth="540.0" VBox.vgrow="SOMETIMES">
-                     <children>
-                        <MFXComboBox fx:id="mcbDeporte" floatMode="BORDER" floatingText="Deporte" />
-                        <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <MFXTextField fx:id="txfId" floatingText="Id" layoutX="154.0" layoutY="20.0" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
-                        <MFXButton fx:id="btnBuscar" onAction="#onActionBtnBuscar" styleClass="search-btn" />
-                     </children>
+                  <HBox VBox.vgrow="NEVER">
                      <styleClass>
                         <String fx:value="left" />
                         <String fx:value="small-container" />
                      </styleClass>
-                  </HBox>
-                  <HBox prefHeight="209.0" prefWidth="560.0" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" styleClass="small-container" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Equipos">
-                                 <styleClass>
-                                    <String fx:value="title" />
-                                    <String fx:value="small-text" />
-                                 </styleClass>
-                              </Label>
-                              <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                 <content>
-                                    <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="721.0">
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </ListView>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox prefHeight="200.0" prefWidth="100.0" styleClass="small-container" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Torneo">
-                                 <styleClass>
-                                    <String fx:value="title" />
-                                    <String fx:value="small-text" />
-                                 </styleClass>
-                              </Label>
-                              <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                 <content>
-                                    <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="615.0">
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </ListView>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </VBox>
+                        <Label styleClass="title" text="Nuevo Torneo" />
                      </children>
+                  </HBox>
+                  <VBox VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox VBox.vgrow="NEVER">
+                           <children>
+                              <MFXComboBox fx:id="mcbDeporte" floatMode="BORDER" floatingText="Deporte" />
+                              <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                              <MFXTextField fx:id="txfId" floatingText="Id" layoutX="154.0" layoutY="20.0" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
+                              <MFXButton fx:id="btnBuscar" onAction="#onActionBtnBuscar" styleClass="search-btn" />
+                           </children>
+                           <styleClass>
+                              <String fx:value="left" />
+                              <String fx:value="small-container" />
+                           </styleClass>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" spacing="5.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="small-container" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Equipos">
+                                       <styleClass>
+                                          <String fx:value="title" />
+                                          <String fx:value="small-text" />
+                                       </styleClass>
+                                    </Label>
+                                    <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="721.0">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </ListView>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="small-container" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Torneo">
+                                       <styleClass>
+                                          <String fx:value="title" />
+                                          <String fx:value="small-text" />
+                                       </styleClass>
+                                    </Label>
+                                    <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="615.0">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </ListView>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <styleClass>
+                        <String fx:value="main-container" />
+                        <String fx:value="small-container" />
+                     </styleClass>
+                  </VBox>
+                  <HBox spacing="15.0" styleClass="center" VBox.vgrow="NEVER">
+                     <children>
+                        <MFXButton fx:id="btnGuardar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnGuardar" styleClass="standard-button" text="Guardar" HBox.hgrow="ALWAYS" />
+                        <MFXButton fx:id="btnNuevo" maxWidth="1.7976931348623157E308" onAction="#onActionBtnNuevo" styleClass="standard-button" text="Nuevo" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="75.0" right="75.0" top="5.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>
-            <HBox prefHeight="49.0" prefWidth="560.0" spacing="15.0" styleClass="center" VBox.vgrow="SOMETIMES">
-               <children>
-                  <MFXButton fx:id="btnGuardar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnGuardar" styleClass="standard-button" text="Guardar" HBox.hgrow="ALWAYS" />
-                  <MFXButton fx:id="btnNuevo" maxWidth="1.7976931348623157E308" onAction="#onActionBtnNuevo" styleClass="standard-button" text="Nuevo" HBox.hgrow="ALWAYS" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="75.0" right="75.0" top="5.0" />
-               </padding>
-            </HBox>
          </children>
-      </VBox>
+      </AnchorPane>
    </children>
-   <styleClass>
-      <String fx:value="main-container" />
-      <String fx:value="small-container" />
-   </styleClass>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </AnchorPane>
