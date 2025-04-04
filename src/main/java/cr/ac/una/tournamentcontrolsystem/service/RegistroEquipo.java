@@ -2,6 +2,8 @@ package cr.ac.una.tournamentcontrolsystem.service;
 
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 
 public class RegistroEquipo {
 
@@ -29,6 +33,10 @@ public class RegistroEquipo {
         }
 
         lastId = getLastId();
+
+        if (lastId == -1) {
+            lastId = 0;
+        }
     }
 
     public static RegistroEquipo getInstance() {
@@ -53,14 +61,10 @@ public class RegistroEquipo {
     }
 
     public Respuesta getEquipos() {
-    Respuesta respuesta = GestorArchivo.getInstance().cargarEquipos();
-        if (!respuesta.getEstado()) {
-            logger.log(Level.SEVERE, "Error al cargar equipos: " + respuesta.getMensaje());
-        }
-        return respuesta;
+        return GestorArchivo.getInstance().cargarEquipos();
     }
 
-    public Respuesta guardarEquipo(Equipo equipo, File selectedImage) {
+    public Respuesta guardarEquipo(Equipo equipo, Image selectedImage) {
 
         for (Equipo d : equipos) {
             if (equipo.getNombre().equals(d.getNombre()) && equipo.getId() != d.getId()) {
@@ -69,7 +73,7 @@ public class RegistroEquipo {
         }
 
         if (buscarEquipo(equipo.getId()).getEstado()) {
-            equipo.setFotoURL(guardarImagen(equipo, selectedImage).toString());
+            equipo.setFotoURL(guardarImagen(equipo.getId(), selectedImage).toString());
             int indexEquipoEncontrado = equipos.indexOf(equipo);
             equipos.set(indexEquipoEncontrado, equipo);
             if (GestorArchivo.getInstance().persistEquipos(equipos).getEstado()) {
@@ -81,7 +85,7 @@ public class RegistroEquipo {
 
         equipo.setId(lastId + 1);
         lastId++;
-        equipo.setFotoURL(guardarImagen(equipo, selectedImage).toString());
+        equipo.setFotoURL(guardarImagen(equipo.getId(), selectedImage).toString());
         equipos.add(equipo);
         if (GestorArchivo.getInstance().persistEquipos(equipos).getEstado()) {
             return new Respuesta(true, "Equipo agregado con exito!", null);
@@ -106,25 +110,26 @@ public class RegistroEquipo {
         }
     }
 
-    private Path guardarImagen(Equipo equipo, File selectedImage) {
-        String fotoURL = equipo.getFotoURL();
-        Path imagenSeleccionadaPath = Paths.get(fotoURL);
+    private Path guardarImagen(int equipoId, Image selectedImage) {
+        String carpeta = "FotosEquipos";
 
-        String extension = "";
-        String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
-        int index = nombreImagen.lastIndexOf('.');
-        if (index > 0) {
-            extension = nombreImagen.substring(index);
+        File ruta = new File(carpeta);
+        if (!ruta.exists()) {
+            ruta.mkdirs();
         }
 
-        Path nuevaImagenPath = Paths.get("Imagenes Equipo", equipo.getId() + extension);
+        String extension = ".png";
+        String nombreArchivo = equipoId + extension;
+        File archivoImagen = new File(ruta, nombreArchivo);
 
         try {
-            Files.copy(imagenSeleccionadaPath, nuevaImagenPath);
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(selectedImage, null);
+            ImageIO.write(bufferedImage, "png", archivoImagen);
+            return archivoImagen.toPath();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error [RegistroEquipo.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
+            logger.log(Level.SEVERE, "Error al guardar la foto");
+            return null;
         }
-        return nuevaImagenPath;
     }
 
     private void eliminarImagen(Equipo equipo) {
@@ -152,6 +157,5 @@ public class RegistroEquipo {
         }
         return -1;
     }
-    
-    
+
 }
