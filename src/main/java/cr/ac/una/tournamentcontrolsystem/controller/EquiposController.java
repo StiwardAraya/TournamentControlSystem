@@ -24,6 +24,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -54,21 +55,27 @@ public class EquiposController extends Controller implements Initializable {
 
     private Equipo equipo;
     private Deporte deporte;
-    private File imagen;
+    private Image imagen;
     private Boolean imagenCargada = false;
 
     @FXML
     private AnchorPane root;
+    @FXML
+    private VBox containerFoto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnEliminar.setDisable(true);
-        loadDeportes();
+        equipo = new Equipo();
+        deporte = new Deporte();
+        imvFoto.fitWidthProperty().bind(containerFoto.widthProperty().subtract(10));
+        imvFoto.fitHeightProperty().bind(containerFoto.heightProperty().subtract(10));
+        imvFoto.preserveRatioProperty().setValue(false);
     }
 
     @Override
     public void initialize() {
-        // TODO
+        loadDeportes();
     }
 
     @FXML
@@ -83,11 +90,13 @@ public class EquiposController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Equipo", respuestaBuscarEquipo.getMensaje());
         } else {
             equipo = (Equipo) respuestaBuscarEquipo.getResultado("equipoEncontrado");
-            String imagennEquipoURL = equipo.getFotoURL();
+            String imagenEquipoURL = equipo.getFotoURL();
             txfIdentificador.setText(String.valueOf(equipo.getId()));
             txfIdentificador.setEditable(false);
             txfNombre.setText(equipo.getNombre());
-            imvFoto.setImage(new Image(new File(imagennEquipoURL).toURI().toString()));
+            cmbDeporte.selectItem(equipo.getDeporte());
+            imvFoto.setImage(new Image(new File(imagenEquipoURL).toURI().toString()));
+            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             btnEliminar.setDisable(false);
             btnGuardar.setText("Actualizar");
@@ -102,21 +111,37 @@ public class EquiposController extends Controller implements Initializable {
     @FXML
     private void onDragDroppedStackPhoto(DragEvent event) {
         Dragboard db = event.getDragboard();
-        boolean success = false;
+        boolean estado = false;
 
         if (db.hasImage()) {
             Image image = db.getImage();
             imvFoto.setImage(image);
-            success = true;
+            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = image;
+            estado = true;
+        } else if (db.hasFiles()) {
+            for (File file : db.getFiles()) {
+                if (isImage(file)) {
+                    Image image = new Image(file.toURI().toString());
+                    imvFoto.setImage(image);
+                    containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+                    imagenCargada = true;
+                    imagen = image;
+                    estado = true;
+                    break;
+                }
+            }
         }
 
-        event.setDropCompleted(success);
+        event.setDropCompleted(estado);
         event.consume();
     }
 
     @FXML
     private void onDragOverStackPhoto(DragEvent event) {
-        if (event.getGestureSource() != imvFoto && event.getDragboard().hasImage()) {
+        Dragboard db = event.getDragboard();
+        if (db.hasImage() || (db.hasFiles() && db.getFiles().stream().anyMatch(this::isImage))) {
             event.acceptTransferModes(TransferMode.COPY);
         }
         event.consume();
@@ -143,11 +168,15 @@ public class EquiposController extends Controller implements Initializable {
             return;
         }
 
-        equipo = new Equipo();
+        if (cmbDeporte.getSelectedItem() == null) {
+            new Mensaje().show(Alert.AlertType.ERROR, "No se ha seleccionado deporte", "Debe seleccionar un deporte");
+            return;
+        }
 
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
             equipo.setId(0);
         }
+
         equipo.setNombre(txfNombre.getText());
         equipo.setDeporte(cmbDeporte.getSelectedItem());
         Respuesta respuestaGuardarEquipo = RegistroEquipo.getInstance().guardarEquipo(equipo, imagen);
@@ -156,6 +185,7 @@ public class EquiposController extends Controller implements Initializable {
         } else {
             reiniciarVentana();
             deporte = null;
+            equipo = null;
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         }
     }
@@ -171,6 +201,9 @@ public class EquiposController extends Controller implements Initializable {
 
         if (respuestaEliminarEquipo.getEstado()) {
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Eliminar Equipo", respuestaEliminarEquipo.getMensaje());
+            reiniciarVentana();
+            equipo = null;
+            deporte = null;
         } else {
             new Mensaje().show(Alert.AlertType.ERROR, "Eliminar Equipo", respuestaEliminarEquipo.getMensaje());
         }
@@ -183,37 +216,48 @@ public class EquiposController extends Controller implements Initializable {
 
     private void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccione una imagen");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-        imvFoto.setImage(new Image(selectedFile.toURI().toString()));
-        imagenCargada = true;
-        imagen = selectedFile;
+        File file = fileChooser.showOpenDialog(imvFoto.getScene().getWindow());
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            imvFoto.setImage(image);
+            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = image;
+        }
     }
 
     private void reiniciarVentana() {
         txfIdentificador.clear();
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
+        btnEliminar.setDisable(true);
         txfNombre.clear();
-        imvFoto.setImage(new Image(new File("../resources/img/camara_icon.png").toURI().toString()));
+        imvFoto.setImage(null);
         imagenCargada = false;
+        containerFoto.setStyle("");
+        cmbDeporte.clear();
+        deporte = new Deporte();
+        equipo = new Equipo();
     }
 
     private void loadDeportes() {
         List<Deporte> deportes = (List<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
-        System.out.println("Deportes disponibles: " + deportes);
-
         cmbDeporte.getItems().clear();
 
         if (deportes != null && !deportes.isEmpty()) {
             cmbDeporte.getItems().addAll(deportes);
         } else {
-            System.out.println("No hay deportes disponibles para mostrar.");
+            new Mensaje().show(Alert.AlertType.WARNING, "Deportes", "No hay deportes registrados");
         }
+    }
+
+    private boolean isImage(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
     }
 
 }

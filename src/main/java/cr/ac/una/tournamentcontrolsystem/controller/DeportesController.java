@@ -205,6 +205,7 @@ public class DeportesController extends Controller implements Initializable {
         txfIdentificador.clear();
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
+        btnEliminar.setDisable(true);
         txfNombre.clear();
         imvPhoto.setImage(null);
         containerPhoto.setStyle("");
