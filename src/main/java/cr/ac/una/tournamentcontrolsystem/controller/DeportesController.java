@@ -8,8 +8,6 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,8 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class DeportesController extends Controller implements Initializable {
 
@@ -43,15 +41,20 @@ public class DeportesController extends Controller implements Initializable {
     private MFXButton btnEliminar;
     @FXML
     private MFXButton btnNuevo;
+    @FXML
+    private VBox containerPhoto;
 
     private Deporte deporte;
-    private File imagen;
+    private Image imagen;
     private Boolean imagenCargada = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnEliminar.setDisable(true);
         this.deporte = new Deporte();
+        imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
+        imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
+        imvPhoto.preserveRatioProperty().setValue(false);
     }
 
     @Override
@@ -104,7 +107,7 @@ public class DeportesController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         } else {
             reiniciarVentana();
-            deporte = null;
+            deporte = new Deporte();
             new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         }
     }
@@ -145,21 +148,37 @@ public class DeportesController extends Controller implements Initializable {
     @FXML
     private void onDragDroppedStackPhoto(DragEvent event) {
         Dragboard db = event.getDragboard();
-        boolean success = false;
+        boolean estado = false;
 
         if (db.hasImage()) {
             Image image = db.getImage();
             imvPhoto.setImage(image);
-            success = true;
+            containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = image;
+            estado = true;
+        } else if (db.hasFiles()) {
+            for (File file : db.getFiles()) {
+                if (isImage(file)) {
+                    Image image = new Image(file.toURI().toString());
+                    imvPhoto.setImage(image);
+                    containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+                    imagenCargada = true;
+                    imagen = image;
+                    estado = true;
+                    break;
+                }
+            }
         }
 
-        event.setDropCompleted(success);
+        event.setDropCompleted(estado);
         event.consume();
     }
 
     @FXML
     private void onDragOverStackPhoto(DragEvent event) {
-        if (event.getGestureSource() != imvPhoto && event.getDragboard().hasImage()) {
+        Dragboard db = event.getDragboard();
+        if (db.hasImage() || (db.hasFiles() && db.getFiles().stream().anyMatch(this::isImage))) {
             event.acceptTransferModes(TransferMode.COPY);
         }
         event.consume();
@@ -167,26 +186,17 @@ public class DeportesController extends Controller implements Initializable {
 
     private void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccione una imagen");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-
-        if (selectedFile != null) {
-            imvPhoto.setImage(new Image(selectedFile.toURI().toString()));
+        File file = fileChooser.showOpenDialog(imvPhoto.getScene().getWindow());
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            imvPhoto.setImage(image);
+            containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
-            imagen = selectedFile;
-
-            if (deporte != null) {
-                deporte.setImagenURL(selectedFile.getAbsolutePath());
-            } else {
-
-                new Mensaje().show(Alert.AlertType.ERROR, "Error", "Debes buscar un deporte antes de seleccionar una imagen.");
-            }
-        } else {
-            new Mensaje().show(Alert.AlertType.WARNING, "Advertencia", "No se seleccionó ninguna imagen.");
+            imagen = image;
         }
     }
 
@@ -196,6 +206,12 @@ public class DeportesController extends Controller implements Initializable {
         btnGuardar.setText("Guardar");
         txfNombre.clear();
         imvPhoto.setImage(null);
+        containerPhoto.setStyle("");
         imagenCargada = false;
+    }
+
+    private boolean isImage(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
     }
 }
