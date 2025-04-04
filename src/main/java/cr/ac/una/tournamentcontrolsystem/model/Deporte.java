@@ -53,12 +53,16 @@ public class Deporte {
     public String toString() {
         return nombre;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Deporte deporte = (Deporte) obj;
-        return id == deporte.id; 
+        return id == deporte.id;
     }
 }
