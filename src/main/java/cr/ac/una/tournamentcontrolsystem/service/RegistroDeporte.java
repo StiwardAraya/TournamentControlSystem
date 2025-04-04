@@ -2,17 +2,20 @@ package cr.ac.una.tournamentcontrolsystem.service;
 
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 
 public class RegistroDeporte {
 
@@ -70,7 +73,7 @@ public class RegistroDeporte {
         }
 
         if (buscarDeporte(deporte.getId()).getEstado()) {
-            deporte.setImagenURL(guardarImagen(deporte, selectedImage).toString());
+            deporte.setImagenURL(guardarImagen(deporte.getId(), selectedImage).toString());
             int indexDeporteEncontrado = deportes.indexOf(deporte);
             deportes.set(indexDeporteEncontrado, deporte);
             if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
@@ -82,7 +85,7 @@ public class RegistroDeporte {
 
         deporte.setId(lastId + 1);
         lastId++;
-        deporte.setImagenURL(guardarImagen(deporte, selectedImage).toString());
+        deporte.setImagenURL(guardarImagen(deporte.getId(), selectedImage).toString());
         deportes.add(deporte);
         if (GestorArchivo.getInstance().persistDeportes(deportes).getEstado()) {
             return new Respuesta(true, "Deporte agregado con exito!", null);
@@ -107,27 +110,27 @@ public class RegistroDeporte {
         }
     }
 
-    // FIXME: cambiar el metodo para usar la imagen que entra por parámetro
-    private Path guardarImagen(Deporte deporte, Image selectedImage) {
-        String imagenURL = deporte.getImagenURL();
-        Path imagenSeleccionadaPath = Paths.get(imagenURL);
+    private Path guardarImagen(int deporteId, Image selectedImage) {
+        String carpeta = "ImagenesBalon";
 
-        String extension = "";
-        String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
-        int index = nombreImagen.lastIndexOf('.');
-        if (index > 0) {
-            extension = nombreImagen.substring(index);
+        File ruta = new File(carpeta);
+        if (!ruta.exists()) {
+            ruta.mkdirs();
         }
 
-        String nuevoNombreImagen = deporte.getId() + extension;
-        Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
+        String extension = ".png";
+        String nombreArchivo = deporteId + extension;
+        File archivoImagen = new File(ruta, nombreArchivo);
 
         try {
-            Files.copy(imagenSeleccionadaPath, nuevaImagenPath, StandardCopyOption.REPLACE_EXISTING);
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(selectedImage, null);
+            ImageIO.write(bufferedImage, "png", archivoImagen);
+            return archivoImagen.toPath();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
+            logger.log(Level.SEVERE, "Error al guardar la imagen");
+            return null;
         }
-        return nuevaImagenPath;
+
     }
 
     private void eliminarImagen(Deporte deporte) {
