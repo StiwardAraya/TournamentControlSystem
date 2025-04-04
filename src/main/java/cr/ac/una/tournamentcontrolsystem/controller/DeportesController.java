@@ -208,6 +208,7 @@ public class DeportesController extends Controller implements Initializable {
         imvPhoto.setImage(null);
         containerPhoto.setStyle("");
         imagenCargada = false;
+        deporte = new Deporte();
     }
 
     private boolean isImage(File file) {
