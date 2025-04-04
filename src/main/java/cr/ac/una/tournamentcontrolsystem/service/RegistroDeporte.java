@@ -2,7 +2,6 @@ package cr.ac.una.tournamentcontrolsystem.service;
 
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -13,13 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 public class RegistroDeporte {
 
     private List<Deporte> deportes;
     private static RegistroDeporte INSTANCE;
     static final Logger logger = Logger.getLogger(RegistroDeporte.class.getName());
-    int lastId = getLastId();
+    int lastId;
 
     private RegistroDeporte() {
         Respuesta respuestaGetDeportes = getDeportes();
@@ -28,6 +28,8 @@ public class RegistroDeporte {
         } else {
             deportes = new ArrayList<>();
         }
+
+        lastId = getLastId();
 
         if (lastId == -1) {
             lastId = 0;
@@ -46,7 +48,6 @@ public class RegistroDeporte {
     }
 
     public Respuesta buscarDeporte(int idDeporte) {
-
         for (Deporte deporte : deportes) {
             if (deporte.getId() == idDeporte) {
                 return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
@@ -59,7 +60,8 @@ public class RegistroDeporte {
         return GestorArchivo.getInstance().cargarDeportes();
     }
 
-    public Respuesta guardarDeporte(Deporte deporte, File selectedImage) {
+    // FIXME: encontrar por que se están actualizando los deportes en lugar de guardarse nuevos
+    public Respuesta guardarDeporte(Deporte deporte, Image selectedImage) {
 
         for (Deporte d : deportes) {
             if (deporte.getNombre().equals(d.getNombre()) && deporte.getId() != d.getId()) {
@@ -105,27 +107,28 @@ public class RegistroDeporte {
         }
     }
 
-    private Path guardarImagen(Deporte deporte, File selectedImage) {
+    // FIXME: cambiar el metodo para usar la imagen que entra por parámetro
+    private Path guardarImagen(Deporte deporte, Image selectedImage) {
         String imagenURL = deporte.getImagenURL();
         Path imagenSeleccionadaPath = Paths.get(imagenURL);
 
-    String extension = "";
-    String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
-    int index = nombreImagen.lastIndexOf('.');
-    if (index > 0) {
-        extension = nombreImagen.substring(index);
-    }
+        String extension = "";
+        String nombreImagen = imagenSeleccionadaPath.getFileName().toString();
+        int index = nombreImagen.lastIndexOf('.');
+        if (index > 0) {
+            extension = nombreImagen.substring(index);
+        }
 
-    String nuevoNombreImagen = deporte.getId() + extension;
-    Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
+        String nuevoNombreImagen = deporte.getId() + extension;
+        Path nuevaImagenPath = Paths.get("Imagenes Balon", nuevoNombreImagen);
 
-    try {
-        Files.copy(imagenSeleccionadaPath, nuevaImagenPath, StandardCopyOption.REPLACE_EXISTING);
-    } catch (IOException e) {
-        logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
+        try {
+            Files.copy(imagenSeleccionadaPath, nuevaImagenPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error [RegistroDeporte.guardarImagen] no se pudo copiar la imagen al directorio nuevo", e);
+        }
+        return nuevaImagenPath;
     }
-    return nuevaImagenPath;
-}
 
     private void eliminarImagen(Deporte deporte) {
         String imagenURL = deporte.getImagenURL();

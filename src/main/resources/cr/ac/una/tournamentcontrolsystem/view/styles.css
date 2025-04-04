@@ -1,5 +1,5 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
   -mfx-main: #6a9c89;
@@ -110,19 +110,14 @@
   -fx-preserve-ratio: false;
   -fx-fit-width: 75px;
   -fx-fit-height: 75px;
-  -fx-opacity: .1;
 }
 
 .photo-container {
   -fx-background-color: -fx-beige;
   -fx-background-image: url("../resources/img/camara_icon.png");
   -fx-background-position: center;
-  -fx-background-size: stretch;
   -fx-opacity: .2;
-  -fx-background-radius: 5px;
-  -fx-pref-width: 120px;
-  -fx-max-width: 120px;
-  -fx-padding: 1px;
+  -fx-background-size: stretch;
   -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
 }
 
