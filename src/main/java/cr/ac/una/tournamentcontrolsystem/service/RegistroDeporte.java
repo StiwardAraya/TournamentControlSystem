@@ -53,6 +53,7 @@ public class RegistroDeporte {
                 return new Respuesta(true, "Deporte encontrado con exito", "Deporte cargado", "deporteEncontrado", deporte);
             }
         }
+
         return new Respuesta(false, "El deporte no se encuentra registrado", "Deporte no existente");
     }
 
@@ -60,7 +61,6 @@ public class RegistroDeporte {
         return GestorArchivo.getInstance().cargarDeportes();
     }
 
-    // FIXME: encontrar por que se están actualizando los deportes en lugar de guardarse nuevos
     public Respuesta guardarDeporte(Deporte deporte, Image selectedImage) {
 
         for (Deporte d : deportes) {
