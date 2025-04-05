@@ -76,7 +76,7 @@
                                           <String fx:value="small-text" />
                                        </styleClass>
                                     </Label>
-                                    <VBox fx:id="containerFoto" alignment="CENTER" maxHeight="250.0" maxWidth="250.0" onDragDropped="#onDragDroppedStackPhoto" onDragOver="#onDragOverStackPhoto" prefHeight="100.0" prefWidth="100.0" styleClass="photo-container">
+                                    <VBox fx:id="containerFoto" alignment="CENTER" maxHeight="400.0" maxWidth="400.0" onDragDropped="#onDragDroppedStackPhoto" onDragOver="#onDragOverStackPhoto" prefHeight="100.0" prefWidth="100.0" styleClass="photo-container" VBox.vgrow="ALWAYS">
                                        <children>
                                           <ImageView fx:id="imvFoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="photo-view" />
                                        </children>
@@ -90,6 +90,7 @@
                                  </children>
                               </VBox>
                               <MFXComboBox fx:id="cmbDeporte" floatMode="BORDER" floatingText="Deporte" maxWidth="1.7976931348623157E308" scrollOnOpen="true" HBox.hgrow="SOMETIMES" />
+                              <ImageView fx:id="imvBalonDeporte" pickOnBounds="true" />
                            </children>
                         </HBox>
                         <HBox layoutX="20.0" layoutY="183.0" VBox.vgrow="NEVER">

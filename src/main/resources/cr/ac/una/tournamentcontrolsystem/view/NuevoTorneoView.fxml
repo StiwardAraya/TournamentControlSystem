@@ -10,6 +10,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -37,6 +38,7 @@
                         <HBox VBox.vgrow="NEVER">
                            <children>
                               <MFXComboBox fx:id="mcbDeporte" floatMode="BORDER" floatingText="Deporte" />
+                              <ImageView fx:id="imvImagenBalon" pickOnBounds="true" />
                               <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                               <MFXTextField fx:id="txfId" floatingText="Id" layoutX="154.0" layoutY="20.0" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
                               <MFXButton fx:id="btnBuscar" onAction="#onActionBtnBuscar" styleClass="search-btn" />

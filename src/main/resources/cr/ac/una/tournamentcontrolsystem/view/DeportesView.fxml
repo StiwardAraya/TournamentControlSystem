@@ -75,7 +75,7 @@
                                           <String fx:value="small-text" />
                                        </styleClass>
                                     </Label>
-                                    <VBox fx:id="containerPhoto" alignment="CENTER" maxHeight="250.0" maxWidth="250.0" onDragDropped="#onDragDroppedStackPhoto" onDragOver="#onDragOverStackPhoto" prefHeight="100.0" prefWidth="100.0" styleClass="photo-container">
+                                    <VBox fx:id="containerPhoto" alignment="CENTER" maxHeight="400.0" maxWidth="400.0" onDragDropped="#onDragDroppedStackPhoto" onDragOver="#onDragOverStackPhoto" prefHeight="100.0" prefWidth="100.0" styleClass="photo-container" VBox.vgrow="ALWAYS">
                                        <children>
                                           <ImageView fx:id="imvPhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" styleClass="photo-view" />
                                        </children>
