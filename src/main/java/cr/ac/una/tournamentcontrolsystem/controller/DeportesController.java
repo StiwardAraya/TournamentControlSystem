@@ -2,6 +2,7 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
+import cr.ac.una.tournamentcontrolsystem.util.FlowController;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -52,9 +53,6 @@ public class DeportesController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnEliminar.setDisable(true);
         this.deporte = new Deporte();
-        imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
-        imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
-        imvPhoto.preserveRatioProperty().setValue(false);
     }
 
     @Override
@@ -79,6 +77,8 @@ public class DeportesController extends Controller implements Initializable {
             txfIdentificador.setEditable(false);
             txfNombre.setText(deporte.getNombre());
             imvPhoto.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
+            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             btnEliminar.setDisable(false);
@@ -138,7 +138,7 @@ public class DeportesController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnVerDeportes(ActionEvent event) {
-        //TODO: Desplegar una tabla con todos los deportes registrados
+        FlowController.getInstance().goViewInWindow("DeportesMuestraView");
     }
 
     @FXML
@@ -154,6 +154,8 @@ public class DeportesController extends Controller implements Initializable {
         if (db.hasImage()) {
             Image image = db.getImage();
             imvPhoto.setImage(image);
+            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
+            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             imagen = image;
@@ -163,6 +165,8 @@ public class DeportesController extends Controller implements Initializable {
                 if (isImage(file)) {
                     Image image = new Image(file.toURI().toString());
                     imvPhoto.setImage(image);
+                    imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
+                    imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
                     containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
                     imagenCargada = true;
                     imagen = image;
@@ -195,6 +199,8 @@ public class DeportesController extends Controller implements Initializable {
         if (file != null) {
             Image image = new Image(file.toURI().toString());
             imvPhoto.setImage(image);
+            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
+            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             imagen = image;
@@ -208,6 +214,8 @@ public class DeportesController extends Controller implements Initializable {
         btnEliminar.setDisable(true);
         txfNombre.clear();
         imvPhoto.setImage(null);
+        imvPhoto.fitWidthProperty().unbind();
+        imvPhoto.fitHeightProperty().unbind();
         containerPhoto.setStyle("");
         imagenCargada = false;
         deporte = new Deporte();

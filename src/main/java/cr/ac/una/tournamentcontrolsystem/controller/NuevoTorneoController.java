@@ -11,6 +11,7 @@ import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -45,13 +48,25 @@ public class NuevoTorneoController extends Controller implements Initializable {
     private Equipo equipo;
     private Deporte deporte;
     private Torneo torneo;
+    @FXML
+    private ImageView imvImagenBalon;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.torneo = new Torneo();
-        cargarDeportes();
+        torneo = new Torneo();
+
         mcbDeporte.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             cargarEquipos();
+        });
+
+        mcbDeporte.valueProperty().addListener((observable, oldValue, newValue) -> {
+            imvImagenBalon.fitWidthProperty().set(40);
+            imvImagenBalon.fitHeightProperty().set(40);
+            Deporte deporteCombo = mcbDeporte.getSelectedItem();
+            if (deporteCombo != null) {
+                String imagenBalonURL = deporteCombo.getImagenURL();
+                imvImagenBalon.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+            }
         });
 
         dragAndDrop(lvEquipos, lvTorneo);
@@ -60,7 +75,8 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        // TODO
+        reiniciarVentana();
+        cargarDeportes();
     }
 
     @FXML
@@ -70,17 +86,12 @@ public class NuevoTorneoController extends Controller implements Initializable {
             return;
         }
 
-        Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem();
-        if (deporteSeleccionado == null) {
+        if (mcbDeporte.getSelectionModel().getSelectedItem() == null) {
             new Mensaje().show(Alert.AlertType.ERROR, "Seleccionar Deporte", "Debe seleccionar un deporte");
             return;
         }
 
-        torneo = new Torneo();
-
-        int cantidadEquipos = lvTorneo.getItems().size();
-
-        if (cantidadEquipos <= 1 || !esPotenciaDeDos(cantidadEquipos)) {
+        if (lvTorneo.getItems().size() <= 1 || !esPotenciaDeDos(lvTorneo.getItems().size())) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar Torneo", "La cantidad de equipos debe ser una potencia de 2 y mayor que 1.");
             return;
         }
@@ -90,7 +101,8 @@ public class NuevoTorneoController extends Controller implements Initializable {
         }
 
         torneo.setNombre(txfNombre.getText());
-        Respuesta respuestaGuardarTorneo = RegistroTorneo.getInstance().guardarTorneo(torneo, deporteSeleccionado);
+        Respuesta respuestaGuardarTorneo = RegistroTorneo.getInstance().guardarTorneo(torneo, mcbDeporte.getSelectionModel().getSelectedItem());
+
         if (!respuestaGuardarTorneo.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
         } else {
@@ -130,6 +142,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
         lvEquipos.getItems().clear();
         lvTorneo.getItems().clear();
         mcbDeporte.getSelectionModel().clearSelection();
+        imvImagenBalon.setImage(null);
+        imvImagenBalon.fitWidthProperty().set(0);
+        imvImagenBalon.fitHeightProperty().set(0);
     }
 
     private void cargarEquipos() {
@@ -137,7 +152,6 @@ public class NuevoTorneoController extends Controller implements Initializable {
         lvEquipos.getItems().clear();
 
         Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem();
-        System.out.println("Deporte seleccionado: " + deporteSeleccionado);
 
         if (respuestaEquipos.getEstado()) {
             List<Equipo> equipos = (List<Equipo>) respuestaEquipos.getResultado("equipos");

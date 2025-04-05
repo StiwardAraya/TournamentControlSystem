@@ -62,6 +62,8 @@ public class EquiposController extends Controller implements Initializable {
     private AnchorPane root;
     @FXML
     private VBox containerFoto;
+    @FXML
+    private ImageView imvBalonDeporte;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,11 +73,22 @@ public class EquiposController extends Controller implements Initializable {
         imvFoto.fitWidthProperty().bind(containerFoto.widthProperty().subtract(10));
         imvFoto.fitHeightProperty().bind(containerFoto.heightProperty().subtract(10));
         imvFoto.preserveRatioProperty().setValue(false);
+
+        cmbDeporte.valueProperty().addListener((observable, oldValue, newValue) -> {
+            imvBalonDeporte.fitWidthProperty().set(40);
+            imvBalonDeporte.fitHeightProperty().set(40);
+            Deporte deporteCombo = cmbDeporte.getSelectedItem();
+            if (deporteCombo != null) {
+                String imagenBalonURL = deporteCombo.getImagenURL();
+                imvBalonDeporte.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+            }
+        });
     }
 
     @Override
     public void initialize() {
         loadDeportes();
+        reiniciarVentana();
     }
 
     @FXML
@@ -237,6 +250,9 @@ public class EquiposController extends Controller implements Initializable {
         btnEliminar.setDisable(true);
         txfNombre.clear();
         imvFoto.setImage(null);
+        imvBalonDeporte.setImage(null);
+        imvBalonDeporte.fitWidthProperty().set(0);
+        imvBalonDeporte.fitHeightProperty().set(0);
         imagenCargada = false;
         containerFoto.setStyle("");
         cmbDeporte.clear();
