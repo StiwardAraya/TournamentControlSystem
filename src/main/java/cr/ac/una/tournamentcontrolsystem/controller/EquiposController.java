@@ -4,6 +4,7 @@ import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
+import cr.ac.una.tournamentcontrolsystem.util.AppContext;
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
@@ -89,6 +90,7 @@ public class EquiposController extends Controller implements Initializable {
     public void initialize() {
         loadDeportes();
         reiniciarVentana();
+        mostrarFotoCapturada();
     }
 
     @FXML
@@ -114,11 +116,6 @@ public class EquiposController extends Controller implements Initializable {
             btnEliminar.setDisable(false);
             btnGuardar.setText("Actualizar");
         }
-    }
-
-    @FXML
-    private void onActionBtnVerEquipos(ActionEvent event) {
-        //TODO: Desplegar una tabla con todos los equipos registrados
     }
 
     @FXML
@@ -275,5 +272,9 @@ public class EquiposController extends Controller implements Initializable {
         String fileName = file.getName().toLowerCase();
         return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
     }
-
+    
+    private void mostrarFotoCapturada() {
+        Image capturedImage = (Image) AppContext.getInstance().get("capturedImage");
+        imvFoto.setImage(capturedImage);
+    }
 }
