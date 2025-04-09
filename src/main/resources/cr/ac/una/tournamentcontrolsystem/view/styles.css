@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');*/
 
 * {
   -mfx-main: #6a9c89;
@@ -158,12 +158,6 @@
   -fx-fit-height: 35px;
 }
 
-.photo-view {
-  -fx-preserve-ratio: false;
-  -fx-fit-width: 75px;
-  -fx-fit-height: 75px;
-}
-
 .photo-container {
   -fx-background-color: -fx-beige;
   -fx-background-image: url("../resources/img/camara_icon.png");
@@ -176,16 +170,11 @@
 .camera {
   -fx-fit-width: 300px;
   -fx-fit-height: 210px;
-  -fx-background-color: -fx-beige;
-  -fx-opacity: 0.2;
-  -fx-border-color: -fx-orange-shade2;
-  -fx-border-width: 2px;
 }
 
-.camera-container {
-  -fx-border-color: -fx-orange-shade2;
-  -fx-border-width: 2px;
-  -fx-background-color: -fx-beige;
+.images{
+   -fx-fit-width: 200px;
+   -fx-fit-height: 150px;
 }
 
 .logo {
@@ -322,4 +311,13 @@
 .scroll-pane .scroll-bar:horizontal .decrement-button {
   -fx-pref-width: 0;
   -fx-background-color: transparent;
+}
+
+.mfx-combo-box .virtual-flow .mfx-combo-box-cell{
+   -fx-background-color: -fx-light-green-shade;
+   -fx-cursor: hand;
+}
+
+.mfx-combo-box .virtual-flow .mfx-combo-box-cell:hover{
+   -fx-background-color: -fx-light-green;
 }

@@ -5,7 +5,6 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -32,13 +31,9 @@
                </children></HBox>
             <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="center" VBox.vgrow="ALWAYS">
                <children>
-                  <AnchorPane styleClass="camera-container">
+                  <AnchorPane fx:id="camContainer" styleClass="photo-container">
                      <children>
-                        <ImageView fx:id="imvCamara" fitHeight="150.0" fitWidth="200.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" styleClass="camera" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
-                           <image>
-                              <Image url="@../resources/img/camara_icon.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="imvCamara" fitHeight="150.0" fitWidth="200.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" styleClass="camera" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
