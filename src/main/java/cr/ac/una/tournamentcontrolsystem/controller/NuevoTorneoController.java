@@ -2,6 +2,7 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
@@ -44,12 +45,13 @@ public class NuevoTorneoController extends Controller implements Initializable {
     private MFXTextField txfId;
     @FXML
     private MFXButton btnBuscar;
+    @FXML
+    private ImageView imvImagenBalon;
 
     private Equipo equipo;
     private Deporte deporte;
     private Torneo torneo;
-    @FXML
-    private ImageView imvImagenBalon;
+    private EquipoTorneo equipoTorneo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

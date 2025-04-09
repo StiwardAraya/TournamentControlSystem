@@ -10,9 +10,11 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +23,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 public class DeportesController extends Controller implements Initializable {
 
@@ -63,7 +66,8 @@ public class DeportesController extends Controller implements Initializable {
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un deporte");
+            txfIdentificador.setStyle("-mfx-main: #ffa725; -fx-border-color: #D21F3C;");
+            shake(txfIdentificador);
             return;
         }
 
@@ -77,8 +81,6 @@ public class DeportesController extends Controller implements Initializable {
             txfIdentificador.setEditable(false);
             txfNombre.setText(deporte.getNombre());
             imvPhoto.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
-            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
-            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             btnEliminar.setDisable(false);
@@ -89,12 +91,14 @@ public class DeportesController extends Controller implements Initializable {
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         if (txfNombre.getText().isBlank() || txfNombre.getText().isEmpty()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Guardar Deporte", "Debe llenar el espacio nombre");
+            txfNombre.setStyle("-mfx-main: #ffa725; -fx-border-color: #D21F3C;");
+            shake(txfNombre);
             return;
         }
 
         if (!imagenCargada) {
-            new Mensaje().show(Alert.AlertType.ERROR, "No hay imagen", "Debe subir una imagen");
+            containerPhoto.setStyle("-fx-background-color: #D21F3C");
+            shake(containerPhoto);
             return;
         }
 
@@ -116,7 +120,8 @@ public class DeportesController extends Controller implements Initializable {
     @FXML
     private void onActionBtnEliminar(ActionEvent event) {
         if (deporte == null) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Eliminar deporte", "Debes buscar un deporte antes de eliminarlo");
+            txfIdentificador.setStyle("-mfx-main: #ffa725; -fx-border-color: #D21F3C;");
+            shake(txfIdentificador);
             return;
         }
 
@@ -154,8 +159,6 @@ public class DeportesController extends Controller implements Initializable {
         if (db.hasImage()) {
             Image image = db.getImage();
             imvPhoto.setImage(image);
-            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
-            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             imagen = image;
@@ -165,8 +168,6 @@ public class DeportesController extends Controller implements Initializable {
                 if (isImage(file)) {
                     Image image = new Image(file.toURI().toString());
                     imvPhoto.setImage(image);
-                    imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
-                    imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
                     containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
                     imagenCargada = true;
                     imagen = image;
@@ -199,8 +200,6 @@ public class DeportesController extends Controller implements Initializable {
         if (file != null) {
             Image image = new Image(file.toURI().toString());
             imvPhoto.setImage(image);
-            imvPhoto.fitWidthProperty().bind(containerPhoto.widthProperty().subtract(10));
-            imvPhoto.fitHeightProperty().bind(containerPhoto.heightProperty().subtract(10));
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             imagen = image;
@@ -213,10 +212,10 @@ public class DeportesController extends Controller implements Initializable {
         btnGuardar.setText("Guardar");
         btnEliminar.setDisable(true);
         txfNombre.clear();
+        txfNombre.setStyle("");
         imvPhoto.setImage(null);
-        imvPhoto.fitWidthProperty().unbind();
-        imvPhoto.fitHeightProperty().unbind();
         containerPhoto.setStyle("");
+        txfIdentificador.setStyle("");
         imagenCargada = false;
         deporte = new Deporte();
     }
@@ -224,5 +223,14 @@ public class DeportesController extends Controller implements Initializable {
     private boolean isImage(File file) {
         String fileName = file.getName().toLowerCase();
         return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
+    }
+
+    private void shake(Node element) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
+        shake.setFromX(0);
+        shake.setToX(10);
+        shake.setCycleCount(4);
+        shake.setAutoReverse(true);
+        shake.play();
     }
 }

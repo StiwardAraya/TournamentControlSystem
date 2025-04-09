@@ -71,9 +71,6 @@ public class EquiposController extends Controller implements Initializable {
         btnEliminar.setDisable(true);
         equipo = new Equipo();
         deporte = new Deporte();
-        imvFoto.fitWidthProperty().bind(containerFoto.widthProperty().subtract(10));
-        imvFoto.fitHeightProperty().bind(containerFoto.heightProperty().subtract(10));
-        imvFoto.preserveRatioProperty().setValue(false);
 
         cmbDeporte.valueProperty().addListener((observable, oldValue, newValue) -> {
             imvBalonDeporte.fitWidthProperty().set(40);
@@ -162,9 +159,15 @@ public class EquiposController extends Controller implements Initializable {
         seleccionarImagen();
     }
 
+    // FIXME: encontrar la forma de apagar el hilo de executor para que la camara se apague cuando se cierra la ventana
     @FXML
     private void onActionBtnTomarFoto(ActionEvent event) {
         FlowController.getInstance().goViewInWindowModal("CamaraView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
+        Image imagenCamara = (Image) AppContext.getInstance().get("capturedImage");
+        if (imagenCamara != null) {
+            imvFoto.setImage(imagenCamara);
+            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+        }
     }
 
     @FXML
@@ -241,6 +244,7 @@ public class EquiposController extends Controller implements Initializable {
     }
 
     private void reiniciarVentana() {
+        AppContext.getInstance().set("capturedImage", null);
         txfIdentificador.clear();
         txfIdentificador.setEditable(true);
         btnGuardar.setText("Guardar");
@@ -248,8 +252,6 @@ public class EquiposController extends Controller implements Initializable {
         txfNombre.clear();
         imvFoto.setImage(null);
         imvBalonDeporte.setImage(null);
-        imvBalonDeporte.fitWidthProperty().set(0);
-        imvBalonDeporte.fitHeightProperty().set(0);
         imagenCargada = false;
         containerFoto.setStyle("");
         cmbDeporte.clear();
@@ -272,9 +274,13 @@ public class EquiposController extends Controller implements Initializable {
         String fileName = file.getName().toLowerCase();
         return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
     }
-    
+
     private void mostrarFotoCapturada() {
         Image capturedImage = (Image) AppContext.getInstance().get("capturedImage");
         imvFoto.setImage(capturedImage);
+    }
+
+    @FXML
+    private void onActionBtnVerEquipos(ActionEvent event) {
     }
 }

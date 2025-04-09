@@ -58,7 +58,6 @@ public class TorneosController extends Controller implements Initializable {
     }
 
     private void shakeLogo(ImageView logo) {
-        //System.out.println("cr.ac.una.tournamentcontrolsystem.controller.TorneosController.shakeLogo()");
         TranslateTransition shake = new TranslateTransition(Duration.millis(100), logo);
         shake.setFromX(0);
         shake.setToX(10);
