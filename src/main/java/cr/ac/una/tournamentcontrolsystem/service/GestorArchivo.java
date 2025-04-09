@@ -7,6 +7,7 @@ import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
@@ -41,6 +42,7 @@ public class GestorArchivo {
     private File archivoPartidos = new File(carpetaData, "Partidos.json");
     private File archivoEquiposTorneos = new File(carpetaData, "EquiposTorneos.json");
     private File archivoEquiposPartidos = new File(carpetaData, "EquiposPartidos.json");
+    private File archivoLlavesTorneos = new File(carpetaData, "LlavesTorneos.json");
     static final Logger logger = Logger.getLogger(GestorArchivo.class.getName());
     private static GestorArchivo INSTANCE;
 
@@ -98,6 +100,14 @@ public class GestorArchivo {
                 archivoEquiposTorneos.createNewFile();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error en GestorArchivo al crear el archivo JSON para EquiposTorneos", e);
+            }
+        }
+
+        if (!archivoLlavesTorneos.exists()) {
+            try {
+                archivoLlavesTorneos.createNewFile();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error en GestorArchivo al crear el archivo JSON para LlavesTorneos", e);
             }
         }
     }
@@ -189,6 +199,17 @@ public class GestorArchivo {
             return new Respuesta(true, "EquiposTorneos actualizados correctamente!", null);
         } catch (IOException e) {
             return new Respuesta(false, "Error al actualizar la lista de EquiposTorneos", e.getMessage());
+        }
+    }
+
+    public Respuesta persistLlavesTorneos(List<LlavesTorneo> llavesTorneos) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String llavesTorneosJSON = gson.toJson(llavesTorneos);
+        try (FileWriter writer = new FileWriter(archivoLlavesTorneos)) {
+            writer.write(llavesTorneosJSON);
+            return new Respuesta(true, "LlavesTorneos actualizadas correctamente!", null);
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al actualizar la lista de LlavesTorneos", e.getMessage());
         }
     }
 
@@ -327,6 +348,27 @@ public class GestorArchivo {
             return new Respuesta(false, "Error al leer el archivo de EquiposTorneos", e.getMessage());
         } catch (Exception e) {
             return new Respuesta(false, "Error inesperado al cargar EquiposTorneos", e.getMessage());
+        }
+    }
+
+    public Respuesta cargarLlavesTorneos() {
+        List<LlavesTorneo> llavesTorneos = new ArrayList<>();
+        Gson gson = new Gson();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(archivoLlavesTorneos))) {
+            Type listType = new TypeToken<List<LlavesTorneo>>() {
+            }.getType();
+
+            llavesTorneos = gson.fromJson(bufferedReader, listType);
+            if (llavesTorneos == null || llavesTorneos.isEmpty()) {
+                return new Respuesta(false, "El archivo de LlavesTorneos se encuentra vacío", "No hay LlavesTorneos registrados");
+            } else {
+                return new Respuesta(true, "LlavesTorneos cargados con exito!", null, "LlavesTorneos", llavesTorneos);
+            }
+        } catch (IOException e) {
+            return new Respuesta(false, "Error al leer el archivo de LlavesTorneos", e.getMessage());
+        } catch (Exception e) {
+            return new Respuesta(false, "Error inesperado al cargar LlavesTorneos", e.getMessage());
         }
     }
 
