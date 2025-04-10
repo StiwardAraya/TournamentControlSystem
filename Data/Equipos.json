@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nombre": "A",
+    "fotoURL": "FotosEquipos\\1.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  }
+]
