@@ -16,9 +16,11 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -26,6 +28,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class NuevoTorneoController extends Controller implements Initializable {
 
@@ -42,11 +46,11 @@ public class NuevoTorneoController extends Controller implements Initializable {
     @FXML
     private MFXTextField txfNombre;
     @FXML
-    private MFXTextField txfId;
-    @FXML
-    private MFXButton btnBuscar;
-    @FXML
     private ImageView imvImagenBalon;
+    @FXML
+    private MFXTextField txfTiempoPorPartido;
+    @FXML
+    private VBox minibalonContainer;
 
     private Equipo equipo;
     private Deporte deporte;
@@ -62,12 +66,11 @@ public class NuevoTorneoController extends Controller implements Initializable {
         });
 
         mcbDeporte.valueProperty().addListener((observable, oldValue, newValue) -> {
-            imvImagenBalon.fitWidthProperty().set(40);
-            imvImagenBalon.fitHeightProperty().set(40);
             Deporte deporteCombo = mcbDeporte.getSelectedItem();
             if (deporteCombo != null) {
                 String imagenBalonURL = deporteCombo.getImagenURL();
                 imvImagenBalon.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+                minibalonContainer.setStyle("-fx-opacity: 1");
             }
         });
 
@@ -77,19 +80,26 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        reiniciarVentana();
         cargarDeportes();
     }
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         if (txfNombre.getText().isBlank() || txfNombre.getText().isEmpty()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Guardar Torneo", "Debe llenar el espacio nombre");
+            txfNombre.setStyle("-fx-border-color: #D21F3C");
+            shake(txfNombre);
             return;
         }
 
         if (mcbDeporte.getSelectionModel().getSelectedItem() == null) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Seleccionar Deporte", "Debe seleccionar un deporte");
+            mcbDeporte.setStyle("-fx-border-color: #D21F3C");
+            shake(mcbDeporte);
+            return;
+        }
+
+        if (txfTiempoPorPartido.getText().isBlank() || txfTiempoPorPartido.getText().isEmpty()) {
+            txfTiempoPorPartido.setStyle("-fx-border-color: #D21F3C");
+            shake(txfTiempoPorPartido);
             return;
         }
 
@@ -98,11 +108,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
             return;
         }
 
-        if (txfId.getText().isBlank()) {
-            torneo.setId(0);
-        }
-
+        torneo.setId(0);
         torneo.setNombre(txfNombre.getText());
+
         Respuesta respuestaGuardarTorneo = RegistroTorneo.getInstance().guardarTorneo(torneo, mcbDeporte.getSelectionModel().getSelectedItem());
 
         if (!respuestaGuardarTorneo.getEstado()) {
@@ -117,36 +125,18 @@ public class NuevoTorneoController extends Controller implements Initializable {
         reiniciarVentana();
     }
 
-    @FXML
-    private void onActionBtnBuscar(ActionEvent event) {
-        if (txfId.getText().isBlank() || txfId.getText().isEmpty()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Id", "Debe ingresar un id para buscar un Torneo");
-            return;
-        }
-
-        Respuesta respuestaBuscarTorneo = RegistroTorneo.getInstance().buscarTorneo(Integer.parseInt(txfId.getText()));
-        if (!respuestaBuscarTorneo.getEstado()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Deporte", respuestaBuscarTorneo.getMensaje());
-        } else {
-            torneo = (Torneo) respuestaBuscarTorneo.getResultado("torneoEncontrado");
-            txfId.setText(String.valueOf(torneo.getId()));
-            txfId.setEditable(false);
-            txfNombre.setText(torneo.getNombre());
-            btnGuardar.setText("Actualizar");
-        }
-    }
-
     private void reiniciarVentana() {
-        txfId.clear();
-        txfId.setEditable(true);
+        txfTiempoPorPartido.clear();
+        txfTiempoPorPartido.setStyle("");
         btnGuardar.setText("Guardar");
         txfNombre.clear();
+        txfNombre.setStyle("");
         lvEquipos.getItems().clear();
         lvTorneo.getItems().clear();
         mcbDeporte.getSelectionModel().clearSelection();
+        mcbDeporte.setStyle("");
         imvImagenBalon.setImage(null);
-        imvImagenBalon.fitWidthProperty().set(0);
-        imvImagenBalon.fitHeightProperty().set(0);
+        minibalonContainer.setStyle("");
     }
 
     private void cargarEquipos() {
@@ -228,6 +218,15 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     private boolean esPotenciaDeDos(int numero) {
         return (numero > 0) && ((numero & (numero - 1)) == 0);
+    }
+
+    private void shake(Node element) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
+        shake.setFromX(0);
+        shake.setToX(10);
+        shake.setCycleCount(4);
+        shake.setAutoReverse(true);
+        shake.play();
     }
 
 }
