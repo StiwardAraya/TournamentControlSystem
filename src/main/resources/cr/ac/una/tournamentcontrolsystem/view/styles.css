@@ -144,6 +144,7 @@
   -fx-background-color: -fx-green-shade1;
   -fx-border-width: 0;
   -fx-pref-width: 1px;
+  -fx-background-radius: 10px;
 }
 
 .btn-main-menu {
@@ -309,4 +310,16 @@
 
 .mfx-combo-box .virtual-flow .mfx-combo-box-cell:hover{
    -fx-background-color: -fx-light-green;
+}
+
+.minibalon-image{
+   -fx-fit-width: 40px;
+   -fx-fit-height: 40px;
+}
+
+.minibalon-container{
+   -fx-background-image: url("../resources/img/App_Logo.png");
+   -fx-background-position: center;
+   -fx-background-size: stretch;
+   -fx-opacity: .3;
 }

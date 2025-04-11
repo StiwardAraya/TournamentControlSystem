@@ -41,6 +41,13 @@
                         <String fx:value="standard-button" />
                         <String fx:value="flat-button" />
                      </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/exit_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </MFXButton>
                </children>
                <padding>

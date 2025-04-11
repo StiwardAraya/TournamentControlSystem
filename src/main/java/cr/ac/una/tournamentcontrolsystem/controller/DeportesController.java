@@ -80,7 +80,8 @@ public class DeportesController extends Controller implements Initializable {
             txfIdentificador.setText(String.valueOf(deporte.getId()));
             txfIdentificador.setEditable(false);
             txfNombre.setText(deporte.getNombre());
-            imvPhoto.setImage(new Image(new File(imagenBalonURL).toURI().toString()));
+            imagen = new Image(new File(imagenBalonURL).toURI().toString());
+            imvPhoto.setImage(imagen);
             containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
             imagenCargada = true;
             btnEliminar.setDisable(false);

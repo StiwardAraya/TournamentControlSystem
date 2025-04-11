@@ -33,20 +33,22 @@
                         <Label styleClass="title" text="Nuevo Torneo" />
                      </children>
                   </HBox>
-                  <VBox VBox.vgrow="ALWAYS">
+                  <VBox styleClass="main-container" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox VBox.vgrow="NEVER">
+                        <HBox spacing="5.0" styleClass="left" VBox.vgrow="NEVER">
                            <children>
                               <MFXComboBox fx:id="mcbDeporte" floatMode="BORDER" floatingText="Deporte" />
-                              <ImageView fx:id="imvImagenBalon" pickOnBounds="true" />
-                              <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                              <MFXTextField fx:id="txfId" floatingText="Id" layoutX="154.0" layoutY="20.0" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
-                              <MFXButton fx:id="btnBuscar" onAction="#onActionBtnBuscar" styleClass="search-btn" />
+                              <VBox fx:id="minibalonContainer" styleClass="minibalon-container" HBox.hgrow="NEVER">
+                                 <children>
+                                    <ImageView fx:id="imvImagenBalon" pickOnBounds="true" styleClass="minibalon-image" />
+                                 </children>
+                              </VBox>
+                              <MFXTextField fx:id="txfNombre" floatMode="BORDER" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                              <MFXTextField fx:id="txfTiempoPorPartido" floatMode="BORDER" floatingText="Tiempo (Min)" />
                            </children>
-                           <styleClass>
-                              <String fx:value="left" />
-                              <String fx:value="small-container" />
-                           </styleClass>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
                         </HBox>
                         <HBox maxHeight="1.7976931348623157E308" spacing="5.0" VBox.vgrow="ALWAYS">
                            <children>
@@ -60,7 +62,7 @@
                                     </Label>
                                     <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <content>
-                                          <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="721.0">
+                                          <ListView fx:id="lvEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0">
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </padding>
@@ -80,7 +82,7 @@
                                     </Label>
                                     <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <content>
-                                          <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="615.0">
+                                          <ListView fx:id="lvTorneo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0">
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </padding>
@@ -92,10 +94,6 @@
                            </children>
                         </HBox>
                      </children>
-                     <styleClass>
-                        <String fx:value="main-container" />
-                        <String fx:value="small-container" />
-                     </styleClass>
                   </VBox>
                   <HBox spacing="15.0" styleClass="center" VBox.vgrow="NEVER">
                      <children>
