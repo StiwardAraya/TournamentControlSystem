@@ -6,7 +6,9 @@ import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
+import cr.ac.una.tournamentcontrolsystem.util.Formato;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -17,6 +19,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,6 +63,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         torneo = new Torneo();
+        txfTiempoPorPartido.setTextFormatter(Formato.getInstance().integerFormat());
 
         mcbDeporte.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             cargarEquipos();
@@ -110,6 +114,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
         torneo.setId(0);
         torneo.setNombre(txfNombre.getText());
+        torneo.setTiempoPorPartido(Integer.parseInt(txfTiempoPorPartido.getText()));
 
         Respuesta respuestaGuardarTorneo = RegistroTorneo.getInstance().guardarTorneo(torneo, mcbDeporte.getSelectionModel().getSelectedItem());
 
@@ -117,6 +122,12 @@ public class NuevoTorneoController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
         } else {
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
+            guardarMapeoEquiposTorneos();
+
+            // TODO: implementar este metodo
+            crearLlaves();
+
+            reiniciarVentana();
         }
     }
 
@@ -227,6 +238,28 @@ public class NuevoTorneoController extends Controller implements Initializable {
         shake.setCycleCount(4);
         shake.setAutoReverse(true);
         shake.play();
+    }
+
+    private void guardarMapeoEquiposTorneos() {
+        ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
+        for (Equipo equipoInscrito : equiposInscritos) {
+            Respuesta respuestaGuardarMapeo = RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(new EquipoTorneo(0, 0, 0, equipoInscrito, torneo));
+            if (!respuestaGuardarMapeo.getEstado()) {
+                new Mensaje().show(Alert.AlertType.ERROR, "Error de inscripcion", "Ocurrio un error al inscribir el equipo: " + equipoInscrito.toString());
+            }
+        }
+    }
+
+    private void crearLlaves() {
+        // Guardar en una ObservableList auxiliar la lista de equipos en lvTorneo
+        // Crear un objeto LlavesTorneo
+        // Crear un objeto TreeMap de tipo Equipo
+        // Settear el idTorneo del objeto LlavesTorneo con el id de torneo
+        // Hacer un foreach para recorrer la lista de equipos
+        // Agregar al objeto treeMap cada equipo de la lista
+        // Al finalizar el for llamar al setLLaves del objeto LlavesTorneo y setearle el objeto TreeMap
+        // Crear un objeto respuesta e igualarlo al metodo agregar del Registro de LlavesTorneo
+        // Solo si la respuesta tiene un estado false enviar un mensaje de error
     }
 
 }
