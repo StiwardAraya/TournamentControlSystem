@@ -43,8 +43,8 @@
                                     <ImageView fx:id="imvImagenBalon" pickOnBounds="true" styleClass="minibalon-image" />
                                  </children>
                               </VBox>
-                              <MFXTextField fx:id="txfNombre" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                              <MFXTextField fx:id="txfTiempoPorPartido" floatingText="Tiempo (Min)" />
+                              <MFXTextField fx:id="txfNombre" floatMode="BORDER" floatingText="Nombre" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                              <MFXTextField fx:id="txfTiempoPorPartido" floatMode="BORDER" floatingText="Tiempo (Min)" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
