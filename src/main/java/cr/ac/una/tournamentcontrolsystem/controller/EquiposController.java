@@ -227,6 +227,8 @@ public class EquiposController extends Controller implements Initializable {
         if (imagenCamara != null) {
             imvFoto.setImage(imagenCamara);
             containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = imagenCamara;
         }
     }
 
