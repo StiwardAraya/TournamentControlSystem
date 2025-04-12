@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.EquiposMuestraController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <VBox layoutX="200.0" layoutY="74.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="side-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <HBox prefHeight="21.0" prefWidth="569.0" styleClass="center">
+               <children>
+                  <Label styleClass="title" text="EQUIPOS" />
+               </children>
+            </HBox>
+            <AnchorPane styleClass="main-container" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="tbEquipos" layoutX="199.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="clId" maxWidth="50.0" prefWidth="75.0" text="Id" />
+                      <TableColumn fx:id="clNombre" maxWidth="1.7976931348623157E308" prefWidth="112.00003814697266" text="Nombre" />
+                        <TableColumn fx:id="clDeporte" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Deporte" />
+                        <TableColumn fx:id="clPuntos" maxWidth="75.0" prefWidth="138.00003051757812" text="Puntos" />
+                        <TableColumn fx:id="clJugando" maxWidth="75.0" prefWidth="42.6666259765625" text="Jugando" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
