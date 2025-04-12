@@ -1,5 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+import java.util.Objects;
+
 /**
  * Clase que representa un Torneo.
  * 
@@ -72,6 +74,20 @@ public class Torneo {
     @Override
     public String toString() {
         return this.nombre;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; 
+        if (obj == null || getClass() != obj.getClass()) return false; 
+
+        Torneo torneo = (Torneo) obj; 
+        return id == torneo.id; 
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); 
     }
 
 }

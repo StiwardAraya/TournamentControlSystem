@@ -56,17 +56,6 @@ public class RegistroTorneo {
         }
         
         torneo.setDeporte(deporteSeleccionado);
-
-        if (buscarTorneo(torneo.getId()).getEstado()) {
-            int indexTorneoEncontrado = torneos.indexOf(torneo);
-            torneos.set(indexTorneoEncontrado, torneo);
-            if (GestorArchivo.getInstance().persistTorneos(torneos).getEstado()) {
-                return new Respuesta(true, "Torneo actualizado con exito!", null);
-            } else {
-                return new Respuesta(false, "No se pudo actualizar el torneo", "Error al guardar la lista de torneos");
-            }
-        }
-
         torneo.setId(lastId + 1);
         lastId++;
         torneos.add(torneo);

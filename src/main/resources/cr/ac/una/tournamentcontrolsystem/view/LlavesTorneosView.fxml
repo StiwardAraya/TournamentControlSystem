@@ -26,7 +26,7 @@
                <children>
                   <HBox styleClass="left" VBox.vgrow="NEVER">
                      <children>
-                        <MFXComboBox floatMode="BORDER" floatingText="Torneo" />
+                        <MFXComboBox fx:id="cmbTorneos" floatingText="Torneo" />
                         <HBox spacing="10.0" styleClass="right" HBox.hgrow="ALWAYS">
                            <children>
                               <MFXRadioButton selected="true" text="Activo">
@@ -44,7 +44,7 @@
                   </HBox>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <content>
-                        <Canvas height="2000.0" width="2000.0" />
+                        <Canvas fx:id="canvaLlaves" height="484.0" width="915.0" />
                      </content>
                   </ScrollPane>
                </children>

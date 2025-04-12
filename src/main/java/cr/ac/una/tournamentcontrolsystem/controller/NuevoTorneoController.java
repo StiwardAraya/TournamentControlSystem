@@ -3,10 +3,12 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.Formato;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -255,15 +258,20 @@ public class NuevoTorneoController extends Controller implements Initializable {
     }
 
     private void crearLlaves() {
-        // Guardar en una ObservableList auxiliar la lista de equipos en lvTorneo
-        // Crear un objeto LlavesTorneo
-        // Crear un objeto TreeMap de tipo Equipo
-        // Settear el idTorneo del objeto LlavesTorneo con el id de torneo
-        // Hacer un foreach para recorrer la lista de equipos
-        // Agregar al objeto treeMap cada equipo de la lista
-        // Al finalizar el for llamar al setLLaves del objeto LlavesTorneo y setearle el objeto TreeMap
-        // Crear un objeto respuesta e igualarlo al metodo agregar del Registro de LlavesTorneo
-        // Solo si la respuesta tiene un estado false enviar un mensaje de error
-    }
+        ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
+        TreeMap<Integer, Equipo> llavesMapa = new TreeMap<>();
+        int idTorneo = torneo.getId(); 
+        LlavesTorneo llavesTorneo = new LlavesTorneo(idTorneo, llavesMapa);
 
+        for (Equipo equipo : equiposInscritos) {
+            llavesMapa.put(equipo.getId(), equipo); 
+        }
+
+        llavesTorneo.setLlaves(llavesMapa);
+        Respuesta respuestaGuardarLlaves = RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+
+        if (!respuestaGuardarLlaves.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Error al crear llaves", "No se pudieron crear las llaves del torneo.");
+        }
+    }
 }
