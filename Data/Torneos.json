@@ -1,0 +1,35 @@
+[
+  {
+    "id": 0,
+    "tiempoPorPartido": 8,
+    "nombre": "TorneoZ",
+    "finalizado": false,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 1,
+    "tiempoPorPartido": 69,
+    "nombre": "TorneoPotaxie",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 2,
+    "tiempoPorPartido": 40,
+    "nombre": "fifesVSpotaxies",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  }
+]
