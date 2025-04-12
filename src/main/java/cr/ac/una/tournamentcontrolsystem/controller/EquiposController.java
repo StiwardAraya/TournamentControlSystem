@@ -138,6 +138,7 @@ public class EquiposController extends Controller implements Initializable {
             return;
         }
 
+        equipo = new Equipo();
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
             equipo.setId(0);
         }
@@ -239,7 +240,7 @@ public class EquiposController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnVerEquipos(ActionEvent event) {
-        // TODO: Abrir tabla de equipos
+        FlowController.getInstance().goViewInWindow("EquiposMuestraView");
     }
 
     private void seleccionarImagen() {

@@ -152,7 +152,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     private void cargarEquipos() {
         Respuesta respuestaEquipos = RegistroEquipo.getInstance().getEquipos();
+
         lvEquipos.getItems().clear();
+        lvTorneo.getItems().clear();
 
         Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem();
 
@@ -243,6 +245,8 @@ public class NuevoTorneoController extends Controller implements Initializable {
     private void guardarMapeoEquiposTorneos() {
         ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
         for (Equipo equipoInscrito : equiposInscritos) {
+            equipoInscrito.setEnTorneoActivo(true);
+            RegistroEquipo.getInstance().guardarEquipo(equipoInscrito, new Image(new File(equipoInscrito.getFotoURL()).toURI().toString()));
             Respuesta respuestaGuardarMapeo = RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(new EquipoTorneo(0, 0, 0, equipoInscrito, torneo));
             if (!respuestaGuardarMapeo.getEstado()) {
                 new Mensaje().show(Alert.AlertType.ERROR, "Error de inscripcion", "Ocurrio un error al inscribir el equipo: " + equipoInscrito.toString());

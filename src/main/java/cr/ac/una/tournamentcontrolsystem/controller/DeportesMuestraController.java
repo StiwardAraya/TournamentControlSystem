@@ -33,10 +33,12 @@ public class DeportesMuestraController extends Controller implements Initializab
     public void initialize() {
         clNombre.prefWidthProperty().bind(tbDeportes.widthProperty().subtract(clId.prefWidthProperty()).subtract(10));
         ArrayList<Deporte> listaDeportes = (ArrayList<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
-        deportes = FXCollections.observableArrayList(listaDeportes);
-        clId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        clNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tbDeportes.setItems(deportes);
+        if (listaDeportes != null) {
+            deportes = FXCollections.observableArrayList(listaDeportes);
+            clId.setCellValueFactory(new PropertyValueFactory<>("id"));
+            clNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            tbDeportes.setItems(deportes);
+        }
     }
 
 }
