@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "nombre": "Wolves",
+    "fotoURL": "FotosEquipos\\1.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 2,
+    "nombre": "Tigers",
+    "fotoURL": "FotosEquipos\\2.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 3,
+    "nombre": "Monkeys",
+    "fotoURL": "FotosEquipos\\3.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 4,
+    "nombre": "Rekkles",
+    "fotoURL": "FotosEquipos\\4.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 5,
+    "nombre": "Deers",
+    "fotoURL": "FotosEquipos\\5.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 6,
+    "nombre": "Frogs",
+    "fotoURL": "FotosEquipos\\6.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 7,
+    "nombre": "Bettles",
+    "fotoURL": "FotosEquipos\\7.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 8,
+    "nombre": "keys",
+    "fotoURL": "FotosEquipos\\8.png",
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  }
+]
