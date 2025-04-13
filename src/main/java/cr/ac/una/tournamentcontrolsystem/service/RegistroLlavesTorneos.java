@@ -32,8 +32,12 @@ public class RegistroLlavesTorneos {
         return INSTANCE;
     }
 
-    private Respuesta getLlavesTorneos() {
+    public Respuesta getLlavesTorneos() {
         return GestorArchivo.getInstance().cargarLlavesTorneos();
+    }
+
+    public void cargarLlaves() {
+        llavesTorneos = (List<LlavesTorneo>) GestorArchivo.getInstance().cargarLlavesTorneos().getResultado("LlavesTorneos");
     }
 
     public Respuesta buscarLlavesTorneo(int idTorneo) {
