@@ -126,10 +126,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
         } else {
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
             guardarMapeoEquiposTorneos();
-
-            // TODO: implementar este metodo
             crearLlaves();
-
             reiniciarVentana();
         }
     }
@@ -247,9 +244,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     private void guardarMapeoEquiposTorneos() {
         ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
+
         for (Equipo equipoInscrito : equiposInscritos) {
-            equipoInscrito.setEnTorneoActivo(true);
-            RegistroEquipo.getInstance().guardarEquipo(equipoInscrito, new Image(new File(equipoInscrito.getFotoURL()).toURI().toString()));
+            actualizarEquipo(equipoInscrito.getId());
             Respuesta respuestaGuardarMapeo = RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(new EquipoTorneo(0, 0, 0, equipoInscrito, torneo));
             if (!respuestaGuardarMapeo.getEstado()) {
                 new Mensaje().show(Alert.AlertType.ERROR, "Error de inscripcion", "Ocurrio un error al inscribir el equipo: " + equipoInscrito.toString());
@@ -260,11 +257,11 @@ public class NuevoTorneoController extends Controller implements Initializable {
     private void crearLlaves() {
         ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
         TreeMap<Integer, Equipo> llavesMapa = new TreeMap<>();
-        int idTorneo = torneo.getId(); 
+        int idTorneo = torneo.getId();
         LlavesTorneo llavesTorneo = new LlavesTorneo(idTorneo, llavesMapa);
 
         for (Equipo equipo : equiposInscritos) {
-            llavesMapa.put(equipo.getId(), equipo); 
+            llavesMapa.put(equipo.getId(), equipo);
         }
 
         llavesTorneo.setLlaves(llavesMapa);
@@ -273,5 +270,11 @@ public class NuevoTorneoController extends Controller implements Initializable {
         if (!respuestaGuardarLlaves.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Error al crear llaves", "No se pudieron crear las llaves del torneo.");
         }
+    }
+
+    private void actualizarEquipo(int idEquipoInscrito) {
+        Equipo equipoInscrito = (Equipo) RegistroEquipo.getInstance().buscarEquipo(idEquipoInscrito).getResultado("equipoEncontrado");
+        equipoInscrito.setEnTorneoActivo(true);
+        RegistroEquipo.getInstance().guardarEquipo(equipoInscrito, new Image(new File(equipoInscrito.getFotoURL()).toURI().toString()));
     }
 }

@@ -7,18 +7,17 @@ import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import java.awt.Point;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleGroup;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 
 public class LlavesTorneosController extends Controller implements Initializable {
@@ -43,7 +42,7 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarGraficar();
+        RegistroLlavesTorneos.getInstance().cargarLlaves();
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 Respuesta respuestaLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(newValue.getId());
@@ -56,9 +55,9 @@ public class LlavesTorneosController extends Controller implements Initializable
     }
 
     @Override
-       public void initialize() {
-          // TODO
-       }
+    public void initialize() {
+        cargarGraficar();
+    }
 
     private void cargarGraficar() {
         try {
@@ -89,7 +88,7 @@ public class LlavesTorneosController extends Controller implements Initializable
         gc = canvaLlaves.getGraphicsContext2D();
         gc.clearRect(0, 0, canvaLlaves.getWidth(), canvaLlaves.getHeight());
 
-        TreeMap<String, Map<String, Object>> llavesData = llavesTorneo.getLlaves();
+        Map<String, Map<String, Object>> llavesData = llavesTorneo.getLlaves();
         List<String> nombresEquipos = new ArrayList<>();
         for (Map<String, Object> equipo : llavesData.values()) {
             nombresEquipos.add((String) equipo.get("nombre"));
@@ -116,7 +115,7 @@ public class LlavesTorneosController extends Controller implements Initializable
             List<Point> puntosAnteriores = rondas.get(ronda - 1);
             List<Point> nuevosPuntos = new ArrayList<>();
             currentX -= ESPACIO_HORIZONTAL;
-            y = 50; 
+            y = 50;
 
             for (int i = 0; i < puntosAnteriores.size(); i += 2) {
                 if (i + 1 < puntosAnteriores.size()) {
@@ -129,7 +128,7 @@ public class LlavesTorneosController extends Controller implements Initializable
                 }
             }
             rondas.put(ronda, nuevosPuntos);
-            participantes = (participantes + 1) / 2; 
+            participantes = (participantes + 1) / 2;
             ronda++;
         }
 
@@ -164,5 +163,5 @@ public class LlavesTorneosController extends Controller implements Initializable
         Point finalPoint = rondas.get(rondas.size() - 1).get(0);
         gc.setFill(Color.BLACK);
         gc.fillText("Enfrentamiento", finalPoint.x + TEXTO_DESPLAZAMIENTO_FINAL, finalPoint.y + LINEA_OFFSET_Y);
-        }
+    }
 }

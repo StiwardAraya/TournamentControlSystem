@@ -138,13 +138,13 @@ public class EquiposController extends Controller implements Initializable {
             return;
         }
 
-        equipo = new Equipo();
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isBlank()) {
             equipo.setId(0);
         }
 
         equipo.setNombre(txfNombre.getText());
         equipo.setDeporte(cmbDeporte.getSelectedItem());
+
         Respuesta respuestaGuardarEquipo = RegistroEquipo.getInstance().guardarEquipo(equipo, imagen);
         if (!respuestaGuardarEquipo.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
