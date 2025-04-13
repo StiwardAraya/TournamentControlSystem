@@ -35,8 +35,7 @@
                <children>
                   <MFXButton fx:id="btnNuevo" maxWidth="1.7976931348623157E308" onAction="#onActionBtnNuevo" styleClass="standard-button" text="Nuevo" HBox.hgrow="ALWAYS" />
                   <MFXButton fx:id="btnPosiciones" maxWidth="1.7976931348623157E308" onAction="#onActionBtnPosiciones" styleClass="standard-button" text="Posiciones" HBox.hgrow="ALWAYS" />
-                  <MFXButton fx:id="btnPartido" maxWidth="1.7976931348623157E308" onAction="#onActionBtnPartido" styleClass="standard-button" text="Partido" HBox.hgrow="ALWAYS" />
-                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" text="Regresar" HBox.hgrow="ALWAYS">
+                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" text="Regresar" HBox.hgrow="SOMETIMES">
                      <styleClass>
                         <String fx:value="standard-button" />
                         <String fx:value="flat-button" />
