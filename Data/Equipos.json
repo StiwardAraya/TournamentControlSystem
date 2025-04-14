@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "nombre": "EquipoA",
+    "fotoURL": "FotosEquipos\\1.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 2,
+    "nombre": "EquipoB",
+    "fotoURL": "FotosEquipos\\2.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 3,
+    "nombre": "EquipoC",
+    "fotoURL": "FotosEquipos\\3.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 4,
+    "nombre": "EquipoD",
+    "fotoURL": "FotosEquipos\\4.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 5,
+    "nombre": "A",
+    "fotoURL": "FotosEquipos\\5.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 6,
+    "nombre": "B",
+    "fotoURL": "FotosEquipos\\6.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 7,
+    "nombre": "C",
+    "fotoURL": "FotosEquipos\\7.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 8,
+    "nombre": "D",
+    "fotoURL": "FotosEquipos\\8.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 9,
+    "nombre": "F",
+    "fotoURL": "FotosEquipos\\9.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 10,
+    "nombre": "G",
+    "fotoURL": "FotosEquipos\\10.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 11,
+    "nombre": "E",
+    "fotoURL": "FotosEquipos\\11.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 12,
+    "nombre": "H",
+    "fotoURL": "FotosEquipos\\12.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 13,
+    "nombre": "Q",
+    "fotoURL": "FotosEquipos\\13.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 14,
+    "nombre": "W",
+    "fotoURL": "FotosEquipos\\14.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 15,
+    "nombre": "T",
+    "fotoURL": "FotosEquipos\\15.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 16,
+    "nombre": "Y",
+    "fotoURL": "FotosEquipos\\16.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  }
+]
