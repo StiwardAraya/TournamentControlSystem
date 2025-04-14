@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "nombre": "Baskett",
+    "nombre": "Basket",
     "imagenURL": "ImagenesBalon\\1.png"
   },
   {
     "id": 2,
-    "nombre": "Futbol",
+    "nombre": "FUTBOL",
     "imagenURL": "ImagenesBalon\\2.png"
   },
   {
