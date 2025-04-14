@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.PartidoController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+   <children>
+      <BorderPane layoutX="219.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <top>
+            <HBox prefHeight="0.0" prefWidth="589.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <styleClass>
+                  <String fx:value="main-container" />
+                  <String fx:value="center" />
+               </styleClass>
+               <children>
+                  <HBox alignment="CENTER_LEFT" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <MFXButton fx:id="btnEmpezar" onAction="#onActionBtnEmpezar" prefHeight="35.0" prefWidth="139.0" styleClass="standard-button" text="Empezar" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="title" text="Tiempo Restante: " />
+                        <Label fx:id="lblTiempo" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" styleClass="small-text" text="00 : 00" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lblNombreEquipoIzq" text="Equipo 1">
+                     <styleClass>
+                        <String fx:value="title" />
+                        <String fx:value="small-text" />
+                        <String fx:value="text-color-white" />
+                     </styleClass>
+                  </Label>
+                  <StackPane>
+                     <children>
+                        <Circle fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
+                        <Label fx:id="lblMarcadorEquipoIzq" text="0">
+                           <styleClass>
+                              <String fx:value="text-color-white" />
+                              <String fx:value="title" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lblNombreEquipoDer" text="Equipo 2">
+                     <styleClass>
+                        <String fx:value="title" />
+                        <String fx:value="small-text" />
+                        <String fx:value="text-color-white" />
+                     </styleClass>
+                  </Label>
+                  <StackPane>
+                     <children>
+                        <Circle fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
+                        <Label fx:id="lblMarcadorEquipoDer" text="0">
+                           <styleClass>
+                              <String fx:value="text-color-white" />
+                              <String fx:value="title" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+         </right>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane fx:id="containerBalon" layoutX="95.0" layoutY="82.0" prefHeight="150.0" prefWidth="200.0" styleClass="ball-image-container">
+                     <children>
+                        <ImageView fx:id="imvBalon" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <HBox styleClass="center" BorderPane.alignment="CENTER">
+               <children>
+                  <MFXButton fx:id="btnFinalizar" maxWidth="250.0" onAction="#onActionBtnFinalizar" text="Finalizar" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets left="70.0" right="70.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

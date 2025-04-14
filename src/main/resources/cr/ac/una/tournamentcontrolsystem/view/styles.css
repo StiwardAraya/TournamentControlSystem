@@ -323,3 +323,18 @@
    -fx-background-size: stretch;
    -fx-opacity: .3;
 }
+
+.circle-fill{
+    -fx-fill: -fx-orange;
+}
+
+.text-color-white{
+    -fx-text-fill: -fx-white;
+}
+
+.ball-image-container{
+    -fx-background-image: url("../resources/img/App_Logo.png");
+    -fx-opacity: .4;
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
