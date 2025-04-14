@@ -66,6 +66,8 @@ public class NuevoTorneoController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         torneo = new Torneo();
+        deporte = new Deporte();
+        equipo = new Equipo();
         txfTiempoPorPartido.setTextFormatter(Formato.getInstance().integerFormat());
 
         mcbDeporte.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -148,6 +150,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
         mcbDeporte.setStyle("");
         imvImagenBalon.setImage(null);
         minibalonContainer.setStyle("");
+        torneo = new Torneo();
+        equipo = new Equipo();
+        deporte = new Deporte();
     }
 
     private void cargarEquipos() {

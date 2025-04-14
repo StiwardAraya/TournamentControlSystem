@@ -42,7 +42,6 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        RegistroLlavesTorneos.getInstance().cargarLlaves();
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 Respuesta respuestaLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(newValue.getId());
@@ -56,6 +55,7 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @Override
     public void initialize() {
+        RegistroLlavesTorneos.getInstance().cargarLlaves();
         cargarGraficar();
     }
 

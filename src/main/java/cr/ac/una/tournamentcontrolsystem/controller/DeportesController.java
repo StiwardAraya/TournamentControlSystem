@@ -113,7 +113,6 @@ public class DeportesController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         } else {
             reiniciarVentana();
-            deporte = new Deporte();
             new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar deporte", respuestaGuardarDeporte.getMensaje());
         }
     }
@@ -131,7 +130,6 @@ public class DeportesController extends Controller implements Initializable {
         if (respuestaEliminarDeporte.getEstado()) {
             new Mensaje().show(Alert.AlertType.INFORMATION, "Eliminar Deporte", respuestaEliminarDeporte.getMensaje());
             reiniciarVentana();
-            deporte = null;
         } else {
             new Mensaje().show(Alert.AlertType.ERROR, "Eliminar Deporte", respuestaEliminarDeporte.getMensaje());
         }

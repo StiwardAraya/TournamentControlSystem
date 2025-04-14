@@ -150,8 +150,6 @@ public class EquiposController extends Controller implements Initializable {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         } else {
             reiniciarVentana();
-            deporte = null;
-            equipo = null;
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar equipo", respuestaGuardarEquipo.getMensaje());
         }
     }
@@ -169,8 +167,6 @@ public class EquiposController extends Controller implements Initializable {
         if (respuestaEliminarEquipo.getEstado()) {
             new Mensaje().show(Alert.AlertType.CONFIRMATION, "Eliminar Equipo", respuestaEliminarEquipo.getMensaje());
             reiniciarVentana();
-            equipo = null;
-            deporte = null;
         } else {
             new Mensaje().show(Alert.AlertType.ERROR, "Eliminar Equipo", respuestaEliminarEquipo.getMensaje());
         }
