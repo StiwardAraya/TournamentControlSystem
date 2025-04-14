@@ -3,7 +3,7 @@
     "id": 1,
     "nombre": "Wolves",
     "fotoURL": "FotosEquipos\\1.png",
-    "enTorneoActivo": false,
+    "enTorneoActivo": true,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,
@@ -15,7 +15,7 @@
     "id": 2,
     "nombre": "Tigers",
     "fotoURL": "FotosEquipos\\2.png",
-    "enTorneoActivo": false,
+    "enTorneoActivo": true,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,
@@ -27,7 +27,7 @@
     "id": 3,
     "nombre": "Monkeys",
     "fotoURL": "FotosEquipos\\3.png",
-    "enTorneoActivo": false,
+    "enTorneoActivo": true,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,
@@ -39,7 +39,7 @@
     "id": 4,
     "nombre": "Rekkles",
     "fotoURL": "FotosEquipos\\4.png",
-    "enTorneoActivo": false,
+    "enTorneoActivo": true,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,

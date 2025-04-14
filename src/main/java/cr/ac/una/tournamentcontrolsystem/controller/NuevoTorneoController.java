@@ -163,7 +163,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
             if (equipos != null && !equipos.isEmpty()) {
                 for (Equipo equipo : equipos) {
-                    if (deporteSeleccionado != null && equipo.getDeporte().equals(deporteSeleccionado)) {
+                    if (deporteSeleccionado != null && equipo.getDeporte().equals(deporteSeleccionado) && !equipo.isEnTorneoActivo()) {
                         lvEquipos.getItems().add(equipo);
                     }
                 }
