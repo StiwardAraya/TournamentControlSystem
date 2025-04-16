@@ -1,8 +1,9 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
-import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
+import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroPartido;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
@@ -124,19 +125,21 @@ public class PartidoController extends Controller implements Initializable {
         cronometro();
     }
 
-    private void finalizarPartido() {
-        if (cronometro != null) {
-            cronometro.stop();
-        }
-        partidoEnCurso = false;
-        btnEmpezar.setDisable(true);
-        btnFinalizar.setDisable(true);
-        arrastre = false;
-        guardarResultadoPartido();
-        
-        lblMarcadorEquipoIzq.setText("0");
-        lblMarcadorEquipoDer.setText("0");  
+   private void finalizarPartido() {
+    if (cronometro != null) {
+        cronometro.stop();
     }
+    partidoEnCurso = false;
+    btnEmpezar.setDisable(true);
+    btnFinalizar.setDisable(true);
+    arrastre = false;
+    guardarResultadoPartido();
+    
+    lblMarcadorEquipoIzq.setText("0");
+    lblMarcadorEquipoDer.setText("0");
+
+ 
+}
 
     private void cronometro() {
         int minutos = tiempoRestanteSegundos / 60;
@@ -203,26 +206,36 @@ public class PartidoController extends Controller implements Initializable {
         int marcadorEquipoIzq = Integer.parseInt(lblMarcadorEquipoIzq.getText());
         int marcadorEquipoDer = Integer.parseInt(lblMarcadorEquipoDer.getText());
 
-        Equipo equipoIzq = new Equipo(); 
-        equipoIzq.setNombre(lblNombreEquipoIzq.getText()); 
+        Equipo equipoIzq = new Equipo();
+        equipoIzq.setNombre(lblNombreEquipoIzq.getText());
+        Equipo equipoDer = new Equipo();
+        equipoDer.setNombre(lblNombreEquipoDer.getText());
 
-        Equipo equipoDer = new Equipo(); 
-        equipoDer.setNombre(lblNombreEquipoDer.getText()); 
+        Partido partido = new Partido();
+        partido.setTorneo(torneoSeleccionado);
 
-        EquipoPartido resultadoPartidoIzq = new EquipoPartido(equipoIzq, null, marcadorEquipoIzq, 0); 
-        EquipoPartido resultadoPartidoDer = new EquipoPartido(equipoDer, null, 0, marcadorEquipoDer); 
-       
-        resultadoPartidoIzq.setMarcador(marcadorEquipoIzq); 
-        resultadoPartidoDer.setMarcador(marcadorEquipoDer); 
+        Equipo ganador = null;
 
         if (marcadorEquipoIzq > marcadorEquipoDer) {
+            ganador = equipoIzq;
+            partido.setGanador(ganador);
             mensaje.show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoIzq.getNombre());
         } else if (marcadorEquipoIzq < marcadorEquipoDer) {
+            ganador = equipoDer;
+            partido.setGanador(ganador);
             mensaje.show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoDer.getNombre());
         } else {
             mensaje.show(Alert.AlertType.INFORMATION, "Empate", "Debe de desempatar.");
+            return;
         }
+
+        Respuesta respuestaGuardarPartido = RegistroPartido.getInstance().guardarPartido(partido);
+        if (!respuestaGuardarPartido.getEstado()) {
+            mensaje.show(Alert.AlertType.ERROR, "Error al guardar partido", respuestaGuardarPartido.getMensaje());
+        } else {
+            mensaje.show(Alert.AlertType.CONFIRMATION, "Partido guardado", "El partido se ha guardado correctamente.");
+        }
+
     }
-    
 }
 
