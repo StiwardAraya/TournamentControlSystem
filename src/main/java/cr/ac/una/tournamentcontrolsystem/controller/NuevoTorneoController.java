@@ -3,6 +3,7 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.Llaves;
 import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroDeporte;
@@ -20,7 +21,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -261,19 +261,11 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     private void crearLlaves() {
         ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
-        TreeMap<Integer, Equipo> llavesMapa = new TreeMap<>();
-        int idTorneo = torneo.getId();
-        LlavesTorneo llavesTorneo = new LlavesTorneo(idTorneo, llavesMapa);
-
-        for (Equipo equipo : equiposInscritos) {
-            llavesMapa.put(equipo.getId(), equipo);
-        }
-
-        llavesTorneo.setLlaves(llavesMapa);
-        Respuesta respuestaGuardarLlaves = RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
-
-        if (!respuestaGuardarLlaves.getEstado()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Error al crear llaves", "No se pudieron crear las llaves del torneo.");
+        Llaves llaves = new Llaves(equiposInscritos);
+        LlavesTorneo llavesTorneo = new LlavesTorneo(torneo.getId(), llaves);
+        Respuesta respuestaGuardarLlavesTorneo = RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+        if (!respuestaGuardarLlavesTorneo.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Llaves de torneo", "Error al construir las llaves del torneo");
         }
     }
 

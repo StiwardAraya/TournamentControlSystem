@@ -24,7 +24,7 @@ posicionarNodos: los primeros nodos que se mostraran son los equipos del torneo,
 avanzar: este metodo permitira que los equipos ganadores avancen de nivel dentro del arbol hasta determinar el ganador
 botonStart: crea un boton en medio de los equipos que se enfrentaran. Este boton abre la ventana de PartidosView con el flow controller (Partidos ya esta funcionando)
 Al llegar al nodo final, el equipo que este en esta posicion sera el ganador. El ganador debe de almacenarse y se debe de mostrar la animacion de ganador
-*/
+ */
 public class LlavesTorneosController extends Controller implements Initializable {
 
     @FXML
@@ -58,8 +58,8 @@ public class LlavesTorneosController extends Controller implements Initializable
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 torneoActual = newValue;
-               //metodo para dibujar la llave
-            } 
+                //metodo para dibujar la llave
+            }
         });
     }
 
@@ -85,6 +85,6 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnActualizar(ActionEvent event) {
-      //Metodo para actualizar la llave
+        //Metodo para actualizar la llave
     }
 }
