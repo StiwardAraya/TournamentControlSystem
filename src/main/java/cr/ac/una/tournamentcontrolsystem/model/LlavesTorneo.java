@@ -1,13 +1,11 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
-import java.util.TreeMap;
-
 public class LlavesTorneo {
 
     private int idTorneo;
-    private TreeMap llaves;
+    private Llaves llaves;
 
-    public LlavesTorneo(int idTorneo, TreeMap llaves) {
+    public LlavesTorneo(int idTorneo, Llaves llaves) {
         this.idTorneo = idTorneo;
         this.llaves = llaves;
     }
@@ -20,11 +18,11 @@ public class LlavesTorneo {
         this.idTorneo = idTorneo;
     }
 
-    public TreeMap getLlaves() {
+    public Llaves getLlaves() {
         return llaves;
     }
 
-    public void setLlaves(TreeMap llaves) {
+    public void setLlaves(Llaves llaves) {
         this.llaves = llaves;
     }
 }
