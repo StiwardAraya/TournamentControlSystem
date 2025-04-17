@@ -50,9 +50,12 @@ public class RegistroLlavesTorneos {
         return new Respuesta(false, "El Torneo no tiene llaves", "llaves no existentes");
     }
 
-    public Respuesta guardarLlavesTorneo(LlavesTorneo LlavesTorneo) {
-        if (LlavesTorneo != null) {
-            llavesTorneos.add(LlavesTorneo);
+    public Respuesta guardarLlavesTorneo(LlavesTorneo llavesTorneo) {
+        if (llavesTorneo != null) {
+            llavesTorneos.add(llavesTorneo);
+            for (LlavesTorneo llave : llavesTorneos) {
+                System.out.println(llave.getLlaves().getEquipos() + "\n\n");
+            }
         }
 
         if (GestorArchivo.getInstance().persistLlavesTorneos(llavesTorneos).getEstado()) {
@@ -61,5 +64,5 @@ public class RegistroLlavesTorneos {
             return new Respuesta(false, "No se pudieron almacenar las llaves del torneo", "error al guardar llaves");
         }
     }
-    
+
 }

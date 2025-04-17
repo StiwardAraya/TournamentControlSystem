@@ -19,9 +19,11 @@ import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -261,7 +263,8 @@ public class NuevoTorneoController extends Controller implements Initializable {
 
     private void crearLlaves() {
         ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
-        Llaves llaves = new Llaves(equiposInscritos);
+        ObservableList<Equipo> copiaEquipos = FXCollections.observableArrayList(equiposInscritos);
+        Llaves llaves = new Llaves(copiaEquipos);
         LlavesTorneo llavesTorneo = new LlavesTorneo(torneo.getId(), llaves);
         Respuesta respuestaGuardarLlavesTorneo = RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
         if (!respuestaGuardarLlavesTorneo.getEstado()) {
