@@ -1,5 +1,8 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NodoTorneo {
 
     private Equipo equipo;
@@ -35,5 +38,16 @@ public class NodoTorneo {
 
     public void setDerecho(NodoTorneo derecho) {
         this.derecho = derecho;
+    }
+
+     public List<NodoTorneo> getHijos() {
+        List<NodoTorneo> hijos = new ArrayList<>();
+        if (izquierdo != null) {
+            hijos.add(izquierdo);
+        }
+        if (derecho != null) {
+            hijos.add(derecho);
+        }
+        return hijos;
     }
 }

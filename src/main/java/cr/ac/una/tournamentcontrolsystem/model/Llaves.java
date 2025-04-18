@@ -1,11 +1,12 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+import java.util.List;
 import javafx.collections.ObservableList;
 
 public class Llaves {
 
     private NodoTorneo raiz;
-    private ObservableList<Equipo> equipos;
+    private List<Equipo> equipos;
 
     public Llaves(ObservableList<Equipo> equipos) {
         this.equipos = equipos;
@@ -30,7 +31,7 @@ public class Llaves {
         return raiz;
     }
 
-    public ObservableList<Equipo> getEquipos() {
+    public List<Equipo> getEquipos() {
         return equipos;
     }
 

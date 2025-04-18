@@ -1,10 +1,16 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import cr.ac.una.tournamentcontrolsystem.model.Llaves;
+import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.NodoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
+import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,52 +19,41 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
-/*Hay que graficar el arbol completo
-El arbol se mostrara completo hasta tener un nivel donde solo exista un nodo, este sera el ganador
-Metodos a realizar:
-calcularNumeroNodos: este se realizara en base a la cantidad de equipos inscritos en el torneo. Es util para definir el tamano del arbol
-posicionarNodos: los primeros nodos que se mostraran son los equipos del torneo, estos estaran en el nivel 1 del arbol
-avanzar: este metodo permitira que los equipos ganadores avancen de nivel dentro del arbol hasta determinar el ganador
-botonStart: crea un boton en medio de los equipos que se enfrentaran. Este boton abre la ventana de PartidosView con el flow controller (Partidos ya esta funcionando)
-Al llegar al nodo final, el equipo que este en esta posicion sera el ganador. El ganador debe de almacenarse y se debe de mostrar la animacion de ganador
- */
 public class LlavesTorneosController extends Controller implements Initializable {
 
     @FXML
     private Canvas canvaLlaves;
     @FXML
     private MFXComboBox<Torneo> cmbTorneos;
-    private Torneo torneoActual;
-
-    private static final double NODO_ALTURA = 40;
-    private static final double ESPACIO_VERTICAL = 60;
-    private static final double ESPACIO_HORIZONTAL = 150;
-    private static final double DESPLAZAMIENTO_NODO = 80;
-    private static final double LINEA_GROSOR = 2;
-    private static final double TEXTO_OFFSET_X = 10;
-    private static final double TEXTO_OFFSET_Y = 25;
-    private static final double NODO_ANCHO = 100;
-
-    private GraphicsContext gc;
-    private Pane paneContenedor;
     @FXML
     private ScrollPane scrollCanva;
     @FXML
     private MFXButton btnActualizar;
 
+    private Torneo torneoActual;
+    @FXML
+    private MFXButton btnImprimir;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        paneContenedor = new Pane();
-        paneContenedor.getChildren().add(canvaLlaves);
-        scrollCanva.setContent(paneContenedor);
-
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 torneoActual = newValue;
-                //metodo para dibujar la llave
+                Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
+                if (!respuestaBuscarLlave.getEstado()) {
+                    new Mensaje().show(Alert.AlertType.ERROR, "Torneo", "No se encontró el torneo seleccionado");
+                    return;
+                } else {
+                    LlavesTorneo llavesTorn = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
+                    Llaves llavesTorneoActual = llavesTorn.getLlaves();
+                    dibujarTorneo(llavesTorneoActual);
+                }
+
             }
         });
     }
@@ -66,6 +61,8 @@ public class LlavesTorneosController extends Controller implements Initializable
     @Override
     public void initialize() {
         cargarTorneos();
+        centrarScroll();
+        btnImprimir.setDisable(true);
     }
 
     private void cargarTorneos() {
@@ -83,8 +80,85 @@ public class LlavesTorneosController extends Controller implements Initializable
         }
     }
 
+    private void dibujarTorneo(Llaves llaves) {
+
+        // Reinicio del canva
+        GraphicsContext gc = canvaLlaves.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvaLlaves.getWidth(), canvaLlaves.getHeight());
+
+        // Estilos
+        gc.setFill(Color.rgb(193, 216, 195));
+        gc.setStroke(Color.rgb(26, 17, 16));
+        gc.setLineWidth(1);
+
+        // Dimensiones
+        double espacioEntreEquipos = 300;
+        double alturaNodo = 75;
+        double anchoNodo = 100;
+        double alturaPorNivel = 200;
+        double xInicio = (canvaLlaves.getWidth() - (alturaNodo * Math.pow(2, getAlturaNodo(llaves.getRaiz())))) / 2;
+        double yInicio = 75;
+
+        dibujarNodo(gc, llaves.getRaiz(), xInicio, yInicio, anchoNodo, alturaNodo, espacioEntreEquipos);
+    }
+
+    private void dibujarNodo(GraphicsContext gc, NodoTorneo nodo, double x, double y, double anchoNodo, double alturaNodo, double espacioEntreEquipos) {
+        if (nodo == null) {
+            return;
+        }
+
+        gc.fillRoundRect(x, y, anchoNodo, alturaNodo, 5, 5);
+
+        if (nodo.getEquipo() != null) {
+            double imagenX = x + 5;
+            double imagenY = y + 5;
+            double imagenAncho = anchoNodo - 10;
+            double imagenAlto = alturaNodo - 10;
+            gc.drawImage(new Image(new File(nodo.getEquipo().getFotoURL()).toURI().toString()), imagenX, imagenY, imagenAncho, imagenAlto);
+
+            String nombreEquipo = nodo.getEquipo().getNombre();
+            double textWidth = gc.getFont().getSize() * nombreEquipo.length() / 2;
+            gc.fillRect(x, y + (alturaNodo - (alturaNodo * 0.25)), anchoNodo, alturaNodo * 0.25);
+            gc.strokeText(nombreEquipo, x + (anchoNodo / 2) - (textWidth / 2), y + alturaNodo - 5);
+            gc.setFill(Color.rgb(193, 216, 195));
+        }
+
+        double hijoY = y + alturaNodo + 50;
+        double hijoX = x - (nodo.getHijos().size() - 1) * (espacioEntreEquipos / 2);
+
+        if (nodo.getIzquierdo() != null) {
+            gc.strokeLine(x + anchoNodo / 2, y + alturaNodo, hijoX + anchoNodo / 2, y + alturaNodo);
+            gc.strokeLine(hijoX + anchoNodo / 2, y + alturaNodo, hijoX + anchoNodo / 2, hijoY);
+            dibujarNodo(gc, nodo.getIzquierdo(), hijoX, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 1.8);
+        }
+
+        if (nodo.getDerecho() != null) {
+            gc.strokeLine(x + anchoNodo / 2, y + alturaNodo, hijoX + espacioEntreEquipos + anchoNodo / 2, y + alturaNodo);
+            gc.strokeLine(hijoX + espacioEntreEquipos + anchoNodo / 2, y + alturaNodo, hijoX + espacioEntreEquipos + anchoNodo / 2, hijoY);
+            dibujarNodo(gc, nodo.getDerecho(), hijoX + espacioEntreEquipos, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 1.8);
+        }
+    }
+
+    private int getAlturaNodo(NodoTorneo nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + Math.max(getAlturaNodo(nodo.getIzquierdo()), getAlturaNodo(nodo.getDerecho()));
+    }
+
+    private void centrarScroll() {
+        double contenidoAncho = scrollCanva.getContent().getBoundsInLocal().getWidth();
+        double scrollPaneAncho = scrollCanva.getViewportBounds().getWidth();
+        double scrollPos = (contenidoAncho - scrollPaneAncho) / 2;
+        scrollCanva.setHvalue(scrollPos / (contenidoAncho - scrollPaneAncho));
+    }
+
     @FXML
     private void onActionBtnActualizar(ActionEvent event) {
         //Metodo para actualizar la llave
+    }
+
+    @FXML
+    private void onActionImprimirCertificado(ActionEvent event) {
     }
 }

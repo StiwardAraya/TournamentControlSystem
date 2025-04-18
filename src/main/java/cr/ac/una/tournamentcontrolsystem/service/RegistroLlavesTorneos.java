@@ -53,9 +53,6 @@ public class RegistroLlavesTorneos {
     public Respuesta guardarLlavesTorneo(LlavesTorneo llavesTorneo) {
         if (llavesTorneo != null) {
             llavesTorneos.add(llavesTorneo);
-            for (LlavesTorneo llave : llavesTorneos) {
-                System.out.println(llave.getLlaves().getEquipos() + "\n\n");
-            }
         }
 
         if (GestorArchivo.getInstance().persistLlavesTorneos(llavesTorneos).getEstado()) {
