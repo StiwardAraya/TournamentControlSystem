@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "nombre": "Futbol",
+    "imagenURL": "ImagenesBalon\\1.png"
+  },
+  {
+    "id": 2,
+    "nombre": "Volley",
+    "imagenURL": "ImagenesBalon\\2.png"
+  }
+]

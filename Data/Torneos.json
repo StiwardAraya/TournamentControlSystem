@@ -1,0 +1,46 @@
+[
+  {
+    "id": 0,
+    "tiempoPorPartido": 1,
+    "nombre": "TorneoA",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 1,
+    "tiempoPorPartido": 1,
+    "nombre": "TorneoB",
+    "finalizado": false,
+    "deporte": {
+      "id": 2,
+      "nombre": "Volley",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 2,
+    "tiempoPorPartido": 1,
+    "nombre": "Torneo1",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 3,
+    "tiempoPorPartido": 1,
+    "nombre": "Torneo2",
+    "finalizado": false,
+    "deporte": {
+      "id": 2,
+      "nombre": "Volley",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  }
+]

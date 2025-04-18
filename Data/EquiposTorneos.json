@@ -1,0 +1,114 @@
+[
+  {
+    "puntosEquipo": 0,
+    "posicionFinal": 0,
+    "partidosJugados": 0,
+    "equipo": {
+      "id": 1,
+      "nombre": "EquipoA",
+      "fotoURL": "FotosEquipos\\1.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 10,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\1.png"
+      }
+    },
+    "torneo": {
+      "id": 2,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo1",
+      "finalizado": false,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\1.png"
+      }
+    }
+  },
+  {
+    "puntosEquipo": 0,
+    "posicionFinal": 0,
+    "partidosJugados": 0,
+    "equipo": {
+      "id": 2,
+      "nombre": "EquipoB",
+      "fotoURL": "FotosEquipos\\2.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 5,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\1.png"
+      }
+    },
+    "torneo": {
+      "id": 2,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo1",
+      "finalizado": false,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\1.png"
+      }
+    }
+  },
+  {
+    "puntosEquipo": 0,
+    "posicionFinal": 6,
+    "partidosJugados": 0,
+    "equipo": {
+      "id": 3,
+      "nombre": "EquipoC",
+      "fotoURL": "FotosEquipos\\3.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 0,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "torneo": {
+      "id": 3,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo2",
+      "finalizado": false,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    }
+  },
+  {
+    "puntosEquipo": 0,
+    "posicionFinal": 0,
+    "partidosJugados": 0,
+    "equipo": {
+      "id": 4,
+      "nombre": "EquipoD",
+      "fotoURL": "FotosEquipos\\4.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 0,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "torneo": {
+      "id": 3,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo2",
+      "finalizado": false,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    }
+  }
+]
