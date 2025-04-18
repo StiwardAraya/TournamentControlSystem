@@ -69,7 +69,8 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnEstadisticas(ActionEvent event) {
-        //TODO: Abrir ventana de estadisticas
+        FlowController.getInstance().goMain("EstadisticasView");
+        ((Stage) root.getScene().getWindow()).close();
     }
 
     @FXML
