@@ -19,7 +19,6 @@ import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -250,10 +249,12 @@ public class NuevoTorneoController extends Controller implements Initializable {
     }
 
     private void guardarMapeoEquiposTorneos() {
-        ObservableList<Equipo> equiposInscritos = lvTorneo.getItems();
+        ObservableList<Equipo> equiposInscritosLista = lvTorneo.getItems();
+        ObservableList<Equipo> equiposInscritos = FXCollections.observableList(equiposInscritosLista);
 
         for (Equipo equipoInscrito : equiposInscritos) {
             actualizarEquipo(equipoInscrito.getId());
+            equipoInscrito.setEnTorneoActivo(true);
             Respuesta respuestaGuardarMapeo = RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(new EquipoTorneo(0, 0, 0, equipoInscrito, torneo));
             if (!respuestaGuardarMapeo.getEstado()) {
                 new Mensaje().show(Alert.AlertType.ERROR, "Error de inscripcion", "Ocurrio un error al inscribir el equipo: " + equipoInscrito.toString());
