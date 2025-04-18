@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="850.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.EstadisticasController">
+   <left>
+      <VBox maxWidth="450.0" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+         <styleClass>
+            <String fx:value="small-container" />
+            <String fx:value="side-container" />
+         </styleClass>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="top-center" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/img/stats_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="ESTADISTICAS">
+                     <styleClass>
+                        <String fx:value="title" />
+                        <String fx:value="small-text" />
+                     </styleClass>
+                  </Label>
+                  <MFXButton fx:id="btnEquipos" maxWidth="1.7976931348623157E308" onAction="#onActionBtnEquipos" styleClass="standard-button" text="Equipos" />
+                  <MFXButton fx:id="btnTorneos" layoutX="10.0" layoutY="130.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnTorneos" styleClass="standard-button" text="Torneos" />
+                  <MFXButton fx:id="btnRankingGlobal" layoutX="10.0" layoutY="175.0" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRankingGlobal" styleClass="standard-button" text="Ranking Global" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="bottom-center" VBox.vgrow="SOMETIMES">
+               <children>
+                  <MFXButton fx:id="btnRegresar" maxWidth="1.7976931348623157E308" onAction="#onActionBtnRegresar" text="Regresar">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/exit_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="standard-button" />
+                        <String fx:value="flat-button" />
+                     </styleClass>
+                  </MFXButton>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

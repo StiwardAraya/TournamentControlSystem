@@ -338,3 +338,9 @@
     -fx-background-size: stretch;
     -fx-background-position: center;
 }
+
+.img-Certificado{
+    -fx-background-image: url("../resources/img/certificado.png");
+    -fx-background-position: center;
+    -fx-background-size: stretch;
+}
