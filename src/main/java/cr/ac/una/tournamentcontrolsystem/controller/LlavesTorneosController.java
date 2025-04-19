@@ -6,6 +6,8 @@ import cr.ac.una.tournamentcontrolsystem.model.NodoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
+import cr.ac.una.tournamentcontrolsystem.util.AppContext;
+import cr.ac.una.tournamentcontrolsystem.util.FlowController;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -17,12 +19,16 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class LlavesTorneosController extends Controller implements Initializable {
 
@@ -38,10 +44,16 @@ public class LlavesTorneosController extends Controller implements Initializable
     private Torneo torneoActual;
     @FXML
     private MFXButton btnImprimir;
+    @FXML
+    private AnchorPane canvasContainer;
+    @FXML
+    private AnchorPane root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            canvasContainer.getChildren().clear();
+            canvasContainer.getChildren().add(canvaLlaves);
             if (newValue != null) {
                 torneoActual = newValue;
                 Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
@@ -92,17 +104,17 @@ public class LlavesTorneosController extends Controller implements Initializable
         gc.setLineWidth(1);
 
         // Dimensiones
-        double espacioEntreEquipos = 300;
+        double espacioEntreEquipos = llaves.getEquipos().size() * 150;
         double alturaNodo = 75;
         double anchoNodo = 100;
         double alturaPorNivel = 200;
         double xInicio = (canvaLlaves.getWidth() - (alturaNodo * Math.pow(2, getAlturaNodo(llaves.getRaiz())))) / 2;
         double yInicio = 75;
 
-        dibujarNodo(gc, llaves.getRaiz(), xInicio, yInicio, anchoNodo, alturaNodo, espacioEntreEquipos);
+        dibujarNodo(gc, llaves.getRaiz(), xInicio, yInicio, anchoNodo, alturaNodo, espacioEntreEquipos, llaves);
     }
 
-    private void dibujarNodo(GraphicsContext gc, NodoTorneo nodo, double x, double y, double anchoNodo, double alturaNodo, double espacioEntreEquipos) {
+    private void dibujarNodo(GraphicsContext gc, NodoTorneo nodo, double x, double y, double anchoNodo, double alturaNodo, double espacioEntreEquipos, Llaves llaves) {
         if (nodo == null) {
             return;
         }
@@ -129,13 +141,42 @@ public class LlavesTorneosController extends Controller implements Initializable
         if (nodo.getIzquierdo() != null) {
             gc.strokeLine(x + anchoNodo / 2, y + alturaNodo, hijoX + anchoNodo / 2, y + alturaNodo);
             gc.strokeLine(hijoX + anchoNodo / 2, y + alturaNodo, hijoX + anchoNodo / 2, hijoY);
-            dibujarNodo(gc, nodo.getIzquierdo(), hijoX, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 1.8);
+            dibujarNodo(gc, nodo.getIzquierdo(), hijoX, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 2, llaves);
         }
 
         if (nodo.getDerecho() != null) {
             gc.strokeLine(x + anchoNodo / 2, y + alturaNodo, hijoX + espacioEntreEquipos + anchoNodo / 2, y + alturaNodo);
             gc.strokeLine(hijoX + espacioEntreEquipos + anchoNodo / 2, y + alturaNodo, hijoX + espacioEntreEquipos + anchoNodo / 2, hijoY);
-            dibujarNodo(gc, nodo.getDerecho(), hijoX + espacioEntreEquipos, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 1.8);
+            dibujarNodo(gc, nodo.getDerecho(), hijoX + espacioEntreEquipos, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 2, llaves);
+        }
+
+        // Dibujar botones
+        if (nodo.getIzquierdo() != null && nodo.getIzquierdo().getEquipo() != null
+                && nodo.getDerecho() != null && nodo.getDerecho().getEquipo() != null) {
+
+            VBox panelBoton = new VBox();
+
+            panelBoton.setLayoutX(x);
+            panelBoton.setLayoutY(y);
+            panelBoton.setPrefSize(anchoNodo, alturaNodo);
+            panelBoton.setAlignment(Pos.CENTER);
+
+            // Crear el botón de MaterialFX
+            MFXButton button = new MFXButton("Partido");
+            button.setOnAction(event -> {
+                AppContext.getInstance().set("equipo1Partido", nodo.getIzquierdo().getEquipo().getNombre());
+                AppContext.getInstance().set("equipo2Partido", nodo.getDerecho().getEquipo().getNombre());
+                AppContext.getInstance().set("torneoIdPartido", cmbTorneos.getSelectedItem().getId());
+                AppContext.getInstance().set("llaves", llaves);
+                FlowController.getInstance().goViewInWindowModal("PartidoView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
+                onActionBtnActualizar(new ActionEvent());
+            });
+
+            // Agregar el botón al panel
+            panelBoton.getChildren().add(button);
+
+            // Agregar el panel al contenedor del canvas
+            canvasContainer.getChildren().add(panelBoton);
         }
     }
 
@@ -155,7 +196,18 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnActualizar(ActionEvent event) {
-        //Metodo para actualizar la llave
+        canvasContainer.getChildren().clear();
+        canvasContainer.getChildren().add(canvaLlaves);
+        torneoActual = cmbTorneos.getSelectedItem();
+        Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
+        if (!respuestaBuscarLlave.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Torneo", "No se encontró el torneo seleccionado");
+            return;
+        } else {
+            LlavesTorneo llavesTorn = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
+            Llaves llavesTorneoActual = llavesTorn.getLlaves();
+            dibujarTorneo(llavesTorneoActual);
+        }
     }
 
     @FXML

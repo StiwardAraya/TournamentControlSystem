@@ -48,27 +48,27 @@ public class PartidoController extends Controller implements Initializable {
     private Label lblMarcadorEquipoDer;
 
     private Torneo torneoSeleccionado;
+    private Equipo equipo1;
+    private Equipo equipo2;
+    private Partido partido;
     private Timeline cronometro;
     private int tiempoRestanteSegundos;
     private boolean partidoEnCurso = false;
-    private boolean arrastre = false; 
-    private Mensaje mensaje = new Mensaje();
-    
+    private boolean arrastre = false;
+
     /* Pendientes:
     Incluir las imagenes de cada equipo
     Mostrar la imagen del balon del equipo en imvBalon
     Realizar el mapeo
     Verificar que los datos se guarden correctamente en json
     Desarrollar el manejo de desempates
-    */
-    
-    /* El partido cuenta con la funcionalidad correcta de: 
+     */
+ /* El partido cuenta con la funcionalidad correcta de:
     cronometro(recibe correctamente el tiempo por partido de cada torneo)
     arrastre del balon y anotacion de goles
     muestra correctamente el nombre de ambos equipos en los labels
     guarda el marcador, el equipo ganador y no permite guardar si existe un empate
     Se implementa la funcionalidad del AppContext para acceder a la informacion requerida del torneo y sus enfrentamientos*/
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -81,7 +81,7 @@ public class PartidoController extends Controller implements Initializable {
         Respuesta respuestaTorneo = RegistroTorneo.getInstance().buscarTorneo(torneoId);
         if (respuestaTorneo.getEstado() && respuestaTorneo.getResultado("torneoEncontrado") instanceof Torneo) {
             this.torneoSeleccionado = (Torneo) respuestaTorneo.getResultado("torneoEncontrado");
-            tiempoRestanteSegundos = torneoSeleccionado.getTiempoPorPartido() * 60; 
+            tiempoRestanteSegundos = torneoSeleccionado.getTiempoPorPartido() * 60;
         }
 
         infoPartido();
@@ -94,9 +94,9 @@ public class PartidoController extends Controller implements Initializable {
             partidoEnCurso = true;
             btnEmpezar.setDisable(true);
             btnFinalizar.setDisable(false);
-            arrastre = true; 
-            
-            cronometro = new Timeline(new KeyFrame(Duration.seconds(1 ), evt -> {
+            arrastre = true;
+
+            cronometro = new Timeline(new KeyFrame(Duration.seconds(1), evt -> {
                 if (tiempoRestanteSegundos > 0 && partidoEnCurso) {
                     tiempoRestanteSegundos--;
                     cronometro();
@@ -117,7 +117,7 @@ public class PartidoController extends Controller implements Initializable {
     private void infoPartido() {
         String equipoIzqNombre = (String) AppContext.getInstance().get("equipo1Partido");
         String equipoDerNombre = (String) AppContext.getInstance().get("equipo2Partido");
-      
+
         lblNombreEquipoIzq.setText(equipoIzqNombre);
         lblNombreEquipoDer.setText(equipoDerNombre);
         btnEmpezar.setDisable(false);
@@ -125,21 +125,20 @@ public class PartidoController extends Controller implements Initializable {
         cronometro();
     }
 
-   private void finalizarPartido() {
-    if (cronometro != null) {
-        cronometro.stop();
-    }
-    partidoEnCurso = false;
-    btnEmpezar.setDisable(true);
-    btnFinalizar.setDisable(true);
-    arrastre = false;
-    guardarResultadoPartido();
-    
-    lblMarcadorEquipoIzq.setText("0");
-    lblMarcadorEquipoDer.setText("0");
+    private void finalizarPartido() {
+        if (cronometro != null) {
+            cronometro.stop();
+        }
+        partidoEnCurso = false;
+        btnEmpezar.setDisable(true);
+        btnFinalizar.setDisable(true);
+        arrastre = false;
+        guardarResultadoPartido();
 
- 
-}
+        lblMarcadorEquipoIzq.setText("0");
+        lblMarcadorEquipoDer.setText("0");
+
+    }
 
     private void cronometro() {
         int minutos = tiempoRestanteSegundos / 60;
@@ -219,23 +218,22 @@ public class PartidoController extends Controller implements Initializable {
         if (marcadorEquipoIzq > marcadorEquipoDer) {
             ganador = equipoIzq;
             partido.setGanador(ganador);
-            mensaje.show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoIzq.getNombre());
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoIzq.getNombre());
         } else if (marcadorEquipoIzq < marcadorEquipoDer) {
             ganador = equipoDer;
             partido.setGanador(ganador);
-            mensaje.show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoDer.getNombre());
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoDer.getNombre());
         } else {
-            mensaje.show(Alert.AlertType.INFORMATION, "Empate", "Debe de desempatar.");
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Empate", "Debe de desempatar.");
             return;
         }
 
         Respuesta respuestaGuardarPartido = RegistroPartido.getInstance().guardarPartido(partido);
         if (!respuestaGuardarPartido.getEstado()) {
-            mensaje.show(Alert.AlertType.ERROR, "Error al guardar partido", respuestaGuardarPartido.getMensaje());
+            new Mensaje().show(Alert.AlertType.ERROR, "Error al guardar partido", respuestaGuardarPartido.getMensaje());
         } else {
-            mensaje.show(Alert.AlertType.CONFIRMATION, "Partido guardado", "El partido se ha guardado correctamente.");
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido guardado", "El partido se ha guardado correctamente.");
         }
 
     }
 }
-

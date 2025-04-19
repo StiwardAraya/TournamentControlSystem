@@ -72,7 +72,7 @@ public class Llaves {
             return null;
         }
 
-        if (nodo.getEquipo() != null && nodo.getEquipo().equals(equipo)) {
+        if (nodo.getEquipo() != null && nodo.getEquipo().getId() == equipo.getId()) {
             return nodo;
         }
 
