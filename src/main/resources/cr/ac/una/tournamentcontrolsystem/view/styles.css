@@ -197,6 +197,21 @@
   -fx-text-fill: -fx-black;
 }
 
+.titleCertificado {
+  -fx-font-size: 25px;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
+  -fx-font-family: "Big Shoulders";
+  -fx-text-fill: -fx-black;
+}
+
+.textCertificado {
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
+  -fx-font-family: "Big Shoulders";
+  -fx-text-fill: -fx-black;
+}
 .small-text {
   -fx-font-size: 16px;
   -fx-text-fill: -fx-black;
