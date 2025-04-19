@@ -1,5 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+import java.util.Objects;
+
 /**
  * Clase que representa un Equipo.
  *
@@ -86,7 +88,19 @@ public class Equipo {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Equipo otroEquipo = (Equipo) obj;
+        return this.id == otroEquipo.id;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

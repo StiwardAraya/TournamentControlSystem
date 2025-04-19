@@ -1,5 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+import java.util.Objects;
+
 /**
  * Clase que representa la relacion entre un equipo y un torneo.
  *
@@ -68,5 +70,22 @@ public class EquipoTorneo {
     @Override
     public String toString() {
         return "EquipoTorneo{" + "puntosEquipo=" + puntosEquipo + ", posicionFinal=" + posicionFinal + ", partidosJugados=" + partidosJugados + ", equipo=" + equipo + ", torneo=" + torneo + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        EquipoTorneo otro = (EquipoTorneo) obj;
+        return Objects.equals(this.equipo, otro.equipo) && Objects.equals(this.torneo, otro.torneo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(equipo, torneo);
     }
 }

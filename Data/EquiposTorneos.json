@@ -4,6 +4,7 @@
     "posicionFinal": 0,
     "partidosJugados": 0,
     "equipo": {
+<<<<<<< HEAD
       "id": 5,
       "nombre": "Bears",
       "fotoURL": "FotosEquipos\\5.png",
@@ -68,10 +69,21 @@
       "deporte": {
         "id": 1,
         "nombre": "VolleyBall",
+=======
+      "id": 1,
+      "nombre": "EquipoA",
+      "fotoURL": "FotosEquipos\\1.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 10,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
         "imagenURL": "ImagenesBalon\\1.png"
       }
     },
     "torneo": {
+<<<<<<< HEAD
       "id": 1,
       "tiempoPorPartido": 30,
       "nombre": "Summer",
@@ -79,6 +91,15 @@
       "deporte": {
         "id": 1,
         "nombre": "VolleyBall",
+=======
+      "id": 2,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo1",
+      "finalizado": false,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
         "imagenURL": "ImagenesBalon\\1.png"
       }
     }
@@ -89,6 +110,7 @@
     "partidosJugados": 0,
     "equipo": {
       "id": 2,
+<<<<<<< HEAD
       "nombre": "Misties",
       "fotoURL": "FotosEquipos\\2.png",
       "enTorneoActivo": false,
@@ -96,10 +118,20 @@
       "deporte": {
         "id": 1,
         "nombre": "VolleyBall",
+=======
+      "nombre": "EquipoB",
+      "fotoURL": "FotosEquipos\\2.png",
+      "enTorneoActivo": false,
+      "puntosTotales": 5,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
         "imagenURL": "ImagenesBalon\\1.png"
       }
     },
     "torneo": {
+<<<<<<< HEAD
       "id": 1,
       "tiempoPorPartido": 30,
       "nombre": "Summer",
@@ -107,21 +139,39 @@
       "deporte": {
         "id": 1,
         "nombre": "VolleyBall",
+=======
+      "id": 2,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo1",
+      "finalizado": false,
+      "deporte": {
+        "id": 1,
+        "nombre": "Futbol",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
         "imagenURL": "ImagenesBalon\\1.png"
       }
     }
   },
   {
     "puntosEquipo": 0,
+<<<<<<< HEAD
     "posicionFinal": 0,
     "partidosJugados": 0,
     "equipo": {
       "id": 3,
       "nombre": "Jinxies",
+=======
+    "posicionFinal": 6,
+    "partidosJugados": 0,
+    "equipo": {
+      "id": 3,
+      "nombre": "EquipoC",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
       "fotoURL": "FotosEquipos\\3.png",
       "enTorneoActivo": false,
       "puntosTotales": 0,
       "deporte": {
+<<<<<<< HEAD
         "id": 1,
         "nombre": "VolleyBall",
         "imagenURL": "ImagenesBalon\\1.png"
@@ -136,6 +186,22 @@
         "id": 1,
         "nombre": "VolleyBall",
         "imagenURL": "ImagenesBalon\\1.png"
+=======
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "torneo": {
+      "id": 3,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo2",
+      "finalizado": false,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
       }
     }
   },
@@ -145,11 +211,16 @@
     "partidosJugados": 0,
     "equipo": {
       "id": 4,
+<<<<<<< HEAD
       "nombre": "Vis",
+=======
+      "nombre": "EquipoD",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
       "fotoURL": "FotosEquipos\\4.png",
       "enTorneoActivo": false,
       "puntosTotales": 0,
       "deporte": {
+<<<<<<< HEAD
         "id": 1,
         "nombre": "VolleyBall",
         "imagenURL": "ImagenesBalon\\1.png"
@@ -164,6 +235,22 @@
         "id": 1,
         "nombre": "VolleyBall",
         "imagenURL": "ImagenesBalon\\1.png"
+=======
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "torneo": {
+      "id": 3,
+      "tiempoPorPartido": 1,
+      "nombre": "Torneo2",
+      "finalizado": false,
+      "deporte": {
+        "id": 2,
+        "nombre": "Volley",
+        "imagenURL": "ImagenesBalon\\2.png"
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
       }
     }
   }

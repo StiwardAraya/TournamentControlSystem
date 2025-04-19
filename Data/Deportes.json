@@ -1,11 +1,16 @@
 [
   {
     "id": 1,
+<<<<<<< HEAD
     "nombre": "VolleyBall",
+=======
+    "nombre": "Futbol",
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
     "imagenURL": "ImagenesBalon\\1.png"
   },
   {
     "id": 2,
+<<<<<<< HEAD
     "nombre": "Futbol",
     "imagenURL": "ImagenesBalon\\2.png"
   },
@@ -13,5 +18,9 @@
     "id": 3,
     "nombre": "Basket",
     "imagenURL": "ImagenesBalon\\3.png"
+=======
+    "nombre": "Volley",
+    "imagenURL": "ImagenesBalon\\2.png"
+>>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
   }
 ]
