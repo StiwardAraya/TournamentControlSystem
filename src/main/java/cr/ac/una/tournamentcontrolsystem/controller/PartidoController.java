@@ -1,14 +1,18 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
+import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
-import cr.ac.una.tournamentcontrolsystem.service.RegistroPartido;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
@@ -18,12 +22,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public class PartidoController extends Controller implements Initializable {
@@ -46,15 +52,32 @@ public class PartidoController extends Controller implements Initializable {
     private Label lblNombreEquipoDer;
     @FXML
     private Label lblMarcadorEquipoDer;
+    @FXML
+    private ImageView imvEquipo1;
+    @FXML
+    private Circle crlContainerMarcador1;
+    @FXML
+    private ImageView imvEquipo2;
+    @FXML
+    private StackPane crlContainerMarcador2;
 
     private Torneo torneoSeleccionado;
     private Equipo equipo1;
     private Equipo equipo2;
     private Partido partido;
+    private Deporte deporte;
+    private LlavesTorneo llavesTorneo;
+    private EquipoPartido equipoPartido1;
+    private EquipoPartido equipoPartido2;
+
     private Timeline cronometro;
     private int tiempoRestanteSegundos;
     private boolean partidoEnCurso = false;
     private boolean arrastre = false;
+
+    private double mouseXOffset;
+    private double mouseYOffset;
+
 
     /* Pendientes:
     Incluir las imagenes de cada equipo
@@ -80,12 +103,20 @@ public class PartidoController extends Controller implements Initializable {
 
         Respuesta respuestaTorneo = RegistroTorneo.getInstance().buscarTorneo(torneoId);
         if (respuestaTorneo.getEstado() && respuestaTorneo.getResultado("torneoEncontrado") instanceof Torneo) {
-            this.torneoSeleccionado = (Torneo) respuestaTorneo.getResultado("torneoEncontrado");
+            torneoSeleccionado = (Torneo) respuestaTorneo.getResultado("torneoEncontrado");
             tiempoRestanteSegundos = torneoSeleccionado.getTiempoPorPartido() * 60;
         }
 
+        setEntidades();
         infoPartido();
         setupDragAndDrop();
+
+        containerBalon.setStyle("-fx-opacity: 1");
+        imvBalon.setImage(new Image(new File(deporte.getImagenURL()).toURI().toString()));
+        imvBalon.setStyle("-fx-cursor: hand");
+
+        imvEquipo1.setImage(new Image(new File(equipo1.getFotoURL()).toURI().toString()));
+        imvEquipo2.setImage(new Image(new File(equipo2.getFotoURL()).toURI().toString()));
     }
 
     @FXML
@@ -115,11 +146,10 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     private void infoPartido() {
-        String equipoIzqNombre = (String) AppContext.getInstance().get("equipo1Partido");
-        String equipoDerNombre = (String) AppContext.getInstance().get("equipo2Partido");
-
-        lblNombreEquipoIzq.setText(equipoIzqNombre);
-        lblNombreEquipoDer.setText(equipoDerNombre);
+        lblNombreEquipoIzq.setText(equipo1.getNombre());
+        lblNombreEquipoDer.setText(equipo2.getNombre());
+        lblMarcadorEquipoIzq.setText("0");
+        lblMarcadorEquipoDer.setText("0");
         btnEmpezar.setDisable(false);
 
         cronometro();
@@ -133,10 +163,8 @@ public class PartidoController extends Controller implements Initializable {
         btnEmpezar.setDisable(true);
         btnFinalizar.setDisable(true);
         arrastre = false;
-        guardarResultadoPartido();
 
-        lblMarcadorEquipoIzq.setText("0");
-        lblMarcadorEquipoDer.setText("0");
+        guardarResultadoPartido();
 
     }
 
@@ -155,6 +183,16 @@ public class PartidoController extends Controller implements Initializable {
                 db.setContent(content);
                 event.consume();
             }
+        });
+
+        imvBalon.setOnMousePressed((MouseEvent event) -> {
+            mouseXOffset = event.getSceneX() - imvBalon.getX();
+            mouseYOffset = event.getSceneY() - imvBalon.getY();
+        });
+
+        imvBalon.setOnMouseDragged((MouseEvent event) -> {
+            imvBalon.setTranslateX(event.getSceneX() - mouseXOffset);
+            imvBalon.setTranslateY(event.getSceneY() - mouseYOffset);
         });
 
         lblMarcadorEquipoIzq.setOnDragOver((javafx.scene.input.DragEvent event) -> {
@@ -202,38 +240,37 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     private void guardarResultadoPartido() {
-        int marcadorEquipoIzq = Integer.parseInt(lblMarcadorEquipoIzq.getText());
-        int marcadorEquipoDer = Integer.parseInt(lblMarcadorEquipoDer.getText());
+        registrarGanadorPartido();
+        // Actualizar los puntos totales de los equipos
+        // Actualizar las entidades de mapeo EquipoPartido y guardarlas
+        // Actualizar las entidades de mapeo EquipoTorneo
 
-        Equipo equipoIzq = new Equipo();
-        equipoIzq.setNombre(lblNombreEquipoIzq.getText());
-        Equipo equipoDer = new Equipo();
-        equipoDer.setNombre(lblNombreEquipoDer.getText());
+        // Revisar si con el partido actual ya finalizó el torneo y hacer los cambios correspondientes
+    }
 
-        Partido partido = new Partido();
-        partido.setTorneo(torneoSeleccionado);
+    private void setEntidades() {
+        equipo1 = (Equipo) AppContext.getInstance().get("equipo1Partido");
+        equipo2 = (Equipo) AppContext.getInstance().get("equipo2Partido");
+        partido = new Partido(0, torneoSeleccionado);
+        deporte = torneoSeleccionado.getDeporte();
 
-        Equipo ganador = null;
+        llavesTorneo = (LlavesTorneo) RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoSeleccionado.getId()).getResultado("llaves");
 
-        if (marcadorEquipoIzq > marcadorEquipoDer) {
-            ganador = equipoIzq;
-            partido.setGanador(ganador);
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoIzq.getNombre());
-        } else if (marcadorEquipoIzq < marcadorEquipoDer) {
-            ganador = equipoDer;
-            partido.setGanador(ganador);
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido finalizado", "Ganador: " + equipoDer.getNombre());
+        // Mapear los partidos
+        equipoPartido1 = new EquipoPartido(equipo1, partido, 0, false);
+        equipoPartido2 = new EquipoPartido(equipo2, partido, 0, false);
+    }
+
+    private void registrarGanadorPartido() {
+        if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) > Integer.parseInt(lblMarcadorEquipoDer.getText())) {
+            llavesTorneo.getLlaves().registrarGanador(equipo1);
+        } else if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) < Integer.parseInt(lblMarcadorEquipoDer.getText())) {
+            llavesTorneo.getLlaves().registrarGanador(equipo2);
         } else {
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Empate", "Debe de desempatar.");
-            return;
+            // Desempate
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Empate", "Se debe desempatar");
         }
 
-        Respuesta respuestaGuardarPartido = RegistroPartido.getInstance().guardarPartido(partido);
-        if (!respuestaGuardarPartido.getEstado()) {
-            new Mensaje().show(Alert.AlertType.ERROR, "Error al guardar partido", respuestaGuardarPartido.getMensaje());
-        } else {
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Partido guardado", "El partido se ha guardado correctamente.");
-        }
-
+        RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
     }
 }

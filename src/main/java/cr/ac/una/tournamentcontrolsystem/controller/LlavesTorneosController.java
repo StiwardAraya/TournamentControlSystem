@@ -164,8 +164,8 @@ public class LlavesTorneosController extends Controller implements Initializable
             // Crear el botón de MaterialFX
             MFXButton button = new MFXButton("Partido");
             button.setOnAction(event -> {
-                AppContext.getInstance().set("equipo1Partido", nodo.getIzquierdo().getEquipo().getNombre());
-                AppContext.getInstance().set("equipo2Partido", nodo.getDerecho().getEquipo().getNombre());
+                AppContext.getInstance().set("equipo1Partido", nodo.getIzquierdo().getEquipo());
+                AppContext.getInstance().set("equipo2Partido", nodo.getDerecho().getEquipo());
                 AppContext.getInstance().set("torneoIdPartido", cmbTorneos.getSelectedItem().getId());
                 AppContext.getInstance().set("llaves", llaves);
                 FlowController.getInstance().goViewInWindowModal("PartidoView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
