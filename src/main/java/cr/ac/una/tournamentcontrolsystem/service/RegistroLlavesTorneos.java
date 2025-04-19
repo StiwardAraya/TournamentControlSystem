@@ -51,14 +51,29 @@ public class RegistroLlavesTorneos {
     }
 
     public Respuesta guardarLlavesTorneo(LlavesTorneo llavesTorneo) {
-        if (llavesTorneo != null) {
+        if (llavesTorneo == null) {
+            return new Respuesta(false, "Objeto nulo", "El objeto LlavesTorneo es null");
+        }
+    
+        boolean actualizado = false;
+    
+        for (int i = 0; i < llavesTorneos.size(); i++) {
+            if (llavesTorneos.get(i).getIdTorneo() == llavesTorneo.getIdTorneo()) {
+                llavesTorneos.set(i, llavesTorneo);
+                actualizado = true;
+                break;
+            }
+        }
+    
+        if (!actualizado) {
             llavesTorneos.add(llavesTorneo);
         }
-
+    
         if (GestorArchivo.getInstance().persistLlavesTorneos(llavesTorneos).getEstado()) {
-            return new Respuesta(true, "Llaves de torneo guardadas", null);
+            String mensaje = actualizado ? "Llaves del torneo actualizadas" : "Llaves del torneo guardadas";
+            return new Respuesta(true, mensaje, null);
         } else {
-            return new Respuesta(false, "No se pudieron almacenar las llaves del torneo", "error al guardar llaves");
+            return new Respuesta(false, "No se pudieron almacenar las llaves del torneo", "Error al guardar llaves");
         }
     }
 
