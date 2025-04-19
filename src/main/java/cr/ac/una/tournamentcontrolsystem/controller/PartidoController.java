@@ -15,8 +15,12 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +32,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -77,6 +82,8 @@ public class PartidoController extends Controller implements Initializable {
 
     private double mouseXOffset;
     private double mouseYOffset;
+    @FXML
+    private AnchorPane root;
 
 
     /* Pendientes:
@@ -143,6 +150,11 @@ public class PartidoController extends Controller implements Initializable {
     @FXML
     private void onActionBtnFinalizar(ActionEvent event) {
         finalizarPartido();
+         Equipo ganador = registrarGanadorPartido(); 
+
+        if (ganador != null) {
+            mostrarAnimacionGanador(ganador); 
+        }
     }
 
     private void infoPartido() {
@@ -164,8 +176,7 @@ public class PartidoController extends Controller implements Initializable {
         btnFinalizar.setDisable(true);
         arrastre = false;
 
-        guardarResultadoPartido();
-
+        guardarResultadoPartido(); 
     }
 
     private void cronometro() {
@@ -261,7 +272,7 @@ public class PartidoController extends Controller implements Initializable {
         equipoPartido2 = new EquipoPartido(equipo2, partido, 0, false);
     }
 
-    private void registrarGanadorPartido() {
+    private Equipo registrarGanadorPartido() {
         if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) > Integer.parseInt(lblMarcadorEquipoDer.getText())) {
             llavesTorneo.getLlaves().registrarGanador(equipo1);
         } else if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) < Integer.parseInt(lblMarcadorEquipoDer.getText())) {
@@ -272,5 +283,45 @@ public class PartidoController extends Controller implements Initializable {
         }
 
         RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+        return null;
     }
+    
+    //No sirve la animacion :(
+    private void mostrarAnimacionGanador(Equipo ganador) {
+        StackPane confetiContainer = new StackPane();
+        confetiContainer.setPrefSize(600, 400); 
+        
+        //crear el tamano y color del confeti
+        for (int i = 0; i < 50; i++) { 
+            Circle confeti = new Circle(5 + Math.random() * 10);
+            confeti.setFill(javafx.scene.paint.Color.color(Math.random(), Math.random(), Math.random())); 
+
+            // Posicionar el confeti en la parte superior de la pantalla
+            confeti.setTranslateX(Math.random() * 600); 
+            confeti.setTranslateY(-10); 
+            confetiContainer.getChildren().add(confeti);
+
+            // Crear la animación de caída
+            FadeTransition fade = new FadeTransition(Duration.seconds(5), confeti);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.0); 
+
+            TranslateTransition translate = new TranslateTransition(Duration.seconds(5), confeti);
+            translate.setFromY(-10);
+            translate.setToY(400); 
+
+            // Combinar las animaciones
+            ParallelTransition parallelTransition = new ParallelTransition(confeti, fade, translate);
+            parallelTransition.setOnFinished(event -> confetiContainer.getChildren().remove(confeti)); // Eliminar confeti al finalizar
+            parallelTransition.play();
+        }
+
+        // Agregar el contenedor de confeti al AnchorPane
+        root.getChildren().add(confetiContainer);
+
+        // Eliminar el contenedor después de 5 segundos
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), evt -> root.getChildren().remove(confetiContainer)));
+        timeline.play();
+    }
+
 }

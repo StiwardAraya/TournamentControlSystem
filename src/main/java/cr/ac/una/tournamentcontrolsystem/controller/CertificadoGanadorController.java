@@ -1,6 +1,8 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import java.awt.Graphics2D;
@@ -15,9 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -50,10 +54,30 @@ public class CertificadoGanadorController extends Controller implements Initiali
     private AnchorPane anchorCertificado;
     @FXML
     private ImageView imvEquipo;
+    @FXML
+    private StackPane containerEquipo;
+    
+    /*Falta cargrar la imagen del equipo en imvEquipo, todo lo demas funciona correctamente*/
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+      
+        String nombreEquipoGanador = (String) AppContext.getInstance().get("nombreEquipoGanador");
+        String nombreTorneo = (String) AppContext.getInstance().get("nombreTorneo");
+        Integer partidosJugados = (Integer) AppContext.getInstance().get("partidosJugados");
+        Integer puntosObtenidos = (Integer) AppContext.getInstance().get("puntosObtenidos");
+        Integer posicionFinal = (Integer) AppContext.getInstance().get("posicionFinal");
+
+        Equipo equipo = new Equipo(); 
+        equipo.setNombre(nombreEquipoGanador); 
+        Torneo torneo = new Torneo();
+        torneo.setNombre(nombreTorneo); 
+        EquipoTorneo equipoTorneo = new EquipoTorneo(puntosObtenidos, posicionFinal, partidosJugados, equipo, torneo);
+        infoGanador(equipoTorneo);
+       
+        containerEquipo.setStyle("-fx-background-color: transparent; -fx-opacity: 1;"); 
+        imvEquipo.setImage(new Image(new File(equipo.getFotoURL()).toURI().toString()));
+        imvEquipo.setStyle("-fx-cursor: hand; -fx-opacity: 1;");
     }    
 
     @Override
@@ -114,26 +138,21 @@ public class CertificadoGanadorController extends Controller implements Initiali
         graphics.drawImage(originalImage, 0, 0, nuevoAnchoPx, nuevoAltoPx, null);
         graphics.dispose();
         return imagenAjustada;
-        
-       //Si lees esto tienes 7 años de mala suerte
     }
     
-    private void informoGanador(EquipoTorneo equipoTorneo){
-         String equipoGanador = (String) AppContext.getInstance().get("equipo");
-         String torneoEquipo = (String) AppContext.getInstance().get("torneo");
-         Integer partidosJugados = (Integer) AppContext.getInstance().get("partidosJugados");
-         Integer puntosObtenidos = (Integer) AppContext.getInstance().get("puntosObtenidos");
-         Integer posicionFinal = (Integer) AppContext.getInstance().get("posicionFinal");
-         
-        if (equipoGanador != null) {
-            lblEquipo.setText(String.valueOf(equipoTorneo.getEquipo()));
-            lblTorneo.setText(String.valueOf(equipoTorneo.getTorneo()));
+    private void infoGanador(EquipoTorneo equipoTorneo) {
+        if (equipoTorneo != null) {
+            lblEquipo.setText(equipoTorneo.getEquipo().getNombre()); 
+            lblTorneo.setText(equipoTorneo.getTorneo().getNombre()); 
             lblPartidosJugados.setText(String.valueOf(equipoTorneo.getPartidosJugados()));
             lblPuntosObtenidos.setText(String.valueOf(equipoTorneo.getPuntosEquipo()));
             lblPosicionFinal.setText(String.valueOf(equipoTorneo.getPosicionFinal()));
-            
-        //Obtener la imagen del equipo y cargarla en el imvEquipo
-        //Si lo vuelves a leer, tienes 7 años más de mala suerte y eres gay
+
+            String imagenUrl = equipoTorneo.getEquipo().getFotoURL(); 
+            if (imagenUrl != null) {
+                Image image = new Image(new File(imagenUrl).toURI().toString());
+                imvEquipo.setImage(image);
+            }
         }
     }
  }

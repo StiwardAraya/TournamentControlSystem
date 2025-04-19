@@ -1,9 +1,12 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
+import cr.ac.una.tournamentcontrolsystem.model.Equipo;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Llaves;
 import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.NodoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
@@ -49,6 +52,7 @@ public class LlavesTorneosController extends Controller implements Initializable
     @FXML
     private AnchorPane root;
 
+    /*Pendiente: habilitar el boton de imprimir certificado cuando el torneo finaliza*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -74,7 +78,7 @@ public class LlavesTorneosController extends Controller implements Initializable
     public void initialize() {
         cargarTorneos();
         centrarScroll();
-        btnImprimir.setDisable(true);
+        //btnImprimir.setDisable(true);
     }
 
     private void cargarTorneos() {
@@ -193,6 +197,51 @@ public class LlavesTorneosController extends Controller implements Initializable
         double scrollPos = (contenidoAncho - scrollPaneAncho) / 2;
         scrollCanva.setHvalue(scrollPos / (contenidoAncho - scrollPaneAncho));
     }
+    
+    private void accesoCertificado(){
+          
+      if (torneoActual != null) {
+          Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
+
+          if (respuestaBuscarLlave.getEstado()) {
+              LlavesTorneo llavesTorneo = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
+              Llaves llaves = llavesTorneo.getLlaves();
+
+              if (llaves != null) {
+                  NodoTorneo raiz = llaves.getRaiz();
+
+                  if (raiz != null && raiz.getEquipo() != null) {
+                      Equipo equipoGanador = raiz.getEquipo();
+                      Respuesta respuestaEquiposTorneos = RegistroEquipoTorneo.getInstance().getEquiposTorneos();
+
+                      if (respuestaEquiposTorneos.getEstado()) {
+                          List<EquipoTorneo> equiposTorneos = (List<EquipoTorneo>) respuestaEquiposTorneos.getResultado("EquiposTorneos");
+                          EquipoTorneo equipoTorneoGanador = null;
+
+                          for (EquipoTorneo et : equiposTorneos) {
+                              if (et.getEquipo().equals(equipoGanador) && et.getTorneo().equals(torneoActual)) {
+                                  equipoTorneoGanador = et;
+                                  break;
+                              }
+                          }
+
+                          if (equipoTorneoGanador != null) {
+                              AppContext.getInstance().set("nombreEquipoGanador", equipoGanador.getNombre());
+                              AppContext.getInstance().set("puntosObtenidos", equipoTorneoGanador.getPuntosEquipo());
+                              AppContext.getInstance().set("posicionFinal", equipoTorneoGanador.getPosicionFinal());
+                              AppContext.getInstance().set("partidosJugados", equipoTorneoGanador.getPartidosJugados());
+
+                              if (torneoActual.getNombre() != null) {
+                                  AppContext.getInstance().set("nombreTorneo", torneoActual.getNombre());
+                              }
+                              FlowController.getInstance().goViewInWindowModal("CertificadoGanadorView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
+                            } 
+                        } 
+                    } 
+                } 
+            } 
+        } 
+    }
 
     @FXML
     private void onActionBtnActualizar(ActionEvent event) {
@@ -212,5 +261,8 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     @FXML
     private void onActionImprimirCertificado(ActionEvent event) {
+        accesoCertificado();
+
     }
 }
+ 
