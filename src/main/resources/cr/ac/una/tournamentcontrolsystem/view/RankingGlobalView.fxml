@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.RankingGlobalController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tournamentcontrolsystem.controller.RankingGlobalController">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
@@ -36,11 +36,11 @@
                <children>
                   <TableView fx:id="tbRankingEquipos" layoutX="230.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="26.0">
                     <columns>
-                      <TableColumn fx:id="clId" maxWidth="93.0" prefWidth="62.0" text="ID" />
-                      <TableColumn fx:id="clEquipo" maxWidth="108.0" prefWidth="81.0" text="Equipo" />
-                        <TableColumn fx:id="clDeporte" maxWidth="169.0" prefWidth="102.0" text="Deporte" />
-                        <TableColumn fx:id="clPuntosTotales" maxWidth="254.0" prefWidth="127.0" text="Puntos Totales" />
-                        <TableColumn fx:id="clJugando" prefWidth="99.0" text="Jugando" />
+                      <TableColumn fx:id="clId" maxWidth="80.0" minWidth="80.0" text="Posición" />
+                      <TableColumn fx:id="clEquipo" maxWidth="1.7976931348623157E308" minWidth="115.0" prefWidth="115.0" text="Equipo" />
+                        <TableColumn fx:id="clDeporte" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Deporte" />
+                        <TableColumn fx:id="clPuntosTotales" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Puntos Totales" />
+                        <TableColumn fx:id="clJugando" maxWidth="76.0" minWidth="76.0" prefWidth="76.0" text="Jugando" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
