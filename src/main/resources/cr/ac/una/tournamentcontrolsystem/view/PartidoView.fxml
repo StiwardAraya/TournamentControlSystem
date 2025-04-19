@@ -43,6 +43,7 @@
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
                <children>
+                  <ImageView fx:id="imvEquipo1" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="lblNombreEquipoIzq" text="Equipo 1">
                      <styleClass>
                         <String fx:value="title" />
@@ -52,7 +53,7 @@
                   </Label>
                   <StackPane>
                      <children>
-                        <Circle fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
+                        <Circle fx:id="crlContainerMarcador1" fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
                         <Label fx:id="lblMarcadorEquipoIzq" text="0">
                            <styleClass>
                               <String fx:value="text-color-white" />
@@ -67,6 +68,7 @@
          <right>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
                <children>
+                  <ImageView fx:id="imvEquipo2" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="lblNombreEquipoDer" text="Equipo 2">
                      <styleClass>
                         <String fx:value="title" />
@@ -74,9 +76,9 @@
                         <String fx:value="text-color-white" />
                      </styleClass>
                   </Label>
-                  <StackPane>
+                  <StackPane fx:id="crlContainerMarcador2">
                      <children>
-                        <Circle fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
+                        <Circle fx:id="crlContainerMarcador1" fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
                         <Label fx:id="lblMarcadorEquipoDer" text="0">
                            <styleClass>
                               <String fx:value="text-color-white" />
