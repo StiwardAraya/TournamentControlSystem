@@ -1,67 +1,24 @@
 [
   {
     "id": 0,
-<<<<<<< HEAD
     "tiempoPorPartido": 90,
-    "nombre": "Gold",
-    "finalizado": true,
+    "nombre": "Bañasos",
+    "finalizado": false,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",
       "imagenURL": "ImagenesBalon\\2.png"
-=======
-    "tiempoPorPartido": 1,
-    "nombre": "TorneoA",
-    "finalizado": false,
-    "deporte": {
-      "id": 1,
-      "nombre": "Futbol",
-      "imagenURL": "ImagenesBalon\\1.png"
->>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
     }
   },
   {
     "id": 1,
-<<<<<<< HEAD
-    "tiempoPorPartido": 30,
-    "nombre": "Summer",
+    "tiempoPorPartido": 20,
+    "nombre": "Tierrosas",
     "finalizado": false,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
       "imagenURL": "ImagenesBalon\\1.png"
     }
-=======
-    "tiempoPorPartido": 1,
-    "nombre": "TorneoB",
-    "finalizado": false,
-    "deporte": {
-      "id": 2,
-      "nombre": "Volley",
-      "imagenURL": "ImagenesBalon\\2.png"
-    }
-  },
-  {
-    "id": 2,
-    "tiempoPorPartido": 1,
-    "nombre": "Torneo1",
-    "finalizado": false,
-    "deporte": {
-      "id": 1,
-      "nombre": "Futbol",
-      "imagenURL": "ImagenesBalon\\1.png"
-    }
-  },
-  {
-    "id": 3,
-    "tiempoPorPartido": 1,
-    "nombre": "Torneo2",
-    "finalizado": false,
-    "deporte": {
-      "id": 2,
-      "nombre": "Volley",
-      "imagenURL": "ImagenesBalon\\2.png"
-    }
->>>>>>> 51029c1d5fae660d4d2ac5e6f54e3a990e72669e
   }
 ]
