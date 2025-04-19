@@ -1,0 +1,28 @@
+[
+  {
+    "idPartido": 0,
+    "torneo": {
+      "id": 0,
+      "tiempoPorPartido": 90,
+      "nombre": "Gold",
+      "finalizado": true,
+      "deporte": {
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "ganador": {
+      "id": 0,
+      "nombre": "Tigers",
+      "fotoURL": "",
+      "enTorneoActivo": false,
+      "puntosTotales": 0,
+      "deporte": {
+        "id": 0,
+        "nombre": "",
+        "imagenURL": ""
+      }
+    }
+  }
+]
