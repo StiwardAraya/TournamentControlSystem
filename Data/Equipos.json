@@ -70,5 +70,173 @@
       "nombre": "Futbol",
       "imagenURL": "ImagenesBalon\\2.png"
     }
+  },
+  {
+    "id": 7,
+    "nombre": "A",
+    "fotoURL": "FotosEquipos\\7.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 8,
+    "nombre": "B",
+    "fotoURL": "FotosEquipos\\8.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 9,
+    "nombre": "C",
+    "fotoURL": "FotosEquipos\\9.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 10,
+    "nombre": "D",
+    "fotoURL": "FotosEquipos\\10.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 11,
+    "nombre": "AA",
+    "fotoURL": "FotosEquipos\\11.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 12,
+    "nombre": "BB",
+    "fotoURL": "FotosEquipos\\12.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 13,
+    "nombre": "AIMEP3",
+    "fotoURL": "FotosEquipos\\13.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 14,
+    "nombre": "anakakaneculo",
+    "fotoURL": "FotosEquipos\\14.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 3,
+      "nombre": "Basket",
+      "imagenURL": "ImagenesBalon\\3.png"
+    }
+  },
+  {
+    "id": 15,
+    "nombre": "ANAKAKANECULO",
+    "fotoURL": "FotosEquipos\\15.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 16,
+    "nombre": "fifesFC",
+    "fotoURL": "FotosEquipos\\16.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 2,
+      "nombre": "Futbol",
+      "imagenURL": "ImagenesBalon\\2.png"
+    }
+  },
+  {
+    "id": 17,
+    "nombre": "X",
+    "fotoURL": "FotosEquipos\\17.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 18,
+    "nombre": "Y",
+    "fotoURL": "FotosEquipos\\18.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 19,
+    "nombre": "1",
+    "fotoURL": "FotosEquipos\\19.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 20,
+    "nombre": "2",
+    "fotoURL": "FotosEquipos\\20.png",
+    "enTorneoActivo": true,
+    "puntosTotales": 0,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
   }
 ]
