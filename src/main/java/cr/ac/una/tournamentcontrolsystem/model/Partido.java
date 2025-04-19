@@ -11,7 +11,6 @@ public class Partido {
 
     private int idPartido;
     private Torneo torneo;
-    private Equipo ganador; // Nuevo atributo para el equipo ganador
 
     public Partido() {
         this(0, new Torneo(), null);
@@ -24,7 +23,6 @@ public class Partido {
     public Partido(int idPartido, Torneo torneo, Equipo ganador) {
         this.idPartido = idPartido;
         this.torneo = torneo;
-        this.ganador = ganador;
     }
 
     // SETTERS
@@ -36,10 +34,6 @@ public class Partido {
         this.torneo = torneo;
     }
 
-    public void setGanador(Equipo ganador) {
-        this.ganador = ganador;
-    }
-
     // GETTERS
     public int getIdPartido() {
         return idPartido;
@@ -49,17 +43,12 @@ public class Partido {
         return torneo;
     }
 
-    public Equipo getGanador() {
-        return ganador;
-    }
-
     @Override
     public String toString() {
-        return "Partido{" +
-                "idPartido=" + idPartido +
-                ", torneo=" + torneo +
-                ", ganador=" + ganador +
-                '}';
+        return "Partido{"
+                + "idPartido=" + idPartido
+                + ", torneo=" + torneo
+                + '}';
     }
 
 }

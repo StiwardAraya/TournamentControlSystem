@@ -12,9 +12,9 @@ public class EquipoPartido {
     private Equipo equipo;
     private Partido partido;
     private int marcador;
-    private int resultado;
+    private boolean resultado;
 
-    public EquipoPartido(Equipo equipo, Partido partido, int marcador, int resultado) {
+    public EquipoPartido(Equipo equipo, Partido partido, int marcador, boolean resultado) {
         this.equipo = equipo;
         this.partido = partido;
         this.marcador = marcador;
@@ -26,7 +26,7 @@ public class EquipoPartido {
         this.marcador = marcador;
     }
 
-    public void setResultado(int resultado) {
+    public void setResultado(boolean resultado) {
         this.resultado = resultado;
     }
 
@@ -43,7 +43,7 @@ public class EquipoPartido {
         return marcador;
     }
 
-    public int getResultado() {
+    public boolean getResultado() {
         return resultado;
     }
 
@@ -57,6 +57,6 @@ public class EquipoPartido {
 
     @Override
     public String toString() {
-        return "EquipoPartido{" + "marcador=" + marcador + ", resultado=" + resultado + ", equipo=" + equipo + ", partido=" + partido + '}';
+        return "EquipoPartido{" + "marcador=" + marcador + ", resultado=" + (resultado ? "Ganador" : "Perdedor") + ", equipo=" + equipo + ", partido=" + partido + '}';
     }
 }
