@@ -12,6 +12,8 @@ public class EquipoPartido {
     private Equipo equipo;
     private Partido partido;
     private int marcador;
+    private int puntosGanados;
+
     private boolean resultado;
 
     public EquipoPartido(Equipo equipo, Partido partido, int marcador, boolean resultado) {
@@ -38,6 +40,10 @@ public class EquipoPartido {
         this.partido = partido;
     }
 
+    public void setPuntosGanados(int puntosGanados) {
+        this.puntosGanados = puntosGanados;
+    }
+
     // GETTERS
     public int getMarcador() {
         return marcador;
@@ -53,6 +59,10 @@ public class EquipoPartido {
 
     public Partido getPartido() {
         return partido;
+    }
+
+    public int getPuntosGanados() {
+        return puntosGanados;
     }
 
     @Override

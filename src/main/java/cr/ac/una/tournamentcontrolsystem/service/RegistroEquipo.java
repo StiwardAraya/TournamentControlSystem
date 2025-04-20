@@ -73,9 +73,13 @@ public class RegistroEquipo {
         }
 
         if (buscarEquipo(equipo.getId()).getEstado()) {
-            equipo.setFotoURL(guardarImagen(equipo.getId(), selectedImage).toString());
-            int indexEquipoEncontrado = equipos.indexOf(equipo);
-            equipos.set(indexEquipoEncontrado, equipo);
+            for (int i = 0; i < equipos.size(); i++) {
+                if (equipo.getId() == equipos.get(i).getId()) {
+                    equipo.setFotoURL(guardarImagen(equipo.getId(), selectedImage).toString());
+                    equipos.set(i, equipo);
+                }
+            }
+
             if (GestorArchivo.getInstance().persistEquipos(equipos).getEstado()) {
                 return new Respuesta(true, "Equipo actualizado con exito!", null);
             } else {

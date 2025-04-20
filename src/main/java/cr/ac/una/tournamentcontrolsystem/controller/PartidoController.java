@@ -6,6 +6,7 @@ import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
 import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
@@ -69,6 +70,7 @@ public class PartidoController extends Controller implements Initializable {
     private LlavesTorneo llavesTorneo;
     private EquipoPartido equipoPartido1;
     private EquipoPartido equipoPartido2;
+    private Equipo equipoGanador;
 
     private Timeline cronometro;
     private int tiempoRestanteSegundos;
@@ -241,7 +243,7 @@ public class PartidoController extends Controller implements Initializable {
 
     private void guardarResultadoPartido() {
         registrarGanadorPartido();
-        // Actualizar los puntos totales de los equipos
+        actualizarPuntosTotalesGanador();
         // Actualizar las entidades de mapeo EquipoPartido y guardarlas
         // Actualizar las entidades de mapeo EquipoTorneo
 
@@ -263,14 +265,25 @@ public class PartidoController extends Controller implements Initializable {
 
     private void registrarGanadorPartido() {
         if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) > Integer.parseInt(lblMarcadorEquipoDer.getText())) {
+            equipo1.setPuntosTotales(equipo1.getPuntosTotales() + 3);
+            equipoGanador = equipo1;
             llavesTorneo.getLlaves().registrarGanador(equipo1);
         } else if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) < Integer.parseInt(lblMarcadorEquipoDer.getText())) {
+            equipo2.setPuntosTotales(equipo2.getPuntosTotales() + 3);
+            equipoGanador = equipo2;
             llavesTorneo.getLlaves().registrarGanador(equipo2);
         } else {
-            // Desempate
+            // TODO: funcion de desempate
             new Mensaje().show(Alert.AlertType.INFORMATION, "Empate", "Se debe desempatar");
         }
 
         RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+    }
+
+    private void actualizarPuntosTotalesGanador() {
+        Respuesta respuestaActualizarPuntosTotales = RegistroEquipo.getInstance().guardarEquipo(equipoGanador, new Image(new File(equipoGanador.getFotoURL()).toURI().toString()));
+        if (!respuestaActualizarPuntosTotales.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Actualizar puntos", "Error al actualizar los puntos del ganador");
+        }
     }
 }
