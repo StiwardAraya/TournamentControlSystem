@@ -3,7 +3,7 @@
     "id": 1,
     "nombre": "Brans",
     "fotoURL": "FotosEquipos\\1.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -15,7 +15,7 @@
     "id": 2,
     "nombre": "Misties",
     "fotoURL": "FotosEquipos\\2.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -27,7 +27,7 @@
     "id": 3,
     "nombre": "Jinxies",
     "fotoURL": "FotosEquipos\\3.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -39,8 +39,8 @@
     "id": 4,
     "nombre": "Vis",
     "fotoURL": "FotosEquipos\\4.png",
-    "enTorneoActivo": true,
-    "puntosTotales": 3,
+    "enTorneoActivo": false,
+    "puntosTotales": 0,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
@@ -64,7 +64,7 @@
     "nombre": "Tigers",
     "fotoURL": "FotosEquipos\\6.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 3,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",
