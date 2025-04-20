@@ -3,11 +3,13 @@ package cr.ac.una.tournamentcontrolsystem.controller;
 import cr.ac.una.tournamentcontrolsystem.model.Deporte;
 import cr.ac.una.tournamentcontrolsystem.model.Equipo;
 import cr.ac.una.tournamentcontrolsystem.model.EquipoPartido;
+import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoPartido;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoTorneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroPartido;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
@@ -73,6 +75,7 @@ public class PartidoController extends Controller implements Initializable {
     private EquipoPartido equipoPartido1;
     private EquipoPartido equipoPartido2;
     private Equipo equipoGanador;
+    private Equipo equipoPerdedor;
 
     private Timeline cronometro;
     private int tiempoRestanteSegundos;
@@ -248,9 +251,10 @@ public class PartidoController extends Controller implements Initializable {
         actualizarPuntosTotalesGanador();
         guardarPartido();
         mapearEquiposPartido();
-        // Actualizar las entidades de mapeo EquipoTorneo
+        actualizarMapeoEquipoTorneo(equipoGanador, 3);
+        actualizarMapeoEquipoTorneo(equipoPerdedor, 0);
 
-        // Revisar si con el partido actual ya finalizó el torneo y hacer los cambios correspondientes
+        finalizarTorneo();
     }
 
     private void setEntidades() {
@@ -270,6 +274,8 @@ public class PartidoController extends Controller implements Initializable {
             equipoPartido2 = new EquipoPartido(equipo2, partido, Integer.parseInt(lblMarcadorEquipoDer.getText()), 0, false);
 
             equipoGanador = equipo1;
+            equipoPerdedor = equipo2;
+
             llavesTorneo.getLlaves().registrarGanador(equipo1);
         } else if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) < Integer.parseInt(lblMarcadorEquipoDer.getText())) {
             equipo2.setPuntosTotales(equipo2.getPuntosTotales() + 3);
@@ -278,6 +284,8 @@ public class PartidoController extends Controller implements Initializable {
             equipoPartido1 = new EquipoPartido(equipo1, partido, Integer.parseInt(lblMarcadorEquipoIzq.getText()), 0, false);
 
             equipoGanador = equipo2;
+            equipoPerdedor = equipo1;
+
             llavesTorneo.getLlaves().registrarGanador(equipo2);
         } else {
             // TODO: funcion de desempate
@@ -306,6 +314,23 @@ public class PartidoController extends Controller implements Initializable {
         Respuesta respuestaGuardarPartido = RegistroPartido.getInstance().guardarPartido(partido);
         if (!respuestaGuardarPartido.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "guardar partido", "Error al guardar el partido");
+        }
+    }
+
+    private void actualizarMapeoEquipoTorneo(Equipo equipo, int puntosGanados) {
+        EquipoTorneo et = (EquipoTorneo) RegistroEquipoTorneo.getInstance().buscarEquipoTorneo(torneoSeleccionado.getId(), equipo.getId()).getResultado("equipoTorneoEncontrado");
+        et.setPuntosEquipo(et.getPuntosEquipo() + puntosGanados);
+        et.setPartidosJugados(et.getPartidosJugados() + 1);
+        et.setEquipo(equipo);
+        Respuesta respuestaGuardarEquipoTorneo = RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(et);
+        if (!respuestaGuardarEquipoTorneo.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "actualizar datos de torneo", respuestaGuardarEquipoTorneo.getMensaje());
+        }
+    }
+
+    private void finalizarTorneo() {
+        if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
+            // TODO: Finalizar el torneo
         }
     }
 }

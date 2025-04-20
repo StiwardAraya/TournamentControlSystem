@@ -1,11 +1,10 @@
 package cr.ac.una.tournamentcontrolsystem.service;
 
+import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
-import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 
 public class RegistroEquipoTorneo {
 
@@ -13,7 +12,7 @@ public class RegistroEquipoTorneo {
     private static RegistroEquipoTorneo INSTANCE;
     static final Logger logger = Logger.getLogger(RegistroEquipoTorneo.class.getName());
 
-    private RegistroEquipoTorneo(){
+    private RegistroEquipoTorneo() {
         Respuesta respuestaGetEquiposTorneos = getEquiposTorneos();
         if (respuestaGetEquiposTorneos.getEstado()) {
             equiposTorneos = (List<EquipoTorneo>) respuestaGetEquiposTorneos.getResultado("EquiposTorneos");
@@ -22,7 +21,7 @@ public class RegistroEquipoTorneo {
         }
     }
 
-    public static RegistroEquipoTorneo getInstance(){
+    public static RegistroEquipoTorneo getInstance() {
         if (INSTANCE == null) {
             synchronized (RegistroEquipoTorneo.class) {
                 if (INSTANCE == null) {
@@ -33,20 +32,39 @@ public class RegistroEquipoTorneo {
         return INSTANCE;
     }
 
-    public Respuesta getEquiposTorneos(){
-        return GestorArchivo.getInstance().cargarEquiposTorneos();
-    }
-
-    public Respuesta guardarEquipoTorneo(EquipoTorneo equipoTorneo){
-        if (equiposTorneos != null && equipoTorneo != null) {
-            for (EquipoTorneo et : equiposTorneos){
-                if (et.getEquipo().getId() == equipoTorneo.getEquipo().getId() && et.getTorneo().getId() == equipoTorneo.getTorneo().getId()) {
-                    return new Respuesta(false, "Ese equipo ya se encuentra en este torneo", "Objeto repetido");
-                }
+    public Respuesta buscarEquipoTorneo(int idTorneo, int idEquipo) {
+        for (EquipoTorneo et : equiposTorneos) {
+            if (et.getTorneo().getId() == idTorneo && et.getEquipo().getId() == idEquipo) {
+                return new Respuesta(true, "", "EquipoTorneo encontrado", "equipoTorneoEncontrado", et);
             }
         }
 
-        equiposTorneos.add(equipoTorneo);
+        return new Respuesta(true, "Ese equipo no se encuentra en ese torneo", "No existe ese registro");
+    }
+
+    public Respuesta getEquiposTorneos() {
+        return GestorArchivo.getInstance().cargarEquiposTorneos();
+    }
+
+    public Respuesta guardarEquipoTorneo(EquipoTorneo equipoTorneo) {
+        if (equipoTorneo == null) {
+            return new Respuesta(false, "No se puede guardar ese equipoTorneo", "Objeto nulo");
+        }
+
+        boolean actualizado = false;
+
+        for (int i = 0; i < equiposTorneos.size(); i++) {
+            if (equiposTorneos.get(i).getTorneo().getId() == equipoTorneo.getTorneo().getId() && equiposTorneos.get(i).getEquipo().getId() == equipoTorneo.getEquipo().getId()) {
+                equiposTorneos.set(i, equipoTorneo);
+                actualizado = true;
+                break;
+            }
+        }
+
+        if (!actualizado) {
+            equiposTorneos.add(equipoTorneo);
+        }
+
         if (!GestorArchivo.getInstance().persistEquiposTorneos(equiposTorneos).getEstado()) {
             return new Respuesta(false, "No se pudo registrar el equipo en ese torneo", "Error al guardar objeto de mapeo");
         } else {
