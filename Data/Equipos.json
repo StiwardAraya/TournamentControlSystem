@@ -3,7 +3,7 @@
     "id": 1,
     "nombre": "Brans",
     "fotoURL": "FotosEquipos\\1.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -15,7 +15,7 @@
     "id": 2,
     "nombre": "Misties",
     "fotoURL": "FotosEquipos\\2.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -27,7 +27,7 @@
     "id": 3,
     "nombre": "Jinxies",
     "fotoURL": "FotosEquipos\\3.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -39,7 +39,7 @@
     "id": 4,
     "nombre": "Vis",
     "fotoURL": "FotosEquipos\\4.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 1,
@@ -51,7 +51,7 @@
     "id": 5,
     "nombre": "Bears",
     "fotoURL": "FotosEquipos\\5.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,
@@ -63,7 +63,7 @@
     "id": 6,
     "nombre": "Tigers",
     "fotoURL": "FotosEquipos\\6.png",
-    "enTorneoActivo": true,
+    "enTorneoActivo": false,
     "puntosTotales": 0,
     "deporte": {
       "id": 2,
