@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroPartido {
+
     private static RegistroPartido instance;
 
-    private RegistroPartido() {}
+    private RegistroPartido() {
+    }
 
     public static RegistroPartido getInstance() {
         if (instance == null) {
@@ -29,9 +31,8 @@ public class RegistroPartido {
             partidos = (List<Partido>) respuestaCargar.getResultado("partidos");
         }
 
-        // Verificar si el partido ya existe para actualizarlo
         int index = -1;
-        if (partido.getIdPartido() != 0) { // Asumimos que un ID 0 indica un nuevo partido
+        if (partido.getIdPartido() != 0) {
             for (int i = 0; i < partidos.size(); i++) {
                 if (partidos.get(i).getIdPartido() == partido.getIdPartido()) {
                     index = i;
@@ -41,18 +42,23 @@ public class RegistroPartido {
         }
 
         if (index != -1) {
-            // Actualizar el partido existente
             partidos.set(index, partido);
         } else {
-            // Agregar el nuevo partido a la lista
+            partido.setIdPartido(getLastId(partidos) + 1);
             partidos.add(partido);
         }
 
-        // Persistir la lista actualizada de partidos
         return GestorArchivo.getInstance().persistPartidos(partidos);
     }
 
     public Respuesta cargarPartidos() {
         return GestorArchivo.getInstance().cargarPartidos();
+    }
+
+    private int getLastId(List<Partido> partidos) {
+        if (partidos != null && !partidos.isEmpty()) {
+            return partidos.getLast().getIdPartido();
+        }
+        return -1;
     }
 }

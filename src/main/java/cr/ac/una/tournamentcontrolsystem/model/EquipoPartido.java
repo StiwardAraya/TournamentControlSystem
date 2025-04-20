@@ -13,14 +13,14 @@ public class EquipoPartido {
     private Partido partido;
     private int marcador;
     private int puntosGanados;
-
     private boolean resultado;
 
-    public EquipoPartido(Equipo equipo, Partido partido, int marcador, boolean resultado) {
+    public EquipoPartido(Equipo equipo, Partido partido, int marcador, int puntosGanados, boolean resultado) {
         this.equipo = equipo;
         this.partido = partido;
         this.marcador = marcador;
         this.resultado = resultado;
+        this.puntosGanados = puntosGanados;
     }
 
     // SETTERS

@@ -146,7 +146,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
         txfNombre.clear();
         txfNombre.setStyle("");
         lvEquipos.getItems().clear();
+        lvEquipos.getItems().removeAll();
         lvTorneo.getItems().clear();
+        lvTorneo.getItems().removeAll();
         mcbDeporte.getSelectionModel().clearSelection();
         mcbDeporte.setStyle("");
         imvImagenBalon.setImage(null);
@@ -160,7 +162,9 @@ public class NuevoTorneoController extends Controller implements Initializable {
         Respuesta respuestaEquipos = RegistroEquipo.getInstance().getEquipos();
 
         lvEquipos.getItems().clear();
+        lvEquipos.getItems().removeAll();
         lvTorneo.getItems().clear();
+        lvTorneo.getItems().removeAll();
 
         Deporte deporteSeleccionado = mcbDeporte.getSelectionModel().getSelectedItem();
 

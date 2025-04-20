@@ -7,7 +7,9 @@ import cr.ac.una.tournamentcontrolsystem.model.LlavesTorneo;
 import cr.ac.una.tournamentcontrolsystem.model.Partido;
 import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipo;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroEquipoPartido;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroLlavesTorneos;
+import cr.ac.una.tournamentcontrolsystem.service.RegistroPartido;
 import cr.ac.una.tournamentcontrolsystem.service.RegistroTorneo;
 import cr.ac.una.tournamentcontrolsystem.util.AppContext;
 import cr.ac.una.tournamentcontrolsystem.util.Mensaje;
@@ -244,7 +246,8 @@ public class PartidoController extends Controller implements Initializable {
     private void guardarResultadoPartido() {
         registrarGanadorPartido();
         actualizarPuntosTotalesGanador();
-        // Actualizar las entidades de mapeo EquipoPartido y guardarlas
+        guardarPartido();
+        mapearEquiposPartido();
         // Actualizar las entidades de mapeo EquipoTorneo
 
         // Revisar si con el partido actual ya finalizó el torneo y hacer los cambios correspondientes
@@ -257,19 +260,23 @@ public class PartidoController extends Controller implements Initializable {
         deporte = torneoSeleccionado.getDeporte();
 
         llavesTorneo = (LlavesTorneo) RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoSeleccionado.getId()).getResultado("llaves");
-
-        // Mapear los partidos
-        equipoPartido1 = new EquipoPartido(equipo1, partido, 0, false);
-        equipoPartido2 = new EquipoPartido(equipo2, partido, 0, false);
     }
 
     private void registrarGanadorPartido() {
         if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) > Integer.parseInt(lblMarcadorEquipoDer.getText())) {
             equipo1.setPuntosTotales(equipo1.getPuntosTotales() + 3);
+
+            equipoPartido1 = new EquipoPartido(equipo1, partido, Integer.parseInt(lblMarcadorEquipoIzq.getText()), 3, true);
+            equipoPartido2 = new EquipoPartido(equipo2, partido, Integer.parseInt(lblMarcadorEquipoDer.getText()), 0, false);
+
             equipoGanador = equipo1;
             llavesTorneo.getLlaves().registrarGanador(equipo1);
         } else if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) < Integer.parseInt(lblMarcadorEquipoDer.getText())) {
             equipo2.setPuntosTotales(equipo2.getPuntosTotales() + 3);
+
+            equipoPartido2 = new EquipoPartido(equipo2, partido, Integer.parseInt(lblMarcadorEquipoDer.getText()), 3, true);
+            equipoPartido1 = new EquipoPartido(equipo1, partido, Integer.parseInt(lblMarcadorEquipoIzq.getText()), 0, false);
+
             equipoGanador = equipo2;
             llavesTorneo.getLlaves().registrarGanador(equipo2);
         } else {
@@ -284,6 +291,21 @@ public class PartidoController extends Controller implements Initializable {
         Respuesta respuestaActualizarPuntosTotales = RegistroEquipo.getInstance().guardarEquipo(equipoGanador, new Image(new File(equipoGanador.getFotoURL()).toURI().toString()));
         if (!respuestaActualizarPuntosTotales.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Actualizar puntos", "Error al actualizar los puntos del ganador");
+        }
+    }
+
+    private void mapearEquiposPartido() {
+        Respuesta respuestaMapeo1 = RegistroEquipoPartido.getInstance().guardarEquipoPartido(equipoPartido1);
+        Respuesta respuestaMapeo2 = RegistroEquipoPartido.getInstance().guardarEquipoPartido(equipoPartido2);
+        if (!respuestaMapeo1.getEstado() || !respuestaMapeo2.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "Mapeo", "Error al guardar el partido");
+        }
+    }
+
+    private void guardarPartido() {
+        Respuesta respuestaGuardarPartido = RegistroPartido.getInstance().guardarPartido(partido);
+        if (!respuestaGuardarPartido.getEstado()) {
+            new Mensaje().show(Alert.AlertType.ERROR, "guardar partido", "Error al guardar el partido");
         }
     }
 }
