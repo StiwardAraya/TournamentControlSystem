@@ -1,6 +1,7 @@
 package cr.ac.una.tournamentcontrolsystem.service;
 
 import cr.ac.una.tournamentcontrolsystem.model.EquipoTorneo;
+import cr.ac.una.tournamentcontrolsystem.model.Torneo;
 import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,4 +72,6 @@ public class RegistroEquipoTorneo {
             return new Respuesta(true, "Deportes inscritos al torneo!", null);
         }
     }
+    
+  
 }

@@ -19,9 +19,11 @@ import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.File;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,7 +35,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -65,6 +69,8 @@ public class PartidoController extends Controller implements Initializable {
     private ImageView imvEquipo2;
     @FXML
     private StackPane crlContainerMarcador2;
+    @FXML
+    private AnchorPane root;
 
     private Torneo torneoSeleccionado;
     private Equipo equipo1;
@@ -84,8 +90,20 @@ public class PartidoController extends Controller implements Initializable {
 
     private double mouseXOffset;
     private double mouseYOffset;
-
-
+    private Circle objetivo;
+    
+    private int rondaDesempate = 1;
+    private int puntosDesempateEquipo1 = 0;
+    private int puntosDesempateEquipo2 = 0;
+    private boolean turnoDesempateEquipo1 = true;
+    private Timeline turnoTimerDesempate;
+    private Timeline aparecerDesaparecerTimerDesempate;
+    private final Mensaje mensaje = new Mensaje(); 
+    private boolean puntoRegistrado = false;
+    private boolean objetivoVisible = false;
+    private boolean turnoEquipo1Finalizado = false;
+    private boolean turnoEquipo2Finalizado = false;
+    
     /* Pendientes:
     Incluir las imagenes de cada equipo
     Mostrar la imagen del balon del equipo en imvBalon
@@ -101,7 +119,9 @@ public class PartidoController extends Controller implements Initializable {
     Se implementa la funcionalidad del AppContext para acceder a la informacion requerida del torneo y sus enfrentamientos*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        objetivo = new Circle(20, Color.RED);
+        objetivo.setVisible(false);
+        root.getChildren().add(objetivo);
     }
 
     @Override
@@ -150,6 +170,7 @@ public class PartidoController extends Controller implements Initializable {
     @FXML
     private void onActionBtnFinalizar(ActionEvent event) {
         finalizarPartido();
+         Equipo ganador = registrarGanadorPartido(); 
     }
 
     private void infoPartido() {
@@ -171,8 +192,7 @@ public class PartidoController extends Controller implements Initializable {
         btnFinalizar.setDisable(true);
         arrastre = false;
 
-        guardarResultadoPartido();
-
+        guardarResultadoPartido(); 
     }
 
     private void cronometro() {
@@ -268,7 +288,7 @@ public class PartidoController extends Controller implements Initializable {
         llavesTorneo = (LlavesTorneo) RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoSeleccionado.getId()).getResultado("llaves");
     }
 
-    private void registrarGanadorPartido() {
+    private Equipo registrarGanadorPartido() {
         if (Integer.parseInt(lblMarcadorEquipoIzq.getText()) > Integer.parseInt(lblMarcadorEquipoDer.getText())) {
             equipo1.setPuntosTotales(equipo1.getPuntosTotales() + 3);
 
@@ -290,11 +310,153 @@ public class PartidoController extends Controller implements Initializable {
 
             llavesTorneo.getLlaves().registrarGanador(equipo2);
         } else {
-            // TODO: funcion de desempate
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Empate", "Se debe desempatar");
+             mensaje.show(Alert.AlertType.INFORMATION, "Desempate", "Haz click en el circulo rojo para acumular puntos y ganar");
+             iniciarDesempate();
         }
 
         RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+        return null;
+    }
+
+
+    //Funcion de desempate    
+
+    private void iniciarDesempate() {
+        rondaDesempate = 1;
+        puntosDesempateEquipo1 = 0;
+        puntosDesempateEquipo2 = 0;
+        turnoDesempateEquipo1 = true;
+        actualizarColorTurno();
+        iniciarRondaDesempate();
+    }
+
+
+    private void iniciarRondaDesempate() {
+        actualizarColorTurno();
+        puntoRegistrado = false;
+
+        turnoTimerDesempate = new Timeline(new KeyFrame(Duration.seconds(30), evt -> {
+            Platform.runLater(() -> {
+                
+                if (turnoDesempateEquipo1) {
+                    turnoDesempateEquipo1 = false; 
+                    turnoEquipo1Finalizado = true; 
+                } else {
+                    turnoEquipo2Finalizado = true; 
+                }
+
+                if (turnoEquipo1Finalizado && turnoEquipo2Finalizado) {
+                    finalizarDesempate();  
+                } else {
+                    iniciarRondaDesempate(); 
+                }
+            });
+        }));
+
+        turnoTimerDesempate.setCycleCount(1);
+        turnoTimerDesempate.play();
+
+        // Animación del circulito
+        Timeline secuenciaCirculo = new Timeline();
+        for (int i = 0; i < 8; i++) {
+            double inicio = i * 4.0;
+            secuenciaCirculo.getKeyFrames().addAll(
+                    new KeyFrame(Duration.seconds(inicio), evt -> mostrarObjetivoDesempate()),
+                    new KeyFrame(Duration.seconds(inicio + 0.8), evt -> objetivo.setVisible(false))
+            );
+        }
+        secuenciaCirculo.setCycleCount(Timeline.INDEFINITE);
+        secuenciaCirculo.play();
+        aparecerDesaparecerTimerDesempate = secuenciaCirculo;
+
+        objetivo.setOnMouseClicked(clickEvent -> eventoCirculo());
+    }
+    
+    private void eventoCirculo() {
+        if (turnoTimerDesempate != null &&
+            turnoTimerDesempate.getStatus() == Timeline.Status.RUNNING &&
+            objetivo.isVisible() &&
+            !puntoRegistrado) {
+
+            puntoRegistrado = true;
+
+            if (turnoDesempateEquipo1) {
+                puntosDesempateEquipo1++;
+                actualizarMarcadorDesempate(lblMarcadorEquipoIzq);
+            } else {
+                puntosDesempateEquipo2++;
+                actualizarMarcadorDesempate(lblMarcadorEquipoDer);
+            }
+
+            objetivo.setVisible(false);
+        }
+    }
+
+    private void actualizarMarcadorDesempate(Label marcadorLabel) {
+        try {
+            int puntosActuales = Integer.parseInt(marcadorLabel.getText());
+            marcadorLabel.setText(String.valueOf(puntosActuales + 1));
+        } catch (NumberFormatException e) {
+            marcadorLabel.setText("1"); 
+        }
+    }
+
+
+    private void mostrarObjetivoDesempate() {
+        double x = Math.random() * (root.getWidth() - 50);
+        double y = Math.random() * (root.getHeight() - 50);
+        objetivo.setTranslateX(x);
+        objetivo.setTranslateY(y);
+        objetivo.setFill(Color.RED); 
+        objetivo.setVisible(true);
+        puntoRegistrado = false;
+    }
+
+    private void finalizarDesempate() {
+    finalizarColorTurno();
+
+    if (aparecerDesaparecerTimerDesempate != null) {
+        aparecerDesaparecerTimerDesempate.stop();
+    }
+
+    String ganador;
+
+    if (puntosDesempateEquipo1 > puntosDesempateEquipo2) {
+        ganador = equipo1.getNombre();
+        llavesTorneo.getLlaves().registrarGanador(equipo1);
+        mensaje.show(Alert.AlertType.INFORMATION, "Ganador", "¡El equipo " + ganador + " ha ganado el desempate con " + puntosDesempateEquipo1 + " puntos!");
+    } else if (puntosDesempateEquipo2 > puntosDesempateEquipo1) {
+        ganador = equipo2.getNombre();
+        llavesTorneo.getLlaves().registrarGanador(equipo2);
+        mensaje.show(Alert.AlertType.INFORMATION, "Ganador", "¡El equipo " + ganador + " ha ganado el desempate con " + puntosDesempateEquipo2 + " puntos!");
+    } else {
+        Random random = new Random();
+        boolean ganadorAleatorio = random.nextBoolean();
+        ganador = ganadorAleatorio ? equipo1.getNombre() : equipo2.getNombre();
+        llavesTorneo.getLlaves().registrarGanador(ganadorAleatorio ? equipo1 : equipo2);
+        mensaje.show(Alert.AlertType.INFORMATION, "Ganador", "¡Empate en el desempate! El ganador se ha elegido al azar: " + ganador);
+    }
+    RegistroLlavesTorneos.getInstance().guardarLlavesTorneo(llavesTorneo);
+}
+    
+    private void actualizarColorTurno() {
+        if (turnoDesempateEquipo1) {
+            lblNombreEquipoIzq.setStyle("-fx-text-fill: lightgreen;");
+            lblMarcadorEquipoIzq.setStyle("-fx-text-fill: lightgreen;");
+        } else {
+            lblNombreEquipoDer.setStyle("-fx-text-fill: lightgreen;");
+            lblMarcadorEquipoDer.setStyle("-fx-text-fill: lightgreen;");
+        }
+    }
+
+    private void finalizarColorTurno() {
+        if (!turnoDesempateEquipo1) {
+            lblNombreEquipoIzq.setStyle("-fx-text-fill: lightcoral;");
+            lblMarcadorEquipoIzq.setStyle("-fx-text-fill: lightcoral;");
+        } else {
+            lblNombreEquipoDer.setStyle("-fx-text-fill: lightcoral;");
+            lblMarcadorEquipoDer.setStyle("-fx-text-fill: lightcoral;");
+        }
     }
 
     private void actualizarPuntosTotalesGanador() {

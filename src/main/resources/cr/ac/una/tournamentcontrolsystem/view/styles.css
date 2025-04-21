@@ -355,7 +355,7 @@
 }
 
 .img-Certificado{
-    -fx-background-image: url("../resources/img/certificado.png");
+    -fx-background-image: url("../resources/img/certificado.jpg");
     -fx-background-position: center;
     -fx-background-size: stretch;
 }
