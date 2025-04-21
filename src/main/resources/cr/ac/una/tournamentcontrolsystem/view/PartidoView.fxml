@@ -51,7 +51,7 @@
                         <String fx:value="text-color-white" />
                      </styleClass>
                   </Label>
-                  <StackPane>
+                  <StackPane fx:id="stackEquipo1">
                      <children>
                         <Circle fx:id="crlContainerMarcador1" fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
                         <Label fx:id="lblMarcadorEquipoIzq" text="0">
@@ -76,9 +76,9 @@
                         <String fx:value="text-color-white" />
                      </styleClass>
                   </Label>
-                  <StackPane fx:id="crlContainerMarcador2">
+                  <StackPane fx:id="stackEquipo2">
                      <children>
-                        <Circle fx:id="crlContainerMarcador1" fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
+                        <Circle fx:id="crlContainerMarcador2" fill="DODGERBLUE" radius="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="circle-fill" />
                         <Label fx:id="lblMarcadorEquipoDer" text="0">
                            <styleClass>
                               <String fx:value="text-color-white" />
