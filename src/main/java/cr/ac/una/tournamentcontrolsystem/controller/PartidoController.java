@@ -254,7 +254,9 @@ public class PartidoController extends Controller implements Initializable {
         actualizarMapeoEquipoTorneo(equipoGanador, 3);
         actualizarMapeoEquipoTorneo(equipoPerdedor, 0);
 
-        finalizarTorneo();
+        if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
+            finalizarTorneo();
+        }
     }
 
     private void setEntidades() {
@@ -329,8 +331,6 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     private void finalizarTorneo() {
-        if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
-            // TODO: Finalizar el torneo
-        }
+        // TODO: proceso de finalizar el torneo
     }
 }
