@@ -3,55 +3,13 @@
     "idPartido": 0,
     "torneo": {
       "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
+      "tiempoPorPartido": 90,
+      "nombre": "Gold",
       "finalizado": false,
       "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    }
-  },
-  {
-    "idPartido": 1,
-    "torneo": {
-      "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
-      "finalizado": false,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    }
-  },
-  {
-    "idPartido": 2,
-    "torneo": {
-      "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
-      "finalizado": false,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    }
-  },
-  {
-    "idPartido": 3,
-    "torneo": {
-      "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
-      "finalizado": false,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
       }
     }
   }

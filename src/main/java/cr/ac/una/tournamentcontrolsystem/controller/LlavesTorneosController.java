@@ -175,6 +175,11 @@ public class LlavesTorneosController extends Controller implements Initializable
                 AppContext.getInstance().set("llaves", llaves);
                 FlowController.getInstance().goViewInWindowModal("PartidoView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
                 onActionBtnActualizar(new ActionEvent());
+
+                Llaves llavesTorneoActual = ((LlavesTorneo) RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId()).getResultado("llaves")).getLlaves();
+                if (llavesTorneoActual.getRaiz().getEquipo() != null) {
+                    btnImprimir.setDisable(false);
+                }
             });
 
             // Agregar el botón al panel

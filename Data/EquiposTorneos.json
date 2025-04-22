@@ -1,57 +1,29 @@
 [
   {
-    "puntosEquipo": 0,
+    "puntosEquipo": 3,
     "posicionFinal": 0,
-    "partidosJugados": 2,
+    "partidosJugados": 1,
     "equipo": {
-      "id": 1,
-      "nombre": "Brans",
-      "fotoURL": "FotosEquipos\\1.png",
-      "enTorneoActivo": true,
-      "puntosTotales": 0,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    },
-    "torneo": {
-      "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
-      "finalizado": false,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    }
-  },
-  {
-    "puntosEquipo": 9,
-    "posicionFinal": 0,
-    "partidosJugados": 3,
-    "equipo": {
-      "id": 2,
-      "nombre": "Misties",
-      "fotoURL": "FotosEquipos\\2.png",
+      "id": 5,
+      "nombre": "Bears",
+      "fotoURL": "FotosEquipos\\5.png",
       "enTorneoActivo": true,
       "puntosTotales": 6,
       "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
       }
     },
     "torneo": {
       "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
+      "tiempoPorPartido": 90,
+      "nombre": "Gold",
       "finalizado": false,
       "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
       }
     }
   },
@@ -60,54 +32,26 @@
     "posicionFinal": 0,
     "partidosJugados": 1,
     "equipo": {
-      "id": 3,
-      "nombre": "Jinxies",
-      "fotoURL": "FotosEquipos\\3.png",
+      "id": 6,
+      "nombre": "Tigers",
+      "fotoURL": "FotosEquipos\\6.png",
       "enTorneoActivo": true,
       "puntosTotales": 0,
       "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
       }
     },
     "torneo": {
       "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
+      "tiempoPorPartido": 90,
+      "nombre": "Gold",
       "finalizado": false,
       "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    }
-  },
-  {
-    "puntosEquipo": 3,
-    "posicionFinal": 0,
-    "partidosJugados": 2,
-    "equipo": {
-      "id": 4,
-      "nombre": "Vis",
-      "fotoURL": "FotosEquipos\\4.png",
-      "enTorneoActivo": true,
-      "puntosTotales": 3,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
-      }
-    },
-    "torneo": {
-      "id": 0,
-      "tiempoPorPartido": 20,
-      "nombre": "summer",
-      "finalizado": false,
-      "deporte": {
-        "id": 1,
-        "nombre": "VolleyBall",
-        "imagenURL": "ImagenesBalon\\1.png"
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
       }
     }
   }

@@ -8,15 +8,5 @@
     "id": 2,
     "nombre": "Futbol",
     "imagenURL": "ImagenesBalon\\2.png"
-  },
-  {
-    "id": 3,
-    "nombre": "Basket",
-    "imagenURL": "ImagenesBalon\\3.png"
-  },
-  {
-    "id": 4,
-    "nombre": "Tennis",
-    "imagenURL": "ImagenesBalon\\4.png"
   }
 ]

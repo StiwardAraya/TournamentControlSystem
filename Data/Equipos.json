@@ -52,7 +52,7 @@
     "nombre": "Bears",
     "fotoURL": "FotosEquipos\\5.png",
     "enTorneoActivo": false,
-    "puntosTotales": 3,
+    "puntosTotales": 6,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",

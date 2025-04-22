@@ -26,13 +26,18 @@ public class DeportesMuestraController extends Controller implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @Override
     public void initialize() {
         clNombre.prefWidthProperty().bind(tbDeportes.widthProperty().subtract(clId.prefWidthProperty()).subtract(10));
         ArrayList<Deporte> listaDeportes = (ArrayList<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
+
+        // DEBUG
+        System.out.println(listaDeportes);
+        // DEBUG
+
         if (listaDeportes != null) {
             deportes = FXCollections.observableArrayList(listaDeportes);
             clId.setCellValueFactory(new PropertyValueFactory<>("id"));

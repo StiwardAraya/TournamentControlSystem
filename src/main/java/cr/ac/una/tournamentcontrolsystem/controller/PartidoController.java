@@ -530,7 +530,7 @@ public class PartidoController extends Controller implements Initializable {
         String textoGanador = equipoGanador.getNombre() + " CAMPEÓN!";
         labelCampeon = new Label(textoGanador);
 
-        labelCampeon.setStyle("-fx-font-size: 30; -fx-text-fill: #FFA725; -fx-font-weight: bold; -fx-background-color: #FFFAF0; -fx-background-radius: 10px; -fx-padding: 10; -fx-font-family: \"Big Shoulders\"; ");
+        labelCampeon.setStyle("-fx-font-size: 20; -fx-text-fill: #FFA725; -fx-font-weight: bold; -fx-background-color: #FFFAF0; -fx-background-radius: 10px; -fx-padding: 10; -fx-font-family: \"Big Shoulders\"; ");
 
         containerBalon.getChildren().add(labelCampeon);
 
