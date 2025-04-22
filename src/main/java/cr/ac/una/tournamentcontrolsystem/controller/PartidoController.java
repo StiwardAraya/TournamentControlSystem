@@ -19,7 +19,6 @@ import cr.ac.una.tournamentcontrolsystem.util.Respuesta;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -96,6 +95,7 @@ public class PartidoController extends Controller implements Initializable {
     private int tiempoRestanteSegundos;
     private boolean partidoEnCurso = false;
     private boolean arrastre = false;
+    private Label labelCampeon;
 
     private double mouseXOffset;
     private double mouseYOffset;
@@ -140,6 +140,13 @@ public class PartidoController extends Controller implements Initializable {
 
         imvEquipo1.setImage(new Image(new File(equipo1.getFotoURL()).toURI().toString()));
         imvEquipo2.setImage(new Image(new File(equipo2.getFotoURL()).toURI().toString()));
+
+        try {
+            containerBalon.getChildren().remove(labelCampeon);
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
     @FXML
@@ -188,7 +195,7 @@ public class PartidoController extends Controller implements Initializable {
         arrastre = false;
 
         guardarResultadoPartido();
-        animacionGanador();
+
     }
 
     private void cronometro() {
@@ -271,6 +278,7 @@ public class PartidoController extends Controller implements Initializable {
         actualizarMapeoEquipoTorneo(equipoPerdedor, 0);
 
         if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
+            animacionGanador();
             finalizarTorneo();
         }
     }
@@ -359,10 +367,7 @@ public class PartidoController extends Controller implements Initializable {
 
     private void finalizarTorneo() {
         finalizarEquipos();
-        actualizarTorneo();
-        finalizarEquipoTorneo();
-        // Actualizar los partidos
-        // Actualizar los equipoPartido
+        finalizarTorneos();
     }
 
     private void finalizarEquipos() {
@@ -376,36 +381,13 @@ public class PartidoController extends Controller implements Initializable {
         }
     }
 
-    private void actualizarTorneo() {
+    private void finalizarTorneos() {
         torneoSeleccionado.setFinalizado(true);
         if (!RegistroTorneo.getInstance().guardarTorneo(torneoSeleccionado, deporte).getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Torneo", "Error al actualizar el torneo");
         }
     }
 
-    private void finalizarEquipoTorneo() {
-        List<EquipoTorneo> equiposTorneoActuales = new ArrayList<>();
-        List<Equipo> equipos = llavesTorneo.getLlaves().getEquipos();
-
-        for (Equipo e : equipos) {
-            try {
-                equiposTorneoActuales.add((EquipoTorneo) RegistroEquipoTorneo.getInstance().buscarEquipoTorneo(torneoSeleccionado.getId(), e.getId()).getResultado("equipoTorneoEncontrado"));
-            } catch (Exception ex) {
-                new Mensaje().show(Alert.AlertType.ERROR, "buscar equipoTorneo", "Error al buscar equiposTorneo del partido");
-            }
-        }
-
-        for (EquipoTorneo et : equiposTorneoActuales) {
-            et.getEquipo().setEnTorneoActivo(false);
-            et.getTorneo().setFinalizado(true);
-            if (!RegistroEquipoTorneo.getInstance().guardarEquipoTorneo(et).getEstado()) {
-                new Mensaje().show(Alert.AlertType.ERROR, "actualizar equipoTorneo", "Error al actualizar equiposTorneo");
-            }
-        }
-    }
-
-    // Actualizar los partidos
-    // Actualizar los equipoPartido
     //Funcion de desempate
     private void iniciarDesempate() {
         rondaDesempate = 1;
@@ -545,10 +527,10 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     private void animacionGanador() {
-        String textoGanador = "CAMPEÓN: " + equipoGanador.getNombre();
-        Label labelCampeon = new Label(textoGanador);
+        String textoGanador = equipoGanador.getNombre() + " CAMPEÓN!";
+        labelCampeon = new Label(textoGanador);
 
-        labelCampeon.setStyle("-fx-font-size: 20; -fx-text-fill: black; -fx-font-weight: bold; " + "-fx-background-color: white; " + "-fx-padding: 10;");
+        labelCampeon.setStyle("-fx-font-size: 30; -fx-text-fill: #FFA725; -fx-font-weight: bold; -fx-background-color: #FFFAF0; -fx-background-radius: 10px; -fx-padding: 10; -fx-font-family: \"Big Shoulders\"; ");
 
         containerBalon.getChildren().add(labelCampeon);
 

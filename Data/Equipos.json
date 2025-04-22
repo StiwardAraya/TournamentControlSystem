@@ -16,7 +16,7 @@
     "nombre": "Misties",
     "fotoURL": "FotosEquipos\\2.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 6,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
@@ -40,7 +40,7 @@
     "nombre": "Vis",
     "fotoURL": "FotosEquipos\\4.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 3,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
