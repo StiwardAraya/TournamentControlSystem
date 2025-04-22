@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -39,6 +40,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -70,9 +73,13 @@ public class PartidoController extends Controller implements Initializable {
     @FXML
     private ImageView imvEquipo2;
     @FXML
-    private StackPane crlContainerMarcador2;
+    private Circle crlContainerMarcador2;
     @FXML
     private AnchorPane root;
+    @FXML
+    private StackPane stackEquipo1;
+    @FXML
+    private StackPane stackEquipo2;
 
     private Torneo torneoSeleccionado;
     private Equipo equipo1;
@@ -106,19 +113,6 @@ public class PartidoController extends Controller implements Initializable {
     private boolean turnoEquipo1Finalizado = false;
     private boolean turnoEquipo2Finalizado = false;
 
-    /* Pendientes:
-    Incluir las imagenes de cada equipo
-    Mostrar la imagen del balon del equipo en imvBalon
-    Realizar el mapeo
-    Verificar que los datos se guarden correctamente en json
-    Desarrollar el manejo de desempates
-     */
- /* El partido cuenta con la funcionalidad correcta de:
-    cronometro(recibe correctamente el tiempo por partido de cada torneo)
-    arrastre del balon y anotacion de goles
-    muestra correctamente el nombre de ambos equipos en los labels
-    guarda el marcador, el equipo ganador y no permite guardar si existe un empate
-    Se implementa la funcionalidad del AppContext para acceder a la informacion requerida del torneo y sus enfrentamientos*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         objetivo = new Circle(20, Color.RED);
@@ -194,6 +188,7 @@ public class PartidoController extends Controller implements Initializable {
         arrastre = false;
 
         guardarResultadoPartido();
+        animacionGanador();
     }
 
     private void cronometro() {
@@ -547,5 +542,26 @@ public class PartidoController extends Controller implements Initializable {
             lblNombreEquipoDer.setStyle("-fx-text-fill: lightcoral;");
             lblMarcadorEquipoDer.setStyle("-fx-text-fill: lightcoral;");
         }
+    }
+
+    private void animacionGanador() {
+        String textoGanador = "CAMPEÓN: " + equipoGanador.getNombre();
+        Label labelCampeon = new Label(textoGanador);
+
+        labelCampeon.setStyle("-fx-font-size: 20; -fx-text-fill: black; -fx-font-weight: bold; " + "-fx-background-color: white; " + "-fx-padding: 10;");
+
+        containerBalon.getChildren().add(labelCampeon);
+
+        String soundPath = getClass().getResource("../resources/sound/ganador.mp3").toExternalForm();
+        Media sound = new Media(soundPath);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
+        Timeline animacion = new Timeline();
+        animacion.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(labelCampeon.scaleXProperty(), 0), new KeyValue(labelCampeon.scaleYProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
+        );
+        animacion.play();
     }
 }
