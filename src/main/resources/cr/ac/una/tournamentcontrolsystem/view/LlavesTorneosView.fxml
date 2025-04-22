@@ -29,7 +29,6 @@
                         <HBox spacing="10.0" styleClass="right" HBox.hgrow="ALWAYS">
                            <children>
                               <MFXButton fx:id="btnImprimir" onAction="#onActionImprimirCertificado" styleClass="standard-button" text="Imprimir certificado" />
-                              <MFXButton fx:id="btnActualizar" onAction="#onActionBtnActualizar" styleClass="standard-button" text="Actualizar Torneo" />
                            </children>
                         </HBox>
                      </children>

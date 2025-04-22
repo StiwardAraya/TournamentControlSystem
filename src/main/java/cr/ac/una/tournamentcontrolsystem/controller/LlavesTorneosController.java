@@ -41,8 +41,6 @@ public class LlavesTorneosController extends Controller implements Initializable
     private MFXComboBox<Torneo> cmbTorneos;
     @FXML
     private ScrollPane scrollCanva;
-    @FXML
-    private MFXButton btnActualizar;
 
     private Torneo torneoActual;
     @FXML
@@ -68,6 +66,9 @@ public class LlavesTorneosController extends Controller implements Initializable
                     LlavesTorneo llavesTorn = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
                     Llaves llavesTorneoActual = llavesTorn.getLlaves();
                     dibujarTorneo(llavesTorneoActual);
+                    if (llavesTorneoActual.getRaiz().getEquipo() != null) {
+                        btnImprimir.setDisable(false);
+                    }
                 }
 
             }
@@ -78,7 +79,7 @@ public class LlavesTorneosController extends Controller implements Initializable
     public void initialize() {
         cargarTorneos();
         centrarScroll();
-        //btnImprimir.setDisable(true);
+        btnImprimir.setDisable(true);
     }
 
     private void cargarTorneos() {
@@ -197,53 +198,52 @@ public class LlavesTorneosController extends Controller implements Initializable
         double scrollPos = (contenidoAncho - scrollPaneAncho) / 2;
         scrollCanva.setHvalue(scrollPos / (contenidoAncho - scrollPaneAncho));
     }
-    
-    private void accesoCertificado(){
-          
-      if (torneoActual != null) {
-          Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
 
-          if (respuestaBuscarLlave.getEstado()) {
-              LlavesTorneo llavesTorneo = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
-              Llaves llaves = llavesTorneo.getLlaves();
+    private void accesoCertificado() {
 
-              if (llaves != null) {
-                  NodoTorneo raiz = llaves.getRaiz();
+        if (torneoActual != null) {
+            Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
 
-                  if (raiz != null && raiz.getEquipo() != null) {
-                      Equipo equipoGanador = raiz.getEquipo();
-                      Respuesta respuestaEquiposTorneos = RegistroEquipoTorneo.getInstance().getEquiposTorneos();
+            if (respuestaBuscarLlave.getEstado()) {
+                LlavesTorneo llavesTorneo = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
+                Llaves llaves = llavesTorneo.getLlaves();
 
-                      if (respuestaEquiposTorneos.getEstado()) {
-                          List<EquipoTorneo> equiposTorneos = (List<EquipoTorneo>) respuestaEquiposTorneos.getResultado("EquiposTorneos");
-                          EquipoTorneo equipoTorneoGanador = null;
+                if (llaves != null) {
+                    NodoTorneo raiz = llaves.getRaiz();
 
-                          for (EquipoTorneo et : equiposTorneos) {
-                              if (et.getEquipo().equals(equipoGanador) && et.getTorneo().equals(torneoActual)) {
-                                  equipoTorneoGanador = et;
-                                  break;
-                              }
-                          }
+                    if (raiz != null && raiz.getEquipo() != null) {
+                        Equipo equipoGanador = raiz.getEquipo();
+                        Respuesta respuestaEquiposTorneos = RegistroEquipoTorneo.getInstance().getEquiposTorneos();
 
-                          if (equipoTorneoGanador != null) {
-                              AppContext.getInstance().set("nombreEquipoGanador", equipoGanador.getNombre());
-                              AppContext.getInstance().set("puntosObtenidos", equipoTorneoGanador.getPuntosEquipo());
-                              AppContext.getInstance().set("posicionFinal", equipoTorneoGanador.getPosicionFinal());
-                              AppContext.getInstance().set("partidosJugados", equipoTorneoGanador.getPartidosJugados());
+                        if (respuestaEquiposTorneos.getEstado()) {
+                            List<EquipoTorneo> equiposTorneos = (List<EquipoTorneo>) respuestaEquiposTorneos.getResultado("EquiposTorneos");
+                            EquipoTorneo equipoTorneoGanador = null;
 
-                              if (torneoActual.getNombre() != null) {
-                                  AppContext.getInstance().set("nombreTorneo", torneoActual.getNombre());
-                              }
-                              FlowController.getInstance().goViewInWindowModal("CertificadoGanadorView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
-                            } 
-                        } 
-                    } 
-                } 
-            } 
-        } 
+                            for (EquipoTorneo et : equiposTorneos) {
+                                if (et.getEquipo().equals(equipoGanador) && et.getTorneo().equals(torneoActual)) {
+                                    equipoTorneoGanador = et;
+                                    break;
+                                }
+                            }
+
+                            if (equipoTorneoGanador != null) {
+                                AppContext.getInstance().set("nombreEquipoGanador", equipoGanador.getNombre());
+                                AppContext.getInstance().set("puntosObtenidos", equipoTorneoGanador.getPuntosEquipo());
+                                AppContext.getInstance().set("posicionFinal", equipoTorneoGanador.getPosicionFinal());
+                                AppContext.getInstance().set("partidosJugados", equipoTorneoGanador.getPartidosJugados());
+
+                                if (torneoActual.getNombre() != null) {
+                                    AppContext.getInstance().set("nombreTorneo", torneoActual.getNombre());
+                                }
+                                FlowController.getInstance().goViewInWindowModal("CertificadoGanadorView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    @FXML
     private void onActionBtnActualizar(ActionEvent event) {
         canvasContainer.getChildren().clear();
         canvasContainer.getChildren().add(canvaLlaves);
@@ -265,4 +265,3 @@ public class LlavesTorneosController extends Controller implements Initializable
 
     }
 }
- 

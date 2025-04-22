@@ -39,6 +39,16 @@ public class Llaves {
         return buscarEquipoRecursivo(raiz, equipo);
     }
 
+    public void editarEquipo(Equipo equipo) {
+        if (equipo != null) {
+            for (int i = 0; i < equipos.size(); i++) {
+                if (equipo.getId() == equipos.get(i).getId()) {
+                    equipos.set(i, equipo);
+                }
+            }
+        }
+    }
+
     public void registrarGanador(Equipo ganador) {
         NodoTorneo nodoGanador = buscarNodoPorEquipo(raiz, ganador);
         if (nodoGanador != null) {

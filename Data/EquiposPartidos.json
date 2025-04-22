@@ -1,0 +1,64 @@
+[
+  {
+    "equipo": {
+      "id": 5,
+      "nombre": "Bears",
+      "fotoURL": "FotosEquipos\\5.png",
+      "enTorneoActivo": true,
+      "puntosTotales": 3,
+      "deporte": {
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "partido": {
+      "idPartido": 0,
+      "torneo": {
+        "id": 0,
+        "tiempoPorPartido": 90,
+        "nombre": "Gold",
+        "finalizado": false,
+        "deporte": {
+          "id": 2,
+          "nombre": "Futbol",
+          "imagenURL": "ImagenesBalon\\2.png"
+        }
+      }
+    },
+    "marcador": 2,
+    "puntosGanados": 3,
+    "resultado": true
+  },
+  {
+    "equipo": {
+      "id": 6,
+      "nombre": "Tigers",
+      "fotoURL": "FotosEquipos\\6.png",
+      "enTorneoActivo": true,
+      "puntosTotales": 0,
+      "deporte": {
+        "id": 2,
+        "nombre": "Futbol",
+        "imagenURL": "ImagenesBalon\\2.png"
+      }
+    },
+    "partido": {
+      "idPartido": 0,
+      "torneo": {
+        "id": 0,
+        "tiempoPorPartido": 90,
+        "nombre": "Gold",
+        "finalizado": false,
+        "deporte": {
+          "id": 2,
+          "nombre": "Futbol",
+          "imagenURL": "ImagenesBalon\\2.png"
+        }
+      }
+    },
+    "marcador": 0,
+    "puntosGanados": 0,
+    "resultado": false
+  }
+]

@@ -18,7 +18,7 @@ public class RegistroTorneo {
         torneos = (List<Torneo>) GestorArchivo.getInstance().cargarTorneos().getResultado("torneos");
         lastId = getLastId();
     }
-    
+
     public static RegistroTorneo getInstance() {
         if (INSTANCE == null) {
             synchronized (RegistroTorneo.class) {
@@ -44,17 +44,28 @@ public class RegistroTorneo {
     }
 
     public Respuesta guardarTorneo(Torneo torneo, Deporte deporteSeleccionado) {
-        
+
         if (torneos == null) {
             torneos = new ArrayList<>();
-        }   
+        }
 
         for (Torneo torn : torneos) {
             if (torneo.getNombre().equals(torn.getNombre()) && torneo.getId() != torn.getId()) {
                 return new Respuesta(false, "Ya existe un torneo con ese nombre", "Torneo repetido");
             }
         }
-        
+
+        for (int i = 0; i < torneos.size(); i++) {
+            if (torneo.getId() == torneos.get(i).getId()) {
+                torneos.set(i, torneo);
+                if (GestorArchivo.getInstance().persistTorneos(torneos).getEstado()) {
+                    return new Respuesta(true, "Torneo actualizado con exito!", null);
+                } else {
+                    return new Respuesta(false, "No se pudo actualizar el torneo", "Error al guardar la lista de torneos");
+                }
+            }
+        }
+
         torneo.setDeporte(deporteSeleccionado);
         torneo.setId(lastId + 1);
         lastId++;

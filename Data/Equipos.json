@@ -52,7 +52,7 @@
     "nombre": "Bears",
     "fotoURL": "FotosEquipos\\5.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 3,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",
@@ -64,7 +64,7 @@
     "nombre": "Tigers",
     "fotoURL": "FotosEquipos\\6.png",
     "enTorneoActivo": false,
-    "puntosTotales": 3,
+    "puntosTotales": 0,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",
