@@ -25,26 +25,25 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+/**
+ * Controlador del CRUD de deportes
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class DeportesController extends Controller implements Initializable {
 
     @FXML
-    private MFXButton btnBuscar;
-    @FXML
     private MFXTextField txfIdentificador;
-    @FXML
-    private MFXButton btnVerDeportes;
     @FXML
     private MFXTextField txfNombre;
     @FXML
     private ImageView imvPhoto;
     @FXML
-    private MFXButton btnBuscarImagen;
-    @FXML
     private MFXButton btnGuardar;
     @FXML
     private MFXButton btnEliminar;
-    @FXML
-    private MFXButton btnNuevo;
     @FXML
     private VBox containerPhoto;
 
@@ -63,6 +62,74 @@ public class DeportesController extends Controller implements Initializable {
         // TODO:
     }
 
+    /**
+     * Abre un cuadro de diálogo para que el usuario seleccione una imagen desde
+     * su sistema de archivos, y la muestra en la interfaz gráfica.
+     *
+     * Este método permite seleccionar archivos con extensiones PNG, JPG o JPEG.
+     * Una vez seleccionada, la imagen se carga en el componente imvPhoto, se
+     * actualizan los estilos del contenedor containerPhoto, y se marca la
+     * imagen como cargada mediante el valor imagenCargada.
+     */
+    private void seleccionarImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File file = fileChooser.showOpenDialog(imvPhoto.getScene().getWindow());
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            imvPhoto.setImage(image);
+            containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = image;
+        }
+    }
+
+    /**
+     * Regresa la ventana a sus configuraciones por defecto.
+     */
+    private void reiniciarVentana() {
+        txfIdentificador.clear();
+        txfIdentificador.setEditable(true);
+        btnGuardar.setText("Guardar");
+        btnEliminar.setDisable(true);
+        txfNombre.clear();
+        txfNombre.setStyle("");
+        imvPhoto.setImage(null);
+        containerPhoto.setStyle("");
+        txfIdentificador.setStyle("");
+        imagenCargada = false;
+        deporte = new Deporte();
+    }
+
+    /**
+     * Revisa si un archivo es una imagen.
+     *
+     * @param file
+     * @return valor del archivo
+     */
+    private boolean isImage(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
+    }
+
+    /**
+     * Animación de javaFX, sacude el elemento Nodo que ingrese por parámetro
+     *
+     * @param element
+     */
+    private void shake(Node element) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
+        shake.setFromX(0);
+        shake.setToX(10);
+        shake.setCycleCount(4);
+        shake.setAutoReverse(true);
+        shake.play();
+    }
+
+    // EVENTOS
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
@@ -92,7 +159,7 @@ public class DeportesController extends Controller implements Initializable {
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         if (txfNombre.getText().isBlank() || txfNombre.getText().isEmpty()) {
-            txfNombre.setStyle("-mfx-main: #ffa725; -fx-border-color: #D21F3C;");
+            txfNombre.setStyle("-mfx-main: #FFA725; -fx-border-color: #D21F3C;");
             shake(txfNombre);
             return;
         }
@@ -189,47 +256,4 @@ public class DeportesController extends Controller implements Initializable {
         event.consume();
     }
 
-    private void seleccionarImagen() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
-        );
-
-        File file = fileChooser.showOpenDialog(imvPhoto.getScene().getWindow());
-        if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            imvPhoto.setImage(image);
-            containerPhoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
-            imagenCargada = true;
-            imagen = image;
-        }
-    }
-
-    private void reiniciarVentana() {
-        txfIdentificador.clear();
-        txfIdentificador.setEditable(true);
-        btnGuardar.setText("Guardar");
-        btnEliminar.setDisable(true);
-        txfNombre.clear();
-        txfNombre.setStyle("");
-        imvPhoto.setImage(null);
-        containerPhoto.setStyle("");
-        txfIdentificador.setStyle("");
-        imagenCargada = false;
-        deporte = new Deporte();
-    }
-
-    private boolean isImage(File file) {
-        String fileName = file.getName().toLowerCase();
-        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
-    }
-
-    private void shake(Node element) {
-        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
-        shake.setFromX(0);
-        shake.setToX(10);
-        shake.setCycleCount(4);
-        shake.setAutoReverse(true);
-        shake.play();
-    }
 }

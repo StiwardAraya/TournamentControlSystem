@@ -15,6 +15,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controlador de la ventana que despliega una tabla con los equipos guardados.
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class EquiposMuestraController extends Controller implements Initializable {
 
     @FXML

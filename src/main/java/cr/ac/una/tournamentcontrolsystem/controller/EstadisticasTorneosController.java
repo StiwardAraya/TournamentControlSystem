@@ -11,28 +11,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
- * FXML Controller class
+ * Controlador de la ventana de estadísticas por torneos.
  *
- * @author Angie Marks
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
  */
 public class EstadisticasTorneosController extends Controller implements Initializable {
 
     @FXML
     private MFXComboBox<Torneo> cmbTorneos;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @Override
     public void initialize() {
         cargarTorneos();
     }
-    
+
     private void cargarTorneos() {
         try {
             Respuesta respuesta = RegistroTorneo.getInstance().getTorneos();
@@ -47,5 +46,5 @@ public class EstadisticasTorneosController extends Controller implements Initial
             e.printStackTrace();
         }
     }
-    
+
 }

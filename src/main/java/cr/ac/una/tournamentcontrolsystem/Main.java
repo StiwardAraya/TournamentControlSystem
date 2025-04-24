@@ -1,13 +1,15 @@
 package cr.ac.una.tournamentcontrolsystem;
 
+/**
+ * Clase main de arranque
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            App.main(args);
-        } catch (Exception e) {
-            e.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        App.main(args);
     }
 }

@@ -33,6 +33,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Controlador de la ventana de llaves de torneo
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class LlavesTorneosController extends Controller implements Initializable {
 
     @FXML
@@ -41,8 +48,6 @@ public class LlavesTorneosController extends Controller implements Initializable
     private MFXComboBox<Torneo> cmbTorneos;
     @FXML
     private ScrollPane scrollCanva;
-
-    private Torneo torneoActual;
     @FXML
     private MFXButton btnImprimir;
     @FXML
@@ -50,7 +55,24 @@ public class LlavesTorneosController extends Controller implements Initializable
     @FXML
     private AnchorPane root;
 
-    /*Pendiente: habilitar el boton de imprimir certificado cuando el torneo finaliza*/
+    private Torneo torneoActual;
+
+    /**
+     * Inicializa el controlador de la vista y configura el comportamiento del
+     * combo box de torneos.
+     *
+     * Este método se ejecuta automáticamente al cargar la interfaz FXML y
+     * establece un listener que responde al cambio de selección en el combo box
+     * de torneos. Cuando se selecciona un nuevo torneo, se limpia y actualiza
+     * el contenedor canvasContainer con el nodo canvaLlaves.
+     *
+     * Luego, se busca la estructura de llaves del torneo seleccionado a través
+     * de RegistroLlavesTorneos. Si la búsqueda tiene éxito, se extraen y
+     * dibujan las llaves en la interfaz mediante el método dibujarTorneo. Si la
+     * raíz de las llaves ya tiene un equipo asignado (es decir, hay un
+     * campeón), se habilita el botón de impresión btnImprimir.
+     *
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmbTorneos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -82,6 +104,14 @@ public class LlavesTorneosController extends Controller implements Initializable
         btnImprimir.setDisable(true);
     }
 
+    /**
+     * Carga la lista de torneos disponibles desde la fuente de datos y la
+     * muestra en el combo box de torneos.
+     *
+     * Este método obtiene los torneos. Si la respuesta es exitosa y contiene
+     * una lista válida de torneos, se limpia el combo box y se agregan los
+     * torneos obtenidos.
+     */
     private void cargarTorneos() {
         try {
             Respuesta respuesta = RegistroTorneo.getInstance().getTorneos();
@@ -97,28 +127,62 @@ public class LlavesTorneosController extends Controller implements Initializable
         }
     }
 
+    /**
+     * Dibuja en el lienzo canvaLlaves la estructura de llaves de un torneo a
+     * partir de la raíz proporcionada.
+     *
+     * Este método utiliza el contexto gráfico GraphicsContext del lienzo para
+     * limpiar cualquier contenido previo y luego configurar el estilo de
+     * dibujo. Calcula la posición inicial y dimensiones de los nodos con base
+     * en la cantidad de equipos y la profundidad del árbol de llaves.
+     * Finalmente, llama al método dibujarNodo para iniciar el dibujo recursivo
+     * de la estructura desde la raíz del torneo.
+     *
+     * @param llaves Objeto Llaves que contiene la estructura completa del árbol
+     * de enfrentamientos del torneo.
+     */
     private void dibujarTorneo(Llaves llaves) {
-
-        // Reinicio del canva
         GraphicsContext gc = canvaLlaves.getGraphicsContext2D();
         gc.clearRect(0, 0, canvaLlaves.getWidth(), canvaLlaves.getHeight());
 
-        // Estilos
         gc.setFill(Color.rgb(193, 216, 195));
         gc.setStroke(Color.rgb(26, 17, 16));
         gc.setLineWidth(1);
 
-        // Dimensiones
         double espacioEntreEquipos = llaves.getEquipos().size() * 150;
         double alturaNodo = 75;
         double anchoNodo = 100;
-        double alturaPorNivel = 200;
         double xInicio = (canvaLlaves.getWidth() - (alturaNodo * Math.pow(2, getAlturaNodo(llaves.getRaiz())))) / 2;
         double yInicio = 75;
 
         dibujarNodo(gc, llaves.getRaiz(), xInicio, yInicio, anchoNodo, alturaNodo, espacioEntreEquipos, llaves);
     }
 
+    /**
+     * Dibuja un nodo del árbol de llaves del torneo en el GraphicsContext del
+     * lienzo.
+     *
+     * Este método representa visualmente un nodo del torneo con su imagen y
+     * nombre del equipo (si lo tiene), líneas de conexión hacia sus hijos
+     * izquierdo y derecho (si existen), y un botón interactivo para iniciar el
+     * partido entre los equipos hijos si ambos están definidos. El botón abre
+     * la vista de gestión del partido y actualiza la estructura de llaves si es
+     * necesario.
+     *
+     * El método se llama de forma recursiva para cada hijo del nodo, generando
+     * un árbol visual completo.
+     *
+     * @param gc Contexto gráfico del lienzo donde se dibujan los elementos.
+     * @param nodo Nodo actual del torneo que se está dibujando.
+     * @param x Posición horizontal inicial del nodo.
+     * @param y Posición vertical inicial del nodo.
+     * @param anchoNodo Ancho visual del nodo que representa al equipo.
+     * @param alturaNodo Altura visual del nodo.
+     * @param espacioEntreEquipos Espacio horizontal entre nodos hermanos en la
+     * jerarquía.
+     * @param llaves Estructura completa de llaves del torneo, usada para
+     * actualizar después de un partido.
+     */
     private void dibujarNodo(GraphicsContext gc, NodoTorneo nodo, double x, double y, double anchoNodo, double alturaNodo, double espacioEntreEquipos, Llaves llaves) {
         if (nodo == null) {
             return;
@@ -155,7 +219,6 @@ public class LlavesTorneosController extends Controller implements Initializable
             dibujarNodo(gc, nodo.getDerecho(), hijoX + espacioEntreEquipos, hijoY, anchoNodo, alturaNodo, espacioEntreEquipos / 2, llaves);
         }
 
-        // Dibujar botones
         if (nodo.getIzquierdo() != null && nodo.getIzquierdo().getEquipo() != null
                 && nodo.getDerecho() != null && nodo.getDerecho().getEquipo() != null) {
 
@@ -166,7 +229,6 @@ public class LlavesTorneosController extends Controller implements Initializable
             panelBoton.setPrefSize(anchoNodo, alturaNodo);
             panelBoton.setAlignment(Pos.CENTER);
 
-            // Crear el botón de MaterialFX
             MFXButton button = new MFXButton("Partido");
             button.setOnAction(event -> {
                 AppContext.getInstance().set("equipo1Partido", nodo.getIzquierdo().getEquipo());
@@ -174,7 +236,7 @@ public class LlavesTorneosController extends Controller implements Initializable
                 AppContext.getInstance().set("torneoIdPartido", cmbTorneos.getSelectedItem().getId());
                 AppContext.getInstance().set("llaves", llaves);
                 FlowController.getInstance().goViewInWindowModal("PartidoView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
-                onActionBtnActualizar(new ActionEvent());
+                actualizarLlaves();
 
                 Llaves llavesTorneoActual = ((LlavesTorneo) RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId()).getResultado("llaves")).getLlaves();
                 if (llavesTorneoActual.getRaiz().getEquipo() != null) {
@@ -182,14 +244,18 @@ public class LlavesTorneosController extends Controller implements Initializable
                 }
             });
 
-            // Agregar el botón al panel
             panelBoton.getChildren().add(button);
 
-            // Agregar el panel al contenedor del canvas
             canvasContainer.getChildren().add(panelBoton);
         }
     }
 
+    /**
+     * Obtiene la altura de un nodo
+     *
+     * @param nodo
+     * @return cantidad en pixeles del alto de un nodo
+     */
     private int getAlturaNodo(NodoTorneo nodo) {
         if (nodo == null) {
             return 0;
@@ -197,6 +263,9 @@ public class LlavesTorneosController extends Controller implements Initializable
         return 1 + Math.max(getAlturaNodo(nodo.getIzquierdo()), getAlturaNodo(nodo.getDerecho()));
     }
 
+    /**
+     * Centra la posición horizontal del scrollPane
+     */
     private void centrarScroll() {
         double contenidoAncho = scrollCanva.getContent().getBoundsInLocal().getWidth();
         double scrollPaneAncho = scrollCanva.getViewportBounds().getWidth();
@@ -204,6 +273,20 @@ public class LlavesTorneosController extends Controller implements Initializable
         scrollCanva.setHvalue(scrollPos / (contenidoAncho - scrollPaneAncho));
     }
 
+    /**
+     * Permite el acceso a la vista del certificado del equipo ganador del
+     * torneo actual.
+     *
+     * Este método recupera la estructura de llaves del torneo actualmente
+     * seleccionado y verifica si existe un equipo ganador (en la raíz del
+     * árbol). Luego, busca los detalles del equipo ganador dentro de la lista
+     * de EquipoTorneo, y si encuentra coincidencia con el torneo actual, guarda
+     * los datos relevantes en el AppContext para ser usados en la vista del
+     * certificado.
+     *
+     * Si toda la información es válida y completa, se abre una nueva ventana
+     * modal con la vista del certificado del equipo ganador.
+     */
     private void accesoCertificado() {
 
         if (torneoActual != null) {
@@ -225,7 +308,7 @@ public class LlavesTorneosController extends Controller implements Initializable
                             EquipoTorneo equipoTorneoGanador = null;
 
                             for (EquipoTorneo et : equiposTorneos) {
-                                if (et.getEquipo().equals(equipoGanador) && et.getTorneo().equals(torneoActual)) {
+                                if (et.getEquipo().getId() == equipoGanador.getId() && et.getTorneo().getId() == torneoActual.getId()) {
                                     equipoTorneoGanador = et;
                                     break;
                                 }
@@ -249,14 +332,16 @@ public class LlavesTorneosController extends Controller implements Initializable
         }
     }
 
-    private void onActionBtnActualizar(ActionEvent event) {
+    /**
+     * Actualiza los cambios de las llaves de torneo
+     */
+    private void actualizarLlaves() {
         canvasContainer.getChildren().clear();
         canvasContainer.getChildren().add(canvaLlaves);
         torneoActual = cmbTorneos.getSelectedItem();
         Respuesta respuestaBuscarLlave = RegistroLlavesTorneos.getInstance().buscarLlavesTorneo(torneoActual.getId());
         if (!respuestaBuscarLlave.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Torneo", "No se encontró el torneo seleccionado");
-            return;
         } else {
             LlavesTorneo llavesTorn = (LlavesTorneo) respuestaBuscarLlave.getResultado("llaves");
             Llaves llavesTorneoActual = llavesTorn.getLlaves();
@@ -264,9 +349,9 @@ public class LlavesTorneosController extends Controller implements Initializable
         }
     }
 
+    // EVENTOS
     @FXML
     private void onActionImprimirCertificado(ActionEvent event) {
         accesoCertificado();
-
     }
 }

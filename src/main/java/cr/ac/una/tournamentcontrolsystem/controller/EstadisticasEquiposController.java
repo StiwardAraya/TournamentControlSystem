@@ -19,11 +19,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * FXML Controller class
+ * Controlador de la ventana de estadísticas por equipos.
  *
- * @author Angie Marks
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
  */
-
 public class EstadisticasEquiposController extends Controller implements Initializable {
 
     @FXML
@@ -38,24 +39,31 @@ public class EstadisticasEquiposController extends Controller implements Initial
     private TableColumn<EquipoTorneo, Integer> clPosicion;
     @FXML
     private TableColumn<EquipoTorneo, Integer> clPuntos;
-    
+
     private ObservableList<EquipoTorneo> equipoTorneo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
     }
-    
+
     @Override
     public void initialize() {
-      cargarEquipos();
-      cargarTabla();
+        cargarEquipos();
+        cargarTabla();
 
-      cmbEquipos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-         cargarTabla(); 
-       }); 
+        cmbEquipos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            cargarTabla();
+        });
     }
-    
+
+    /**
+     * Carga la lista de equipos disponibles desde la capa de datos y la muestra
+     * en el comboBox de equipos.
+     *
+     * Este método obtiene los equipos a través de Registro Equipo, si la
+     * respuesta es exitosa, limpia el combo box y agrega los equipos obtenidos.
+     */
     private void cargarEquipos() {
         try {
             Respuesta respuesta = RegistroEquipo.getInstance().getEquipos();
@@ -73,28 +81,40 @@ public class EstadisticasEquiposController extends Controller implements Initial
             new Mensaje().show(Alert.AlertType.ERROR, "Error al cargar equipos", e.getMessage());
         }
     }
-    
+
+    /**
+     * Carga y muestra en la tabla los datos de participación en torneos del
+     * equipo seleccionado.
+     *
+     * Este método obtiene la lista de registros EquipoTorneo desde la clase
+     * RegistroEquipoTorneo. Si la respuesta es válida, limpia la tabla
+     * tbEquipos, configura las columnas para mostrar el nombre del torneo,
+     * partidos jugados, posición final y puntos obtenidos.
+     *
+     * Luego filtra los registros para mostrar solo aquellos que correspondan al
+     * equipo seleccionado en el combo box cmbEquipos.
+     */
     private void cargarTabla() {
-      Respuesta respuestaEquipoTorneo = RegistroEquipoTorneo.getInstance().getEquiposTorneos();
-      tbEquipos.getItems().clear();
+        Respuesta respuestaEquipoTorneo = RegistroEquipoTorneo.getInstance().getEquiposTorneos();
+        tbEquipos.getItems().clear();
 
-      Equipo equipoSeleccionado = cmbEquipos.getSelectionModel().getSelectedItem();
+        Equipo equipoSeleccionado = cmbEquipos.getSelectionModel().getSelectedItem();
 
-      if (respuestaEquipoTorneo.getEstado()) {
-          List<EquipoTorneo> listaEquiposTorneo = (List<EquipoTorneo>) respuestaEquipoTorneo.getResultado("EquiposTorneos");
+        if (respuestaEquipoTorneo.getEstado()) {
+            List<EquipoTorneo> listaEquiposTorneo = (List<EquipoTorneo>) respuestaEquipoTorneo.getResultado("EquiposTorneos");
 
-          if (listaEquiposTorneo != null && !listaEquiposTorneo.isEmpty()) {
-              clTorneo.setCellValueFactory(new PropertyValueFactory<>("torneo"));
-              clPartidosJugados.setCellValueFactory(new PropertyValueFactory<>("partidosJugados"));
-              clPosicion.setCellValueFactory(new PropertyValueFactory<>("posicionFinal"));
-              clPuntos.setCellValueFactory(new PropertyValueFactory<>("puntosEquipo"));
+            if (listaEquiposTorneo != null && !listaEquiposTorneo.isEmpty()) {
+                clTorneo.setCellValueFactory(new PropertyValueFactory<>("torneo"));
+                clPartidosJugados.setCellValueFactory(new PropertyValueFactory<>("partidosJugados"));
+                clPosicion.setCellValueFactory(new PropertyValueFactory<>("posicionFinal"));
+                clPuntos.setCellValueFactory(new PropertyValueFactory<>("puntosEquipo"));
 
-              for (EquipoTorneo equipoTorneo : listaEquiposTorneo) {
-                  if (equipoSeleccionado != null && equipoTorneo.getEquipo().equals(equipoSeleccionado)) {
-                      tbEquipos.getItems().add(equipoTorneo);
-                  } 
-              }
-          }
+                for (EquipoTorneo equipoTorneo : listaEquiposTorneo) {
+                    if (equipoSeleccionado != null && equipoTorneo.getEquipo().equals(equipoSeleccionado)) {
+                        tbEquipos.getItems().add(equipoTorneo);
+                    }
+                }
+            }
         }
-    }  
+    }
 }

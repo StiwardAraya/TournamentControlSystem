@@ -1,7 +1,6 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -13,20 +12,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controlador de la ventana principal de torneos
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class TorneosController extends Controller implements Initializable {
 
     @FXML
     private BorderPane root;
     @FXML
     private ImageView imvTorneos;
-    @FXML
-    private MFXButton btnNuevo;
-    @FXML
-    private MFXButton btnPosiciones;
-    @FXML
-    private MFXButton btnPartido;
-    @FXML
-    private MFXButton btnRegresar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -32,30 +32,27 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controlador del CRUD de equipos
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class EquiposController extends Controller implements Initializable {
 
     @FXML
     private MFXTextField txfIdentificador;
     @FXML
-    private MFXButton btnBuscar;
-    @FXML
-    private MFXButton btnVerEquipos;
-    @FXML
     private MFXTextField txfNombre;
     @FXML
     private ImageView imvFoto;
-    @FXML
-    private MFXButton btnBuscarImagen;
-    @FXML
-    private MFXButton btnTomarFoto;
     @FXML
     private MFXComboBox<Deporte> cmbDeporte;
     @FXML
     private MFXButton btnGuardar;
     @FXML
     private MFXButton btnEliminar;
-    @FXML
-    private MFXButton btnNuevo;
     @FXML
     private AnchorPane root;
     @FXML
@@ -91,6 +88,88 @@ public class EquiposController extends Controller implements Initializable {
         loadDeportes();
     }
 
+    /**
+     * Abre el explorador de archivos para seleccionar la imagen
+     */
+    private void seleccionarImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File file = fileChooser.showOpenDialog(imvFoto.getScene().getWindow());
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            imvFoto.setImage(image);
+            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
+            imagenCargada = true;
+            imagen = image;
+        }
+    }
+
+    /**
+     * Devuelve los componentes de la ventana a sus valores por defecto
+     */
+    private void reiniciarVentana() {
+        AppContext.getInstance().set("capturedImage", null);
+        txfIdentificador.clear();
+        txfIdentificador.setEditable(true);
+        txfNombre.setStyle("");
+        txfIdentificador.setStyle("");
+        cmbDeporte.setStyle("");
+        btnGuardar.setText("Guardar");
+        btnEliminar.setDisable(true);
+        txfNombre.clear();
+        imvFoto.setImage(null);
+        imvBalonDeporte.setImage(null);
+        imagenCargada = false;
+        containerFoto.setStyle("");
+        minibalonContainer.setStyle("-fx-opacity: .3");
+        cmbDeporte.getSelectionModel().clearSelection();
+        deporte = new Deporte();
+        equipo = new Equipo();
+    }
+
+    /**
+     * Carga los deportes en el comboBox
+     */
+    private void loadDeportes() {
+        List<Deporte> deportes = (List<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
+        cmbDeporte.getItems().clear();
+
+        if (deportes != null && !deportes.isEmpty()) {
+            cmbDeporte.getItems().addAll(deportes);
+        } else {
+            new Mensaje().show(Alert.AlertType.WARNING, "Deportes", "No hay deportes registrados");
+        }
+    }
+
+    /**
+     * Verifica si un archivo es una imagen
+     *
+     * @param file
+     * @return valor de la validación
+     */
+    private boolean isImage(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
+    }
+
+    /**
+     * Animación de javaFX, sacude el elemento Nodo que ingrese por parámetro
+     *
+     * @param element
+     */
+    private void shake(Node element) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
+        shake.setFromX(0);
+        shake.setToX(10);
+        shake.setCycleCount(4);
+        shake.setAutoReverse(true);
+        shake.play();
+    }
+
+    // EVENTOS
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
         if (txfIdentificador.getText().isBlank() || txfIdentificador.getText().isEmpty()) {
@@ -239,64 +318,4 @@ public class EquiposController extends Controller implements Initializable {
         FlowController.getInstance().goViewInWindow("EquiposMuestraView");
     }
 
-    private void seleccionarImagen() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
-        );
-
-        File file = fileChooser.showOpenDialog(imvFoto.getScene().getWindow());
-        if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            imvFoto.setImage(image);
-            containerFoto.setStyle("-fx-background-color: #FFFFFF; -fx-background-image: none; -fx-opacity: 1;");
-            imagenCargada = true;
-            imagen = image;
-        }
-    }
-
-    private void reiniciarVentana() {
-        AppContext.getInstance().set("capturedImage", null);
-        txfIdentificador.clear();
-        txfIdentificador.setEditable(true);
-        txfNombre.setStyle("");
-        txfIdentificador.setStyle("");
-        cmbDeporte.setStyle("");
-        btnGuardar.setText("Guardar");
-        btnEliminar.setDisable(true);
-        txfNombre.clear();
-        imvFoto.setImage(null);
-        imvBalonDeporte.setImage(null);
-        imagenCargada = false;
-        containerFoto.setStyle("");
-        minibalonContainer.setStyle("-fx-opacity: .3");
-        cmbDeporte.getSelectionModel().clearSelection();
-        deporte = new Deporte();
-        equipo = new Equipo();
-    }
-
-    private void loadDeportes() {
-        List<Deporte> deportes = (List<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
-        cmbDeporte.getItems().clear();
-
-        if (deportes != null && !deportes.isEmpty()) {
-            cmbDeporte.getItems().addAll(deportes);
-        } else {
-            new Mensaje().show(Alert.AlertType.WARNING, "Deportes", "No hay deportes registrados");
-        }
-    }
-
-    private boolean isImage(File file) {
-        String fileName = file.getName().toLowerCase();
-        return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
-    }
-
-    private void shake(Node element) {
-        TranslateTransition shake = new TranslateTransition(Duration.millis(100), element);
-        shake.setFromX(0);
-        shake.setToX(10);
-        shake.setCycleCount(4);
-        shake.setAutoReverse(true);
-        shake.play();
-    }
 }

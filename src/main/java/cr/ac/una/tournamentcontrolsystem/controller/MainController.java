@@ -1,7 +1,6 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +30,9 @@ public class MainController extends Controller implements Initializable {
     private AnchorPane root;
     @FXML
     private ImageView imvMain;
-    @FXML
-    private MFXButton btnMantenimiento;
-    @FXML
-    private MFXButton btnTorneos;
-    @FXML
-    private MFXButton btnEstadisticas;
 
     private List<Image> imagenes;
     private int indiceActualImagen = 0;
-
-    @FXML
-    private MFXButton btnAcercaDe;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,6 +68,9 @@ public class MainController extends Controller implements Initializable {
         //TODO: Abrir web acerca de
     }
 
+    /**
+     * Carga las imagenes de fondo en una lista
+     */
     private void cargarImagenes() {
         imagenes = new ArrayList<>();
         imagenes.add(new Image(getClass().getResourceAsStream("/cr/ac/una/tournamentcontrolsystem/resources/img/futbol_bg_image.jpg")));
@@ -88,6 +81,10 @@ public class MainController extends Controller implements Initializable {
         imagenes.add(new Image(getClass().getResourceAsStream("/cr/ac/una/tournamentcontrolsystem/resources/img/volleyball_bg_image.jpg")));
     }
 
+    /**
+     * setea el timeline para cambiar las cada 5 segundos Y define el timeline
+     * como indefinido para que no termine mientras la ventana está abierta
+     */
     private void iniciarCambioDeImagen() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> cambiarImagen()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -100,6 +97,9 @@ public class MainController extends Controller implements Initializable {
         imvMain.preserveRatioProperty().setValue(false);
     }
 
+    /**
+     * Animación de cambio de imagen en el ImageView del fondo
+     */
     private void cambiarImagen() {
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), imvMain);
         fadeOut.setFromValue(1.0);

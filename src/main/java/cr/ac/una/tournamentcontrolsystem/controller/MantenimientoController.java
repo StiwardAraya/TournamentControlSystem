@@ -1,7 +1,6 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.RotateTransition;
@@ -24,12 +23,6 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private BorderPane root;
-    @FXML
-    private MFXButton btnDeportes;
-    @FXML
-    private MFXButton btnEquipos;
-    @FXML
-    private MFXButton btnRegresar;
     @FXML
     private ImageView imvMantenimientoIcon;
 

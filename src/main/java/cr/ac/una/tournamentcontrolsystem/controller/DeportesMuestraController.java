@@ -13,6 +13,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controlador de la ventana que despliega una tabla mostrando todos los
+ * deportes guardados.
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
+ */
 public class DeportesMuestraController extends Controller implements Initializable {
 
     @FXML
@@ -33,10 +41,6 @@ public class DeportesMuestraController extends Controller implements Initializab
     public void initialize() {
         clNombre.prefWidthProperty().bind(tbDeportes.widthProperty().subtract(clId.prefWidthProperty()).subtract(10));
         ArrayList<Deporte> listaDeportes = (ArrayList<Deporte>) RegistroDeporte.getInstance().getDeportes().getResultado("deportes");
-
-        // DEBUG
-        System.out.println(listaDeportes);
-        // DEBUG
 
         if (listaDeportes != null) {
             deportes = FXCollections.observableArrayList(listaDeportes);

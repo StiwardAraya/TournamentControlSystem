@@ -7,7 +7,11 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
- * JavaFX App
+ * Clase app de JavaFX
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderón Z.
  */
 public class App extends Application {
 
