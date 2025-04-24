@@ -3,6 +3,13 @@ package cr.ac.una.tournamentcontrolsystem.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase Nodo que funciona como las posiciones de un torneo
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class NodoTorneo {
 
     private Equipo equipo;
@@ -40,7 +47,7 @@ public class NodoTorneo {
         this.derecho = derecho;
     }
 
-     public List<NodoTorneo> getHijos() {
+    public List<NodoTorneo> getHijos() {
         List<NodoTorneo> hijos = new ArrayList<>();
         if (izquierdo != null) {
             hijos.add(izquierdo);

@@ -1,5 +1,12 @@
 package cr.ac.una.tournamentcontrolsystem.model;
 
+/**
+ * Clase de llaves para la relación 1:1 entre torneo y sus llaves
+ *
+ * @author Stiward Araya C.
+ * @author Angie Marks S.
+ * @author Kevin Calderon Z.
+ */
 public class LlavesTorneo {
 
     private int idTorneo;
