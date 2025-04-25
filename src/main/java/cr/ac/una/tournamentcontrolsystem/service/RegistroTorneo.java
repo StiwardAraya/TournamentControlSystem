@@ -11,12 +11,22 @@ public class RegistroTorneo {
 
     private List<Torneo> torneos;
     private static final Logger logger = Logger.getLogger(RegistroTorneo.class.getName());
-    int lastId = getLastId();
+    int lastId;
     private static RegistroTorneo INSTANCE;
 
     private RegistroTorneo() {
-        torneos = (List<Torneo>) GestorArchivo.getInstance().cargarTorneos().getResultado("torneos");
+        Respuesta respuestaGetTorneos = getTorneos();
+        if (respuestaGetTorneos.getEstado()) {
+            torneos = (List<Torneo>) respuestaGetTorneos.getResultado("torneos");
+        } else {
+            torneos = new ArrayList<>();
+        }
+
         lastId = getLastId();
+
+        if (lastId == -1) {
+            lastId = 0;
+        }
     }
 
     public static RegistroTorneo getInstance() {

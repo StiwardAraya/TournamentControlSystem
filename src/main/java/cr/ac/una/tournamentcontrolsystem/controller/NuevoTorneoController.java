@@ -372,7 +372,7 @@ public class NuevoTorneoController extends Controller implements Initializable {
         if (!respuestaGuardarTorneo.getEstado()) {
             new Mensaje().show(Alert.AlertType.ERROR, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
         } else {
-            new Mensaje().show(Alert.AlertType.CONFIRMATION, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar torneo", respuestaGuardarTorneo.getMensaje());
             guardarMapeoEquiposTorneos();
             crearLlaves();
             reiniciarVentana();

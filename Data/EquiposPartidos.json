@@ -5,7 +5,7 @@
       "nombre": "Bears",
       "fotoURL": "FotosEquipos\\5.png",
       "enTorneoActivo": true,
-      "puntosTotales": 6,
+      "puntosTotales": 3,
       "deporte": {
         "id": 2,
         "nombre": "Futbol",
@@ -15,7 +15,7 @@
     "partido": {
       "idPartido": 0,
       "torneo": {
-        "id": 0,
+        "id": 2,
         "tiempoPorPartido": 90,
         "nombre": "Gold",
         "finalizado": false,
@@ -46,7 +46,7 @@
     "partido": {
       "idPartido": 0,
       "torneo": {
-        "id": 0,
+        "id": 2,
         "tiempoPorPartido": 90,
         "nombre": "Gold",
         "finalizado": false,

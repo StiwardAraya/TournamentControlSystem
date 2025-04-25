@@ -2,7 +2,7 @@
   {
     "idPartido": 0,
     "torneo": {
-      "id": 0,
+      "id": 2,
       "tiempoPorPartido": 90,
       "nombre": "Gold",
       "finalizado": false,

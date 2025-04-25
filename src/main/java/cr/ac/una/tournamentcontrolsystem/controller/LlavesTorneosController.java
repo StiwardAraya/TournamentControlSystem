@@ -315,14 +315,9 @@ public class LlavesTorneosController extends Controller implements Initializable
                             }
 
                             if (equipoTorneoGanador != null) {
-                                AppContext.getInstance().set("nombreEquipoGanador", equipoGanador.getNombre());
-                                AppContext.getInstance().set("puntosObtenidos", equipoTorneoGanador.getPuntosEquipo());
-                                AppContext.getInstance().set("posicionFinal", equipoTorneoGanador.getPosicionFinal());
-                                AppContext.getInstance().set("partidosJugados", equipoTorneoGanador.getPartidosJugados());
-
-                                if (torneoActual.getNombre() != null) {
-                                    AppContext.getInstance().set("nombreTorneo", torneoActual.getNombre());
-                                }
+                                AppContext.getInstance().set("equipoGanador", equipoGanador);
+                                AppContext.getInstance().set("equipoTorneoGanador", equipoTorneoGanador);
+                                AppContext.getInstance().set("torneo", equipoTorneoGanador.getTorneo());
                                 FlowController.getInstance().goViewInWindowModal("CertificadoGanadorView", ((Stage) root.getScene().getWindow()), Boolean.FALSE);
                             }
                         }

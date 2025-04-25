@@ -56,12 +56,6 @@ public class CertificadoGanadorController extends Controller implements Initiali
     @FXML
     private StackPane containerEquipo;
 
-    String nombreEquipoGanador;
-    String nombreTorneo;
-    Integer partidosJugados;
-    Integer puntosObtenidos;
-    Integer posicionFinal;
-
     Equipo equipo;
     Torneo torneo;
     EquipoTorneo equipoTorneo;
@@ -79,19 +73,12 @@ public class CertificadoGanadorController extends Controller implements Initiali
     }
 
     private void cargarDatos() {
-        nombreEquipoGanador = (String) AppContext.getInstance().get("nombreEquipoGanador");
-        nombreTorneo = (String) AppContext.getInstance().get("nombreTorneo");
-        partidosJugados = (Integer) AppContext.getInstance().get("partidosJugados");
-        puntosObtenidos = (Integer) AppContext.getInstance().get("puntosObtenidos");
-        posicionFinal = (Integer) AppContext.getInstance().get("posicionFinal");
+        equipo = (Equipo) AppContext.getInstance().get("equipoGanador");
+        equipoTorneo = (EquipoTorneo) AppContext.getInstance().get("equipoTorneoGanador");
+        torneo = (Torneo) AppContext.getInstance().get("torneo");
     }
 
     private void establecerDatos() {
-        equipo = new Equipo();
-        torneo = new Torneo();
-        equipoTorneo = new EquipoTorneo(puntosObtenidos, posicionFinal, partidosJugados, equipo, torneo);
-        equipo.setNombre(nombreEquipoGanador);
-        torneo.setNombre(nombreTorneo);
         infoGanador(equipoTorneo);
     }
 
@@ -203,7 +190,7 @@ public class CertificadoGanadorController extends Controller implements Initiali
             lblTorneo.setText(equipoTorneo.getTorneo().getNombre());
             lblPartidosJugados.setText(String.valueOf(equipoTorneo.getPartidosJugados()));
             lblPuntosObtenidos.setText(String.valueOf(equipoTorneo.getPuntosEquipo()));
-            lblPosicionFinal.setText(String.valueOf(equipoTorneo.getPosicionFinal()));
+            lblPosicionFinal.setText("Campeón!");
 
             String imagenUrl = equipoTorneo.getEquipo().getFotoURL();
             if (imagenUrl != null) {

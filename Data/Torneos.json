@@ -1,6 +1,17 @@
 [
   {
-    "id": 0,
+    "id": 1,
+    "tiempoPorPartido": 20,
+    "nombre": "summer",
+    "finalizado": false,
+    "deporte": {
+      "id": 1,
+      "nombre": "VolleyBall",
+      "imagenURL": "ImagenesBalon\\1.png"
+    }
+  },
+  {
+    "id": 2,
     "tiempoPorPartido": 90,
     "nombre": "Gold",
     "finalizado": true,

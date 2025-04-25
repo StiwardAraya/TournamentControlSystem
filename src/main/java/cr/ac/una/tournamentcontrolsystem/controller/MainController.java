@@ -1,6 +1,10 @@
 package cr.ac.una.tournamentcontrolsystem.controller;
 
 import cr.ac.una.tournamentcontrolsystem.util.FlowController;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +69,14 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnAcercaDe(ActionEvent event) {
-        //TODO: Abrir web acerca de
+        try {
+            URI uri = new URI("https://tournament-control-system-pi3ligqf7-stiwards-projects.vercel.app/");
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(uri);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
