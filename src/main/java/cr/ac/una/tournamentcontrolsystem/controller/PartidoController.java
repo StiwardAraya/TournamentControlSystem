@@ -278,8 +278,11 @@ public class PartidoController extends Controller implements Initializable {
         actualizarMapeoEquipoTorneo(equipoPerdedor, 0);
 
         if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
-            animacionGanador();
+            animacionGanadorTorneo();
             finalizarTorneo();
+        }
+        else{
+            animacionGanadorPartido();
         }
     }
 
@@ -388,13 +391,11 @@ public class PartidoController extends Controller implements Initializable {
         }
     }
 
-    //Funcion de desempate
     private void iniciarDesempate() {
         rondaDesempate = 1;
         puntosDesempateEquipo1 = 0;
         puntosDesempateEquipo2 = 0;
         turnoDesempateEquipo1 = true;
-        actualizarColorTurno();
         iniciarRondaDesempate();
     }
 
@@ -404,11 +405,12 @@ public class PartidoController extends Controller implements Initializable {
 
         turnoTimerDesempate = new Timeline(new KeyFrame(Duration.seconds(30), evt -> {
             Platform.runLater(() -> {
-
                 if (turnoDesempateEquipo1) {
                     turnoDesempateEquipo1 = false;
                     turnoEquipo1Finalizado = true;
+                    finalizarColorTurno();
                 } else {
+                    finalizarColorTurno();
                     turnoEquipo2Finalizado = true;
                 }
 
@@ -423,7 +425,6 @@ public class PartidoController extends Controller implements Initializable {
         turnoTimerDesempate.setCycleCount(1);
         turnoTimerDesempate.play();
 
-        // Animación del circulito
         Timeline secuenciaCirculo = new Timeline();
         for (int i = 0; i < 8; i++) {
             double inicio = i * 4.0;
@@ -436,9 +437,17 @@ public class PartidoController extends Controller implements Initializable {
         secuenciaCirculo.play();
         aparecerDesaparecerTimerDesempate = secuenciaCirculo;
 
+        Timeline temporizadorAnimacion = new Timeline(new KeyFrame(Duration.seconds(30), evt -> {
+            if (aparecerDesaparecerTimerDesempate != null) {
+                aparecerDesaparecerTimerDesempate.stop();
+            }
+        }));
+        temporizadorAnimacion.setCycleCount(1);
+        temporizadorAnimacion.play();
+
         objetivo.setOnMouseClicked(clickEvent -> eventoCirculo());
     }
-
+ 
     private void eventoCirculo() {
         if (turnoTimerDesempate != null
                 && turnoTimerDesempate.getStatus() == Timeline.Status.RUNNING
@@ -479,14 +488,11 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     private void finalizarDesempate() {
-        finalizarColorTurno();
-
-        if (aparecerDesaparecerTimerDesempate != null) {
-            aparecerDesaparecerTimerDesempate.stop();
-        }
-
-        String ganador;
-
+        lblNombreEquipoIzq.setStyle("-fx-text-fill: black;");
+        lblMarcadorEquipoIzq.setStyle("-fx-text-fill: black;");
+        lblNombreEquipoDer.setStyle("-fx-text-fill: black;");
+        lblMarcadorEquipoDer.setStyle("-fx-text-fill: black;");
+        
         if (puntosDesempateEquipo1 > puntosDesempateEquipo2) {
             ganadorEquipoIzq();
             mensaje.show(Alert.AlertType.INFORMATION, "Ganador", "¡El equipo " + equipoGanador + " ha ganado el desempate con " + puntosDesempateEquipo1 + " puntos!");
@@ -526,7 +532,7 @@ public class PartidoController extends Controller implements Initializable {
         }
     }
 
-    private void animacionGanador() {
+    private void animacionGanadorTorneo() {
         String textoGanador = equipoGanador.getNombre() + " CAMPEÓN!";
         labelCampeon = new Label(textoGanador);
 
@@ -534,7 +540,28 @@ public class PartidoController extends Controller implements Initializable {
 
         containerBalon.getChildren().add(labelCampeon);
 
-        String soundPath = getClass().getResource("../resources/sound/ganador.mp3").toExternalForm();
+        String soundPath = getClass().getResource("../resources/sound/ganadorTorneo.mp3").toExternalForm();
+        Media sound = new Media(soundPath);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
+        Timeline animacion = new Timeline();
+        animacion.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(labelCampeon.scaleXProperty(), 0), new KeyValue(labelCampeon.scaleYProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
+        );
+        animacion.play();
+    }
+    
+     private void animacionGanadorPartido() {
+        String textoGanador = equipoGanador.getNombre() + " Pasa la ronda!";
+        labelCampeon = new Label(textoGanador);
+
+        labelCampeon.setStyle("-fx-font-size: 20; -fx-text-fill: #FFA725; -fx-font-weight: bold; -fx-background-color: #FFFAF0; -fx-background-radius: 10px; -fx-padding: 20; -fx-font-family: \"Big Shoulders\"; ");
+
+        containerBalon.getChildren().add(labelCampeon);
+
+        String soundPath = getClass().getResource("../resources/sound/ganadorPartido.mp3").toExternalForm();
         Media sound = new Media(soundPath);
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
