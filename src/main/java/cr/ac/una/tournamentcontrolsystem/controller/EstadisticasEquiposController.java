@@ -110,7 +110,7 @@ public class EstadisticasEquiposController extends Controller implements Initial
                 clPuntos.setCellValueFactory(new PropertyValueFactory<>("puntosEquipo"));
 
                 for (EquipoTorneo equipoTorneo : listaEquiposTorneo) {
-                    if (equipoSeleccionado != null && equipoTorneo.getEquipo().equals(equipoSeleccionado)) {
+                    if (equipoSeleccionado != null && equipoTorneo.getEquipo().getId() == equipoSeleccionado.getId()) {
                         tbEquipos.getItems().add(equipoTorneo);
                     }
                 }
