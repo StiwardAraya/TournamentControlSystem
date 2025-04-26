@@ -90,6 +90,8 @@ public class LlavesTorneosController extends Controller implements Initializable
                     dibujarTorneo(llavesTorneoActual);
                     if (llavesTorneoActual.getRaiz().getEquipo() != null) {
                         btnImprimir.setDisable(false);
+                    } else {
+                        btnImprimir.setDisable(true);
                     }
                 }
 

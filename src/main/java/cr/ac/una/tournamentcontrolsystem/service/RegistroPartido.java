@@ -44,7 +44,11 @@ public class RegistroPartido {
         if (index != -1) {
             partidos.set(index, partido);
         } else {
-            partido.setIdPartido(getLastId(partidos) + 1);
+            if (partido.getIdPartido() == 0) {
+                partido.setIdPartido(1);
+            } else {
+                partido.setIdPartido(getLastId(partidos) + 1);
+            }
             partidos.add(partido);
         }
 

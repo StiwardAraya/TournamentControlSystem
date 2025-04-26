@@ -54,9 +54,9 @@ public class RegistroLlavesTorneos {
         if (llavesTorneo == null) {
             return new Respuesta(false, "Objeto nulo", "El objeto LlavesTorneo es null");
         }
-    
+
         boolean actualizado = false;
-    
+
         for (int i = 0; i < llavesTorneos.size(); i++) {
             if (llavesTorneos.get(i).getIdTorneo() == llavesTorneo.getIdTorneo()) {
                 llavesTorneos.set(i, llavesTorneo);
@@ -64,11 +64,11 @@ public class RegistroLlavesTorneos {
                 break;
             }
         }
-    
+
         if (!actualizado) {
             llavesTorneos.add(llavesTorneo);
         }
-    
+
         if (GestorArchivo.getInstance().persistLlavesTorneos(llavesTorneos).getEstado()) {
             String mensaje = actualizado ? "Llaves del torneo actualizadas" : "Llaves del torneo guardadas";
             return new Respuesta(true, mensaje, null);

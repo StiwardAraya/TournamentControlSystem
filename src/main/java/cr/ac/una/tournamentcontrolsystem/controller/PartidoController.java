@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -141,12 +143,7 @@ public class PartidoController extends Controller implements Initializable {
         imvEquipo1.setImage(new Image(new File(equipo1.getFotoURL()).toURI().toString()));
         imvEquipo2.setImage(new Image(new File(equipo2.getFotoURL()).toURI().toString()));
 
-        try {
-            containerBalon.getChildren().remove(labelCampeon);
-        } catch (Exception e) {
-            throw e;
-        }
-
+        containerBalon.getChildren().remove(labelCampeon);
     }
 
     @FXML
@@ -162,7 +159,11 @@ public class PartidoController extends Controller implements Initializable {
                     tiempoRestanteSegundos--;
                     cronometro();
                 } else {
-                    finalizarPartido();
+                    try {
+                        finalizarPartido();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PartidoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }));
             cronometro.setCycleCount(Timeline.INDEFINITE);
@@ -171,7 +172,7 @@ public class PartidoController extends Controller implements Initializable {
     }
 
     @FXML
-    private void onActionBtnFinalizar(ActionEvent event) {
+    private void onActionBtnFinalizar(ActionEvent event) throws InterruptedException {
         finalizarPartido();
     }
 
@@ -185,7 +186,7 @@ public class PartidoController extends Controller implements Initializable {
         cronometro();
     }
 
-    private void finalizarPartido() {
+    private void finalizarPartido() throws InterruptedException {
         if (cronometro != null) {
             cronometro.stop();
         }
@@ -225,14 +226,14 @@ public class PartidoController extends Controller implements Initializable {
             imvBalon.setTranslateY(event.getSceneY() - mouseYOffset);
         });
 
-        lblMarcadorEquipoIzq.setOnDragOver((javafx.scene.input.DragEvent event) -> {
+        crlContainerMarcador1.setOnDragOver((javafx.scene.input.DragEvent event) -> {
             if (event.getDragboard().hasString() && event.getDragboard().getString().equals("BALON")) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
 
-        lblMarcadorEquipoIzq.setOnDragDropped((javafx.scene.input.DragEvent event) -> {
+        crlContainerMarcador1.setOnDragDropped((javafx.scene.input.DragEvent event) -> {
             if (event.getDragboard().hasString() && event.getDragboard().getString().equals("BALON")) {
                 incrementarMarcador(lblMarcadorEquipoIzq);
                 event.setDropCompleted(true);
@@ -242,14 +243,14 @@ public class PartidoController extends Controller implements Initializable {
             event.consume();
         });
 
-        lblMarcadorEquipoDer.setOnDragOver((javafx.scene.input.DragEvent event) -> {
+        crlContainerMarcador2.setOnDragOver((javafx.scene.input.DragEvent event) -> {
             if (event.getDragboard().hasString() && event.getDragboard().getString().equals("BALON")) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
 
-        lblMarcadorEquipoDer.setOnDragDropped((javafx.scene.input.DragEvent event) -> {
+        crlContainerMarcador2.setOnDragDropped((javafx.scene.input.DragEvent event) -> {
             if (event.getDragboard().hasString() && event.getDragboard().getString().equals("BALON")) {
                 incrementarMarcador(lblMarcadorEquipoDer);
                 event.setDropCompleted(true);
@@ -269,7 +270,7 @@ public class PartidoController extends Controller implements Initializable {
         }
     }
 
-    private void guardarResultadoPartido() {
+    private void guardarResultadoPartido() throws InterruptedException {
         registrarGanadorPartido();
         actualizarPuntosTotalesGanador();
         guardarPartido();
@@ -280,8 +281,7 @@ public class PartidoController extends Controller implements Initializable {
         if (llavesTorneo.getLlaves().getRaiz().getEquipo() != null) {
             animacionGanadorTorneo();
             finalizarTorneo();
-        }
-        else{
+        } else {
             animacionGanadorPartido();
         }
     }
@@ -447,7 +447,7 @@ public class PartidoController extends Controller implements Initializable {
 
         objetivo.setOnMouseClicked(clickEvent -> eventoCirculo());
     }
- 
+
     private void eventoCirculo() {
         if (turnoTimerDesempate != null
                 && turnoTimerDesempate.getStatus() == Timeline.Status.RUNNING
@@ -492,7 +492,7 @@ public class PartidoController extends Controller implements Initializable {
         lblMarcadorEquipoIzq.setStyle("-fx-text-fill: black;");
         lblNombreEquipoDer.setStyle("-fx-text-fill: black;");
         lblMarcadorEquipoDer.setStyle("-fx-text-fill: black;");
-        
+
         if (puntosDesempateEquipo1 > puntosDesempateEquipo2) {
             ganadorEquipoIzq();
             mensaje.show(Alert.AlertType.INFORMATION, "Ganador", "¡El equipo " + equipoGanador + " ha ganado el desempate con " + puntosDesempateEquipo1 + " puntos!");
@@ -548,12 +548,12 @@ public class PartidoController extends Controller implements Initializable {
         Timeline animacion = new Timeline();
         animacion.getKeyFrames().addAll(
                 new KeyFrame(Duration.ZERO, new KeyValue(labelCampeon.scaleXProperty(), 0), new KeyValue(labelCampeon.scaleYProperty(), 0)),
-                new KeyFrame(Duration.seconds(1), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
+                new KeyFrame(Duration.seconds(3), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
         );
         animacion.play();
     }
-    
-     private void animacionGanadorPartido() {
+
+    private void animacionGanadorPartido() throws InterruptedException {
         String textoGanador = equipoGanador.getNombre() + " Pasa la ronda!";
         labelCampeon = new Label(textoGanador);
 
@@ -569,7 +569,7 @@ public class PartidoController extends Controller implements Initializable {
         Timeline animacion = new Timeline();
         animacion.getKeyFrames().addAll(
                 new KeyFrame(Duration.ZERO, new KeyValue(labelCampeon.scaleXProperty(), 0), new KeyValue(labelCampeon.scaleYProperty(), 0)),
-                new KeyFrame(Duration.seconds(1), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
+                new KeyFrame(Duration.seconds(3), new KeyValue(labelCampeon.scaleXProperty(), 1), new KeyValue(labelCampeon.scaleYProperty(), 1))
         );
         animacion.play();
     }

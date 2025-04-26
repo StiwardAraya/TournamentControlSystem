@@ -16,7 +16,7 @@
     "nombre": "Misties",
     "fotoURL": "FotosEquipos\\2.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 6,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
@@ -28,7 +28,7 @@
     "nombre": "Jinxies",
     "fotoURL": "FotosEquipos\\3.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 3,
     "deporte": {
       "id": 1,
       "nombre": "VolleyBall",
@@ -52,7 +52,7 @@
     "nombre": "Bears",
     "fotoURL": "FotosEquipos\\5.png",
     "enTorneoActivo": false,
-    "puntosTotales": 0,
+    "puntosTotales": 3,
     "deporte": {
       "id": 2,
       "nombre": "Futbol",
